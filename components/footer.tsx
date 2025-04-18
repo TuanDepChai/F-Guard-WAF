@@ -1,5 +1,8 @@
+"use client"
+
 import Link from "next/link"
 import { Shield, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export default function Footer() {
   return (
@@ -15,19 +18,19 @@ export default function Footer() {
               Giải pháp Web Application Firewall hàng đầu bảo vệ website của bạn khỏi các mối đe dọa trực tuyến.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-slate-400 hover:text-primary">
+              <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
               </Link>
-              <Link href="#" className="text-slate-400 hover:text-primary">
+              <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                 <Twitter className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
               </Link>
-              <Link href="#" className="text-slate-400 hover:text-primary">
+              <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
               </Link>
-              <Link href="#" className="text-slate-400 hover:text-primary">
+              <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </Link>
@@ -37,27 +40,27 @@ export default function Footer() {
             <h3 className="text-lg font-bold">Dịch vụ</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="#" className="text-slate-400 hover:text-primary">
+                <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                   Web Application Firewall
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-primary">
+                <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                   Bảo vệ DDoS
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-primary">
+                <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                   Bảo vệ API
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-primary">
+                <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                   Tư vấn bảo mật
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-primary">
+                <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                   Đánh giá bảo mật
                 </Link>
               </li>
@@ -67,27 +70,27 @@ export default function Footer() {
             <h3 className="text-lg font-bold">Công ty</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="#" className="text-slate-400 hover:text-primary">
+                <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                   Về chúng tôi
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-primary">
+                <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                   Đội ngũ
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-primary">
+                <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                   Khách hàng
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-primary">
+                <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-slate-400 hover:text-primary">
+                <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                   Tuyển dụng
                 </Link>
               </li>
@@ -95,7 +98,7 @@ export default function Footer() {
           </div>
           <div className="space-y-4">
             <h3 className="text-lg font-bold">Liên hệ</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                 <span className="text-slate-400">123 Đường Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</span>
@@ -109,6 +112,11 @@ export default function Footer() {
                 <span className="text-slate-400">info@fguard.com</span>
               </li>
             </ul>
+            <div className="pt-4">
+              <Button className="w-full bg-gradient-to-r from-primary to-blue-700 hover:from-primary/90 hover:to-blue-700/90">
+                Liên hệ ngay
+              </Button>
+            </div>
           </div>
         </div>
         <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
