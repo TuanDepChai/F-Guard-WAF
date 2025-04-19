@@ -7,44 +7,44 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 export default function FaqSection() {
   const faqs = [
     {
-      question: "Web Application Firewall (WAF) là gì?",
+      question: "How does your WAF solution compare to Barracuda WAF?",
       answer:
-        "Web Application Firewall (WAF) là một giải pháp bảo mật giúp bảo vệ các ứng dụng web khỏi các cuộc tấn công như SQL Injection, Cross-Site Scripting (XSS), và các mối đe dọa khác. WAF hoạt động bằng cách lọc và giám sát lưu lượng HTTP giữa ứng dụng web và Internet, ngăn chặn các yêu cầu độc hại trước khi chúng đến được máy chủ của bạn.",
+        "Our WAF solution offers comparable enterprise-grade protection to Barracuda WAF, with advanced features including machine learning-based threat detection, zero-day vulnerability protection, and comprehensive API security. We provide similar capabilities in terms of DDoS protection, bot mitigation, and virtual patching, while offering more flexible deployment options and dedicated security engineering support tailored to your specific industry requirements.",
     },
     {
-      question: "FGuard WAF bảo vệ website của tôi khỏi những mối đe dọa nào?",
+      question: "What deployment options are available for enterprise clients?",
       answer:
-        "FGuard WAF bảo vệ website của bạn khỏi nhiều loại tấn công khác nhau, bao gồm: SQL Injection, Cross-Site Scripting (XSS), Cross-Site Request Forgery (CSRF), tấn công DDoS, tấn công brute force, file inclusion, command injection, và nhiều loại tấn công khác. Hệ thống của chúng tôi liên tục cập nhật để đối phó với các mối đe dọa mới nhất.",
+        "We offer multiple deployment options to meet enterprise requirements: cloud-based WAF-as-a-Service for rapid deployment and scalability, on-premises appliances (both physical and virtual) for environments with strict data sovereignty requirements, hybrid deployments that combine cloud and on-premises components, and multi-cloud deployments across AWS, Azure, Google Cloud, and other providers. Our security engineers will work with you to determine the optimal deployment strategy for your specific infrastructure.",
     },
     {
-      question: "Làm thế nào để triển khai FGuard WAF cho website của tôi?",
+      question: "How do you handle zero-day vulnerabilities and emerging threats?",
       answer:
-        "Triển khai FGuard WAF rất đơn giản. Sau khi đăng ký, bạn chỉ cần thay đổi DNS của tên miền để trỏ về hệ thống của chúng tôi. Đội ngũ hỗ trợ kỹ thuật của chúng tôi sẽ hướng dẫn bạn qua từng bước của quá trình thiết lập. Toàn bộ quá trình thường chỉ mất vài phút và không yêu cầu bất kỳ thay đổi nào đối với mã nguồn website của bạn.",
+        "Our approach to zero-day vulnerabilities combines multiple layers of protection: our threat research team continuously monitors for emerging threats and develops protection signatures; our machine learning systems analyze traffic patterns to detect anomalous behavior indicative of new attack vectors; virtual patching provides immediate protection without application code changes; and our 24/7 security operations center provides human oversight and rapid response to emerging threats.",
     },
     {
-      question: "FGuard có ảnh hưởng đến hiệu suất website của tôi không?",
+      question: "What compliance standards does your WAF solution support?",
       answer:
-        "FGuard được thiết kế để tối ưu hóa hiệu suất. Thay vì làm chậm website, chúng tôi thực sự giúp cải thiện tốc độ tải trang thông qua CDN tích hợp và các tính năng tối ưu hóa. Hệ thống của chúng tôi được phân phối trên toàn cầu, đảm bảo thời gian phản hồi nhanh cho người dùng ở bất kỳ vị trí nào.",
+        "Our WAF solution helps organizations meet requirements for numerous compliance standards including PCI DSS, HIPAA, GDPR, SOC 2, ISO 27001, NIST, and industry-specific regulations. We provide comprehensive logging, audit trails, and customizable reports specifically designed for compliance documentation. Our security experts can assist with configuring policies to address specific compliance requirements for your industry.",
     },
     {
-      question: "Tôi có thể tùy chỉnh các quy tắc bảo mật không?",
+      question: "How do you ensure minimal performance impact on our applications?",
       answer:
-        "Có, FGuard cung cấp khả năng tùy chỉnh các quy tắc bảo mật để phù hợp với nhu cầu cụ thể của website bạn. Bạn có thể tạo các quy tắc tùy chỉnh, điều chỉnh mức độ bảo mật, và thiết lập các ngoại lệ cho các phần cụ thể của ứng dụng web. Dashboard quản trị trực quan giúp bạn dễ dàng quản lý tất cả các cài đặt bảo mật.",
+        "Performance is a core design principle of our WAF solution. We employ distributed architecture with global points of presence to minimize latency, intelligent caching and compression to optimize content delivery, custom hardware acceleration for cryptographic operations, and adaptive rule processing that applies only relevant security checks based on traffic context. Our enterprise clients typically experience less than 5ms of added latency when our WAF is properly configured.",
     },
     {
-      question: "FGuard có hỗ trợ HTTPS không?",
+      question: "What level of support do enterprise clients receive?",
       answer:
-        "Có, FGuard hỗ trợ đầy đủ HTTPS và tự động cung cấp chứng chỉ SSL miễn phí cho tất cả các website được bảo vệ. Chúng tôi đảm bảo mọi kết nối đều được mã hóa và an toàn, giúp bảo vệ dữ liệu của người dùng và cải thiện xếp hạng SEO của website bạn.",
+        "Enterprise clients receive our highest tier of support, including: 24/7/365 access to certified security engineers via phone, email, and chat; a dedicated Technical Account Manager who understands your specific environment; guaranteed response times with 15-minute response for critical issues; proactive monitoring and threat hunting; quarterly security reviews and optimization recommendations; and priority access to our threat research team for custom security rule development.",
     },
     {
-      question: "Tôi có thể chuyển từ một nhà cung cấp WAF khác sang FGuard không?",
+      question: "Can your WAF solution integrate with our existing security infrastructure?",
       answer:
-        "Hoàn toàn có thể! Chúng tôi có quy trình chuyển đổi đơn giản và đội ngũ hỗ trợ sẽ giúp bạn chuyển từ nhà cung cấp WAF hiện tại sang FGuard một cách suôn sẻ, đảm bảo không có thời gian ngừng hoạt động. Chúng tôi cũng có thể nhập các quy tắc bảo mật tùy chỉnh từ hệ thống cũ của bạn.",
+        "Yes, our WAF solution is designed for seamless integration with enterprise security ecosystems. We provide robust APIs and pre-built integrations with leading SIEM platforms (Splunk, IBM QRadar, ArcSight), SOAR solutions, identity providers, threat intelligence platforms, and DevSecOps toolchains. Our professional services team can develop custom integrations for proprietary systems when needed.",
     },
     {
-      question: "FGuard có cung cấp báo cáo và phân tích không?",
+      question: "How do you handle custom applications and APIs?",
       answer:
-        "Có, FGuard cung cấp báo cáo chi tiết và phân tích theo thời gian thực về lưu lượng truy cập, các cuộc tấn công đã bị chặn, và hiệu suất website. Bạn có thể xem các báo cáo này trên dashboard hoặc nhận báo cáo định kỳ qua email. Các báo cáo này giúp bạn hiểu rõ hơn về các mối đe dọa bảo mật và cách cải thiện bảo mật website.",
+        "Our WAF solution excels at protecting custom applications and APIs through multiple approaches: application-specific learning that builds behavioral profiles of normal traffic patterns; custom rule development by our security engineers who analyze your application architecture; API schema validation that enforces proper API usage; and granular rate limiting and access controls. We support REST, SOAP, GraphQL, gRPC, and custom API protocols.",
     },
   ]
 
@@ -61,11 +61,11 @@ export default function FaqSection() {
           <div className="space-y-2">
             <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">
               <Shield className="mr-1 h-4 w-4" />
-              <span>Câu hỏi thường gặp</span>
+              <span>Enterprise WAF FAQ</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Giải đáp thắc mắc của bạn</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Common Questions</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
-              Tìm hiểu thêm về FGuard WAF và cách chúng tôi có thể bảo vệ website của bạn
+              Detailed answers to frequently asked questions about our enterprise-grade WAF solution
             </p>
           </div>
         </motion.div>

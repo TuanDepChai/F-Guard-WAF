@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Building, Users, Globe, Shield, ArrowRight } from "lucide-react"
+import { Building, Shield, ArrowRight, FileText, Headphones } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function EnterpriseSection() {
@@ -18,56 +18,57 @@ export default function EnterpriseSection() {
           >
             <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">
               <Building className="mr-1 h-4 w-4" />
-              <span>Giải pháp doanh nghiệp</span>
+              <span>Enterprise WAF Solutions</span>
             </div>
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                Giải pháp bảo mật tùy chỉnh cho doanh nghiệp
+                Tailored Security for Enterprise Applications
               </h2>
               <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                FGuard cung cấp giải pháp bảo mật tùy chỉnh đáp ứng nhu cầu cụ thể của doanh nghiệp bạn, bất kể quy mô
-                hay ngành nghề.
+                Our enterprise WAF solution delivers Barracuda-level protection with customized security policies,
+                dedicated support, and advanced threat intelligence tailored to your specific industry requirements.
               </p>
             </div>
             <div className="space-y-4">
               <div className="flex items-start gap-4">
                 <div className="rounded-full bg-primary/10 p-2">
-                  <Users className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-bold">Đội ngũ chuyên gia</h3>
-                  <p className="text-muted-foreground">
-                    Đội ngũ chuyên gia bảo mật với nhiều năm kinh nghiệm sẽ tư vấn và triển khai giải pháp phù hợp nhất.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="rounded-full bg-primary/10 p-2">
-                  <Globe className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-bold">Bảo vệ toàn cầu</h3>
-                  <p className="text-muted-foreground">
-                    Hệ thống máy chủ toàn cầu giúp bảo vệ website của bạn khỏi các cuộc tấn công từ mọi nơi trên thế
-                    giới.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="rounded-full bg-primary/10 p-2">
                   <Shield className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-bold">Tuân thủ quy định</h3>
+                  <h3 className="font-bold">Advanced Threat Protection</h3>
                   <p className="text-muted-foreground">
-                    Đảm bảo website của bạn tuân thủ các quy định bảo mật và quyền riêng tư như GDPR, PCI DSS, và ISO
-                    27001.
+                    Enterprise-grade security with machine learning-powered threat detection, behavioral analysis, and
+                    real-time protection against sophisticated attacks.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="rounded-full bg-primary/10 p-2">
+                  <FileText className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-bold">Compliance Assurance</h3>
+                  <p className="text-muted-foreground">
+                    Comprehensive compliance support for PCI DSS, HIPAA, GDPR, SOC 2, and other regulatory frameworks
+                    with detailed audit logs and reporting.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="rounded-full bg-primary/10 p-2">
+                  <Headphones className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-bold">Dedicated Security Team</h3>
+                  <p className="text-muted-foreground">
+                    Access to certified security engineers who understand your business needs and provide 24/7
+                    monitoring, incident response, and strategic security guidance.
                   </p>
                 </div>
               </div>
             </div>
             <Button className="gap-1 bg-gradient-to-r from-primary to-blue-700 hover:from-primary/90 hover:to-blue-700/90">
-              Liên hệ tư vấn
+              Schedule Security Consultation
               <ArrowRight className="h-4 w-4" />
             </Button>
           </motion.div>
@@ -78,31 +79,22 @@ export default function EnterpriseSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div className="grid grid-cols-2 gap-4 md:gap-8">
-              <div className="grid gap-4">
-                <div className="rounded-lg bg-slate-100 dark:bg-slate-800 p-6 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="font-bold mb-2">Bảo vệ tài sản số</h3>
-                  <p className="text-muted-foreground">
-                    Bảo vệ dữ liệu và tài sản số của doanh nghiệp khỏi các mối đe dọa mạng.
-                  </p>
-                </div>
-                <div className="rounded-lg bg-slate-100 dark:bg-slate-800 p-6 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="font-bold mb-2">Giảm thiểu rủi ro</h3>
-                  <p className="text-muted-foreground">
-                    Giảm thiểu rủi ro bảo mật và ngăn chặn các cuộc tấn công trước khi xảy ra.
-                  </p>
-                </div>
+            <div className="relative w-full h-[500px] rounded-xl overflow-hidden shadow-xl bg-slate-800">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Shield className="h-32 w-32 text-primary/20" />
               </div>
-              <div className="grid gap-4">
-                <div className="rounded-lg bg-slate-100 dark:bg-slate-800 p-6 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="font-bold mb-2">Tối ưu chi phí</h3>
-                  <p className="text-muted-foreground">
-                    Giải pháp bảo mật hiệu quả với chi phí hợp lý cho doanh nghiệp.
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end">
+                <div className="p-8">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Shield className="h-6 w-6 text-primary" />
+                    <span className="text-white font-bold">Enterprise Security</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">
+                    Comprehensive Protection for Critical Applications
+                  </h3>
+                  <p className="text-white/80">
+                    Our enterprise solutions are trusted by Fortune 500 companies and government agencies worldwide
                   </p>
-                </div>
-                <div className="rounded-lg bg-slate-100 dark:bg-slate-800 p-6 shadow-sm hover:shadow-md transition-shadow">
-                  <h3 className="font-bold mb-2">Hỗ trợ 24/7</h3>
-                  <p className="text-muted-foreground">Đội ngũ hỗ trợ kỹ thuật 24/7 sẵn sàng giải quyết mọi vấn đề.</p>
                 </div>
               </div>
             </div>

@@ -2,41 +2,41 @@
 
 import { motion } from "framer-motion"
 import { Shield, Star } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 
 export default function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Nguyễn Văn A",
-      role: "CEO, Tech Solutions",
+      name: "David Chen",
+      role: "CISO, Global Financial Services",
       content:
-        "FGuard đã giúp chúng tôi bảo vệ website khỏi hàng nghìn cuộc tấn công mỗi tháng. Dịch vụ hỗ trợ khách hàng tuyệt vời và dashboard rất dễ sử dụng.",
-      avatar: "/placeholder.svg?height=40&width=40",
+        "After evaluating multiple WAF solutions, we chose FGuard for its enterprise-grade protection capabilities. Their zero-day attack prevention has proven invaluable, blocking several sophisticated attacks that would have bypassed traditional security measures.",
+      initials: "DC",
       rating: 5,
     },
     {
-      name: "Trần Thị B",
-      role: "CTO, E-commerce Platform",
+      name: "Sarah Johnson",
+      role: "VP of Information Security, E-commerce Enterprise",
       content:
-        "Chúng tôi đã thử nhiều giải pháp WAF khác nhau, nhưng FGuard là giải pháp tốt nhất với chi phí hợp lý. Tôi đặc biệt ấn tượng với khả năng phát hiện và ngăn chặn các cuộc tấn công SQL Injection.",
-      avatar: "/placeholder.svg?height=40&width=40",
+        "FGuard's WAF solution has transformed our security posture. The advanced API protection features were crucial for securing our microservices architecture. Their virtual patching capability has reduced our vulnerability window to zero.",
+      initials: "SJ",
       rating: 5,
     },
     {
-      name: "Lê Văn C",
-      role: "IT Manager, Financial Services",
+      name: "Michael Rodriguez",
+      role: "IT Director, Healthcare Organization",
       content:
-        "Bảo mật là ưu tiên hàng đầu trong ngành tài chính. FGuard đã giúp chúng tôi tuân thủ các quy định bảo mật và bảo vệ dữ liệu khách hàng một cách hiệu quả.",
-      avatar: "/placeholder.svg?height=40&width=40",
-      rating: 4,
+        "In the healthcare sector, security and compliance are paramount. FGuard's WAF not only provides robust protection against OWASP Top 10 threats but also helps us maintain HIPAA compliance with comprehensive logging and reporting.",
+      initials: "MR",
+      rating: 5,
     },
     {
-      name: "Phạm Thị D",
-      role: "Developer, Startup",
+      name: "Jennifer Lee",
+      role: "CTO, SaaS Platform Provider",
       content:
-        "Tôi rất hài lòng với FGuard. Việc triển khai rất đơn giản và tôi có thể tập trung vào phát triển sản phẩm mà không phải lo lắng về các vấn đề bảo mật.",
-      avatar: "/placeholder.svg?height=40&width=40",
+        "As a SaaS provider, we needed a WAF solution that could scale with our rapid growth while providing enterprise-level security. FGuard delivered beyond our expectations with their multi-tenant architecture, granular controls, and exceptional performance even under high traffic loads.",
+      initials: "JL",
       rating: 5,
     },
   ]
@@ -54,14 +54,47 @@ export default function TestimonialsSection() {
           <div className="space-y-2">
             <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">
               <Shield className="mr-1 h-4 w-4" />
-              <span>Khách hàng tin dùng</span>
+              <span>Enterprise Success Stories</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Khách hàng nói gì về FGuard?
-            </h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Trusted by Security Leaders</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
-              Hàng nghìn khách hàng đã tin tưởng FGuard để bảo vệ website của họ
+              See why enterprise security professionals choose our WAF solution for their critical applications
             </p>
+          </div>
+        </motion.div>
+
+        {/* Featured testimonial with image */}
+        <motion.div
+          className="mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <div className="relative w-full h-[400px] rounded-xl overflow-hidden bg-slate-800">
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent flex items-center">
+              <div className="p-8 md:p-12 max-w-lg">
+                <div className="flex space-x-1 mb-4">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+                  ))}
+                </div>
+                <p className="text-white text-xl mb-6 italic">
+                  "FGuard's enterprise WAF solution has been instrumental in protecting our global infrastructure. Their
+                  security team's expertise and the platform's advanced capabilities have given us confidence in our web
+                  application security posture."
+                </p>
+                <div className="flex items-center">
+                  <Avatar className="h-12 w-12 mr-4 border-2 border-white">
+                    <AvatarFallback className="bg-primary text-white">JD</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-medium text-white">James Davidson</p>
+                    <p className="text-white/80">Chief Information Security Officer, Global 500 Company</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
 
@@ -89,8 +122,7 @@ export default function TestimonialsSection() {
                   <p className="mb-4 text-muted-foreground">{testimonial.content}</p>
                   <div className="flex items-center">
                     <Avatar className="h-10 w-10 mr-3">
-                      <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.name} />
-                      <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                      <AvatarFallback className="bg-primary/10 text-primary">{testimonial.initials}</AvatarFallback>
                     </Avatar>
                     <div>
                       <p className="font-medium">{testimonial.name}</p>
@@ -117,10 +149,10 @@ export default function TestimonialsSection() {
               ))}
             </div>
           </div>
-          <h3 className="text-2xl font-bold mb-2">Được tin dùng bởi hơn 5,000+ khách hàng</h3>
+          <h3 className="text-2xl font-bold mb-2">Trusted by 1,000+ enterprise clients worldwide</h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Từ các doanh nghiệp nhỏ đến các tập đoàn lớn, FGuard bảo vệ hàng nghìn website trên toàn thế giới khỏi các
-            mối đe dọa trực tuyến.
+            From Fortune 500 companies to government agencies, our enterprise-grade WAF solution protects
+            mission-critical applications across industries including finance, healthcare, e-commerce, and more.
           </p>
         </motion.div>
       </div>

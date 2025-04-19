@@ -1,7 +1,19 @@
 "use client"
 
 import Link from "next/link"
-import { Shield, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
+import {
+  Shield,
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  Award,
+  FileCheck,
+  Lock,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Footer() {
@@ -15,8 +27,23 @@ export default function Footer() {
               <span className="text-xl font-bold">FGuard</span>
             </div>
             <p className="text-slate-400">
-              Giải pháp Web Application Firewall hàng đầu bảo vệ website của bạn khỏi các mối đe dọa trực tuyến.
+              Enterprise-grade Web Application Firewall solutions delivering Barracuda-level protection for
+              mission-critical applications.
             </p>
+            <div className="flex space-x-2">
+              <div className="flex items-center gap-1 bg-slate-800 px-3 py-1 rounded-full text-xs">
+                <Award className="h-3 w-3 text-primary" />
+                <span>ISO 27001</span>
+              </div>
+              <div className="flex items-center gap-1 bg-slate-800 px-3 py-1 rounded-full text-xs">
+                <FileCheck className="h-3 w-3 text-primary" />
+                <span>SOC 2</span>
+              </div>
+              <div className="flex items-center gap-1 bg-slate-800 px-3 py-1 rounded-full text-xs">
+                <Lock className="h-3 w-3 text-primary" />
+                <span>PCI DSS</span>
+              </div>
+            </div>
             <div className="flex space-x-4">
               <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
                 <Facebook className="h-5 w-5" />
@@ -37,90 +64,90 @@ export default function Footer() {
             </div>
           </div>
           <div className="space-y-4">
-            <h3 className="text-lg font-bold">Dịch vụ</h3>
+            <h3 className="text-lg font-bold">Solutions</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
-                  Web Application Firewall
+                  Enterprise WAF
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
-                  Bảo vệ DDoS
+                  Advanced DDoS Protection
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
-                  Bảo vệ API
+                  API Security
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
-                  Tư vấn bảo mật
+                  Bot Management
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
-                  Đánh giá bảo mật
+                  Managed WAF Services
                 </Link>
               </li>
             </ul>
           </div>
           <div className="space-y-4">
-            <h3 className="text-lg font-bold">Công ty</h3>
+            <h3 className="text-lg font-bold">Resources</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
-                  Về chúng tôi
+                  Security Blog
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
-                  Đội ngũ
+                  Threat Research
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
-                  Khách hàng
+                  Case Studies
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
-                  Blog
+                  Security Academy
                 </Link>
               </li>
               <li>
                 <Link href="#" className="text-slate-400 hover:text-primary transition-colors">
-                  Tuyển dụng
+                  Documentation
                 </Link>
               </li>
             </ul>
           </div>
           <div className="space-y-4">
-            <h3 className="text-lg font-bold">Liên hệ</h3>
+            <h3 className="text-lg font-bold">Contact</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span className="text-slate-400">123 Đường Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</span>
+                <span className="text-slate-400">123 Security Boulevard, Enterprise Tower, Floor 15</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-5 w-5 text-primary" />
-                <span className="text-slate-400">+84 123 456 789</span>
+                <span className="text-slate-400">+1 (888) WAF-GUARD</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-5 w-5 text-primary" />
-                <span className="text-slate-400">info@fguard.com</span>
+                <span className="text-slate-400">enterprise@fguard.com</span>
               </li>
             </ul>
             <div className="pt-4">
               <Button className="w-full bg-gradient-to-r from-primary to-blue-700 hover:from-primary/90 hover:to-blue-700/90">
-                Liên hệ ngay
+                Schedule Security Consultation
               </Button>
             </div>
           </div>
         </div>
         <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400">
-          <p>© 2025 FGuard. Tất cả các quyền được bảo lưu.</p>
+          <p>© 2023 FGuard Enterprise Security Solutions. All rights reserved.</p>
         </div>
       </div>
     </footer>

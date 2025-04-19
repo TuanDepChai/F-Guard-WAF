@@ -7,14 +7,14 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useI18n } from "@/lib/i18n/i18n-provider"
 
 export default function LanguageSelector() {
-  const { locale, setLocale, t } = useI18n()
+  const { locale, setLocale } = useI18n()
   const [isOpen, setIsOpen] = useState(false)
 
   const languages = [
-    { code: "vi", name: t("language.vi"), flag: "🇻🇳" },
-    { code: "en", name: t("language.en"), flag: "🇬🇧" },
-    { code: "ja", name: t("language.ja"), flag: "🇯🇵" },
-    { code: "zh", name: t("language.zh"), flag: "🇨🇳" },
+    { code: "vi", name: "Tiếng Việt", flag: "🇻🇳" },
+    { code: "en", name: "English", flag: "🇬🇧" },
+    { code: "ja", name: "日本語", flag: "🇯🇵" },
+    { code: "zh", name: "中文", flag: "🇨🇳" },
   ]
 
   const currentLanguage = languages.find((lang) => lang.code === locale)

@@ -10,6 +10,7 @@ import FaqSection from "@/components/faq-section"
 import CtaSection from "@/components/cta-section"
 import Footer from "@/components/footer"
 import DashboardPreview from "@/components/dashboard-preview"
+import SecurityPartners from "@/components/security-partners"
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
         <FeaturesSection />
         <HowItWorksSection />
         <DashboardPreview />
+        <SecurityPartners />
         <PricingSection />
         <TestimonialsSection />
         <EnterpriseSection />

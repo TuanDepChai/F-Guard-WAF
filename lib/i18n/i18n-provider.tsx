@@ -1,28 +1,14 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import { vi } from "./locales/vi"
-import { en } from "./locales/en"
-import { ja } from "./locales/ja"
-import { zh } from "./locales/zh"
+import { translations } from "./translations"
 
 type Locale = "vi" | "en" | "ja" | "zh"
-
-type Translations = {
-  [key: string]: string | Translations
-}
 
 interface I18nContextProps {
   locale: Locale
   setLocale: (locale: Locale) => void
   t: (key: string) => string
-}
-
-const locales: Record<Locale, Translations> = {
-  vi,
-  en,
-  ja,
-  zh,
 }
 
 const I18nContext = createContext<I18nContextProps>({
@@ -36,7 +22,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const savedLocale = localStorage.getItem("locale") as Locale | null
-    if (savedLocale && Object.keys(locales).includes(savedLocale)) {
+    if (savedLocale && Object.keys(translations).includes(savedLocale)) {
       setLocale(savedLocale)
     }
   }, [])
@@ -47,15 +33,22 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   }, [locale])
 
   const t = (key: string): string => {
-    const keys = key.split(".")
-    let value: any = locales[locale]
+    try {
+      const keys = key.split(".")
+      let value: any = translations[locale]
 
-    for (const k of keys) {
-      if (value === undefined) return key
-      value = value[k]
+      for (const k of keys) {
+        if (value === undefined || value === null) {
+          return key // Return the key if any part of the path is undefined
+        }
+        value = value[k]
+      }
+
+      return typeof value === "string" ? value : key
+    } catch (error) {
+      console.error(`Translation error for key: ${key}`, error)
+      return key // Return the key if any error occurs
     }
-
-    return typeof value === "string" ? value : key
   }
 
   return <I18nContext.Provider value={{ locale, setLocale, t }}>{children}</I18nContext.Provider>

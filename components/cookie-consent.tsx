@@ -3,11 +3,9 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { useI18n } from "@/lib/i18n/i18n-provider"
 
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false)
-  const { t } = useI18n()
 
   useEffect(() => {
     // Check if user has already accepted cookies
@@ -45,15 +43,18 @@ export default function CookieConsent() {
             <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 p-6 max-w-4xl mx-auto">
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div className="space-y-2">
-                  <h3 className="font-bold text-lg">{t("cookieConsent.title")}</h3>
-                  <p className="text-muted-foreground text-sm">{t("cookieConsent.description")}</p>
+                  <h3 className="font-bold text-lg">We use cookies</h3>
+                  <p className="text-muted-foreground text-sm">
+                    This website uses cookies to improve your experience. By continuing to use this site, you agree to
+                    our use of cookies.
+                  </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <Button variant="outline" size="sm" onClick={handleDecline}>
-                    {t("cookieConsent.decline")}
+                    Essential Only
                   </Button>
                   <Button size="sm" onClick={handleAccept}>
-                    {t("cookieConsent.accept")}
+                    Accept All
                   </Button>
                 </div>
               </div>

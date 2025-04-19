@@ -1,12 +1,12 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Shield, AlertTriangle, BarChart3, Users, Globe, Lock, Server } from "lucide-react"
+import { Shield, AlertTriangle, Users, Globe, Lock, Server } from "lucide-react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export default function DashboardPreview() {
   return (
-    <section className="py-20 bg-white dark:bg-slate-950">
+    <section className="py-20 bg-slate-50 dark:bg-slate-900">
       <div className="container px-4 md:px-6">
         <motion.div
           className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
@@ -17,12 +17,14 @@ export default function DashboardPreview() {
         >
           <div className="space-y-2">
             <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">
-              <BarChart3 className="mr-1 h-4 w-4" />
-              <span>Dashboard trực quan</span>
+              <Shield className="mr-1 h-4 w-4" />
+              <span>Enterprise Security Dashboard</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Quản lý bảo mật dễ dàng</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              Comprehensive Security Visibility
+            </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
-              Dashboard trực quan giúp bạn theo dõi và quản lý bảo mật website một cách dễ dàng
+              Our intuitive security dashboard provides real-time insights into your application security posture
             </p>
           </div>
         </motion.div>
@@ -36,14 +38,14 @@ export default function DashboardPreview() {
         >
           <Tabs defaultValue="overview" className="w-full">
             <TabsList className="grid w-full grid-cols-3 lg:grid-cols-5 mb-8">
-              <TabsTrigger value="overview">Tổng quan</TabsTrigger>
-              <TabsTrigger value="threats">Mối đe dọa</TabsTrigger>
-              <TabsTrigger value="traffic">Lưu lượng</TabsTrigger>
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="threats">Threats</TabsTrigger>
+              <TabsTrigger value="traffic">Traffic</TabsTrigger>
               <TabsTrigger value="settings" className="hidden lg:block">
-                Cài đặt
+                Settings
               </TabsTrigger>
               <TabsTrigger value="reports" className="hidden lg:block">
-                Báo cáo
+                Reports
               </TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="mt-0">
@@ -58,7 +60,7 @@ export default function DashboardPreview() {
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
                     </span>
-                    Hoạt động
+                    Active
                   </div>
                 </div>
 
@@ -69,7 +71,7 @@ export default function DashboardPreview() {
                         <Shield className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <div className="text-sm text-slate-400">Tấn công đã chặn</div>
+                        <div className="text-sm text-slate-400">Attacks Blocked</div>
                         <div className="text-2xl font-bold text-white">1,245</div>
                       </div>
                     </div>
@@ -83,7 +85,7 @@ export default function DashboardPreview() {
                         <Users className="h-5 w-5 text-green-500" />
                       </div>
                       <div>
-                        <div className="text-sm text-slate-400">Người dùng hợp lệ</div>
+                        <div className="text-sm text-slate-400">Legitimate Users</div>
                         <div className="text-2xl font-bold text-white">8,392</div>
                       </div>
                     </div>
@@ -97,7 +99,7 @@ export default function DashboardPreview() {
                         <AlertTriangle className="h-5 w-5 text-yellow-500" />
                       </div>
                       <div>
-                        <div className="text-sm text-slate-400">Cảnh báo</div>
+                        <div className="text-sm text-slate-400">Alerts</div>
                         <div className="text-2xl font-bold text-white">12</div>
                       </div>
                     </div>
@@ -110,8 +112,8 @@ export default function DashboardPreview() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   <div className="bg-slate-800/80 dark:bg-slate-700/80 p-4 rounded-lg backdrop-blur-sm">
                     <div className="flex justify-between items-center mb-4">
-                      <span className="text-white font-medium">Loại tấn công</span>
-                      <span className="text-xs text-slate-400">7 ngày qua</span>
+                      <span className="text-white font-medium">Attack Types</span>
+                      <span className="text-xs text-slate-400">Last 7 days</span>
                     </div>
                     <div className="space-y-3">
                       <div>
@@ -143,7 +145,7 @@ export default function DashboardPreview() {
                       </div>
                       <div>
                         <div className="flex justify-between items-center mb-1">
-                          <span className="text-sm text-slate-400">Khác</span>
+                          <span className="text-sm text-slate-400">Other</span>
                           <span className="text-sm text-white">12%</span>
                         </div>
                         <div className="h-2 bg-slate-700 dark:bg-slate-600 rounded-full overflow-hidden">
@@ -154,35 +156,35 @@ export default function DashboardPreview() {
                   </div>
                   <div className="bg-slate-800/80 dark:bg-slate-700/80 p-4 rounded-lg backdrop-blur-sm">
                     <div className="flex justify-between items-center mb-4">
-                      <span className="text-white font-medium">Hoạt động gần đây</span>
-                      <span className="text-xs text-slate-400">Hôm nay</span>
+                      <span className="text-white font-medium">Recent Activity</span>
+                      <span className="text-xs text-slate-400">Today</span>
                     </div>
                     <div className="space-y-4">
                       <div className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-red-500"></div>
                         <div className="flex-1">
-                          <div className="text-sm text-white">SQL Injection đã bị chặn</div>
+                          <div className="text-sm text-white">SQL Injection Blocked</div>
                           <div className="text-xs text-slate-400">10:45 AM</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
                         <div className="flex-1">
-                          <div className="text-sm text-white">Phát hiện bot độc hại</div>
+                          <div className="text-sm text-white">Malicious Bot Detected</div>
                           <div className="text-xs text-slate-400">09:32 AM</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-red-500"></div>
                         <div className="flex-1">
-                          <div className="text-sm text-white">XSS Attack đã bị chặn</div>
+                          <div className="text-sm text-white">XSS Attack Blocked</div>
                           <div className="text-xs text-slate-400">08:17 AM</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-green-500"></div>
                         <div className="flex-1">
-                          <div className="text-sm text-white">Cập nhật quy tắc bảo mật</div>
+                          <div className="text-sm text-white">Security Rules Updated</div>
                           <div className="text-xs text-slate-400">07:05 AM</div>
                         </div>
                       </div>
@@ -192,24 +194,24 @@ export default function DashboardPreview() {
 
                 <div className="bg-slate-800/80 dark:bg-slate-700/80 p-4 rounded-lg backdrop-blur-sm">
                   <div className="flex justify-between items-center mb-4">
-                    <span className="text-white font-medium">Lưu lượng theo khu vực</span>
-                    <span className="text-xs text-slate-400">24 giờ qua</span>
+                    <span className="text-white font-medium">Traffic by Region</span>
+                    <span className="text-xs text-slate-400">Last 24 hours</span>
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="flex flex-col items-center">
-                      <div className="text-sm text-slate-400 mb-1">Châu Á</div>
+                      <div className="text-sm text-slate-400 mb-1">Asia</div>
                       <div className="text-xl font-bold text-white">42%</div>
                     </div>
                     <div className="flex flex-col items-center">
-                      <div className="text-sm text-slate-400 mb-1">Châu Âu</div>
+                      <div className="text-sm text-slate-400 mb-1">Europe</div>
                       <div className="text-xl font-bold text-white">28%</div>
                     </div>
                     <div className="flex flex-col items-center">
-                      <div className="text-sm text-slate-400 mb-1">Bắc Mỹ</div>
+                      <div className="text-sm text-slate-400 mb-1">North America</div>
                       <div className="text-xl font-bold text-white">18%</div>
                     </div>
                     <div className="flex flex-col items-center">
-                      <div className="text-sm text-slate-400 mb-1">Khác</div>
+                      <div className="text-sm text-slate-400 mb-1">Other</div>
                       <div className="text-xl font-bold text-white">12%</div>
                     </div>
                   </div>
@@ -221,12 +223,12 @@ export default function DashboardPreview() {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2">
                     <AlertTriangle className="h-8 w-8 text-yellow-500" />
-                    <span className="text-xl font-bold text-white">Quản lý mối đe dọa</span>
+                    <span className="text-xl font-bold text-white">Threat Management</span>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="bg-slate-800/80 dark:bg-slate-700/80 p-4 rounded-lg backdrop-blur-sm">
-                    <div className="text-white font-medium mb-3">Mối đe dọa đã phát hiện</div>
+                    <div className="text-white font-medium mb-3">Detected Threats</div>
                     <div className="space-y-3">
                       {[1, 2, 3, 4].map((item) => (
                         <div key={item} className="bg-slate-700/50 p-3 rounded-md">
@@ -238,13 +240,13 @@ export default function DashboardPreview() {
                             <span className="text-xs text-slate-400">10:4{item} AM</span>
                           </div>
                           <p className="text-sm text-slate-400 mb-2">
-                            Phát hiện nỗ lực SQL Injection từ IP 192.168.1.{item}
+                            SQL Injection attempt detected from IP 192.168.1.{item}
                           </p>
                           <div className="flex justify-between items-center">
                             <span className="text-xs px-2 py-1 bg-red-500/20 text-red-500 rounded-full">
-                              Mức độ cao
+                              High Level
                             </span>
-                            <span className="text-xs text-primary">Xem chi tiết</span>
+                            <span className="text-xs text-primary">View Details</span>
                           </div>
                         </div>
                       ))}
@@ -258,12 +260,12 @@ export default function DashboardPreview() {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2">
                     <Globe className="h-8 w-8 text-blue-500" />
-                    <span className="text-xl font-bold text-white">Phân tích lưu lượng</span>
+                    <span className="text-xl font-bold text-white">Traffic Analysis</span>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="bg-slate-800/80 dark:bg-slate-700/80 p-4 rounded-lg backdrop-blur-sm">
-                    <div className="text-white font-medium mb-3">Lưu lượng theo thời gian</div>
+                    <div className="text-white font-medium mb-3">Traffic Over Time</div>
                     <div className="h-40 bg-slate-700/50 rounded-md flex items-end p-4 gap-2">
                       {[30, 45, 25, 60, 35, 50, 70, 40, 55, 65, 75, 45].map((height, index) => (
                         <div key={index} className="flex-1 flex flex-col items-center gap-1">
@@ -281,21 +283,23 @@ export default function DashboardPreview() {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2">
                     <Lock className="h-8 w-8 text-green-500" />
-                    <span className="text-xl font-bold text-white">Cài đặt bảo mật</span>
+                    <span className="text-xl font-bold text-white">Security Settings</span>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="bg-slate-800/80 dark:bg-slate-700/80 p-4 rounded-lg backdrop-blur-sm">
-                    <div className="text-white font-medium mb-3">Cài đặt bảo mật</div>
+                    <div className="text-white font-medium mb-3">Security Settings</div>
                     <div className="space-y-3">
-                      {["Chống SQL Injection", "Chống XSS", "Bảo vệ DDoS", "Bảo vệ API"].map((item, index) => (
-                        <div key={index} className="flex justify-between items-center p-3 bg-slate-700/50 rounded-md">
-                          <span className="text-white">{item}</span>
-                          <div className="w-12 h-6 bg-primary/20 rounded-full relative">
-                            <div className="absolute inset-y-1 left-1 w-4 h-4 bg-primary rounded-full"></div>
+                      {["SQL Injection Protection", "XSS Protection", "DDoS Protection", "API Protection"].map(
+                        (item, index) => (
+                          <div key={index} className="flex justify-between items-center p-3 bg-slate-700/50 rounded-md">
+                            <span className="text-white">{item}</span>
+                            <div className="w-12 h-6 bg-primary/20 rounded-full relative">
+                              <div className="absolute inset-y-1 left-1 w-4 h-4 bg-primary rounded-full"></div>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ),
+                      )}
                     </div>
                   </div>
                 </div>
@@ -306,18 +310,18 @@ export default function DashboardPreview() {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2">
                     <Server className="h-8 w-8 text-purple-500" />
-                    <span className="text-xl font-bold text-white">Báo cáo</span>
+                    <span className="text-xl font-bold text-white">Reports</span>
                   </div>
                 </div>
                 <div className="space-y-4">
                   <div className="bg-slate-800/80 dark:bg-slate-700/80 p-4 rounded-lg backdrop-blur-sm">
-                    <div className="text-white font-medium mb-3">Báo cáo gần đây</div>
+                    <div className="text-white font-medium mb-3">Recent Reports</div>
                     <div className="space-y-3">
-                      {["Báo cáo hàng tuần", "Báo cáo tấn công", "Báo cáo hiệu suất", "Báo cáo bảo mật"].map(
+                      {["Weekly Report", "Attack Report", "Performance Report", "Security Report"].map(
                         (item, index) => (
                           <div key={index} className="flex justify-between items-center p-3 bg-slate-700/50 rounded-md">
                             <span className="text-white">{item}</span>
-                            <span className="text-xs text-primary">Tải xuống</span>
+                            <span className="text-xs text-primary">Download</span>
                           </div>
                         ),
                       )}

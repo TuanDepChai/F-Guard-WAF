@@ -1,58 +1,73 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Check, Shield } from "lucide-react"
+import { Check, Shield, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 export default function PricingSection() {
   const plans = [
     {
-      name: "Cơ bản",
-      description: "Dành cho website cá nhân và doanh nghiệp nhỏ",
-      price: "199k",
+      name: "Business",
+      description: "For small to medium businesses with standard security needs",
+      price: "$1,499",
       popular: false,
       features: [
-        "Bảo vệ DDoS cơ bản",
-        "Chống SQL Injection",
-        "Chống XSS",
-        "1 website",
-        "100GB băng thông/tháng",
-        "Hỗ trợ email",
+        "Up to 10 web applications",
+        "Basic DDoS protection",
+        "OWASP Top 10 protection",
+        "SSL/TLS encryption",
+        "5 custom security rules",
+        "Basic reporting",
+        "Email support (business hours)",
+        "99.9% uptime SLA",
       ],
+      notIncluded: ["Advanced bot protection", "API security", "Virtual patching", "Custom integrations"],
     },
     {
-      name: "Nâng cao",
-      description: "Dành cho doanh nghiệp vừa và nhỏ",
-      price: "499k",
+      name: "Enterprise",
+      description: "For organizations with advanced security requirements",
+      price: "$3,999",
       popular: true,
       features: [
-        "Bảo vệ DDoS nâng cao",
-        "Chống SQL Injection",
-        "Chống XSS",
-        "Bảo vệ API",
-        "5 website",
-        "500GB băng thông/tháng",
-        "Hỗ trợ 24/7 qua email và chat",
-        "Báo cáo bảo mật hàng tuần",
+        "Up to 50 web applications",
+        "Advanced DDoS protection",
+        "OWASP Top 10 protection",
+        "SSL/TLS encryption",
+        "Zero-day attack prevention",
+        "API security",
+        "Virtual patching",
+        "25 custom security rules",
+        "Advanced reporting & analytics",
+        "24/7 email and phone support",
+        "99.95% uptime SLA",
+        "Dedicated security engineer",
       ],
+      notIncluded: ["Custom integrations"],
     },
     {
-      name: "Doanh nghiệp",
-      description: "Dành cho doanh nghiệp lớn",
-      price: "999k",
+      name: "Ultimate",
+      description: "For large enterprises with mission-critical applications",
+      price: "Custom",
       popular: false,
       features: [
-        "Bảo vệ DDoS cao cấp",
-        "Chống SQL Injection",
-        "Chống XSS",
-        "Bảo vệ API nâng cao",
-        "20 website",
-        "2TB băng thông/tháng",
-        "Hỗ trợ 24/7 ưu tiên",
-        "Báo cáo bảo mật hàng ngày",
-        "Tư vấn bảo mật chuyên sâu",
+        "Unlimited web applications",
+        "Premium DDoS protection",
+        "OWASP Top 10 protection",
+        "SSL/TLS encryption",
+        "Zero-day attack prevention",
+        "Advanced API security",
+        "Virtual patching",
+        "Unlimited custom security rules",
+        "Real-time threat intelligence",
+        "Advanced reporting & analytics",
+        "24/7 priority support",
+        "99.99% uptime SLA",
+        "Dedicated security team",
+        "Custom integrations",
+        "On-site deployment option",
       ],
+      notIncluded: [],
     },
   ]
 
@@ -69,13 +84,13 @@ export default function PricingSection() {
           <div className="space-y-2">
             <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">
               <Shield className="mr-1 h-4 w-4" />
-              <span>Bảng giá linh hoạt</span>
+              <span>Enterprise Pricing</span>
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Gói dịch vụ phù hợp với mọi nhu cầu
+              Security Solutions for Every Scale
             </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
-              Chọn gói dịch vụ phù hợp với nhu cầu bảo mật website của bạn
+              Enterprise-grade WAF protection with flexible pricing options to meet your organization's security needs
             </p>
           </div>
         </motion.div>
@@ -95,25 +110,44 @@ export default function PricingSection() {
                 <CardHeader className="flex flex-col space-y-1.5">
                   {plan.popular && (
                     <div className="mx-auto rounded-full bg-primary/10 px-3 py-1 text-sm text-primary mb-2">
-                      Phổ biến nhất
+                      Most Popular
                     </div>
                   )}
                   <CardTitle className="text-2xl">{plan.name}</CardTitle>
                   <CardDescription>{plan.description}</CardDescription>
                   <div className="mt-4">
                     <span className="text-4xl font-bold">{plan.price}</span>
-                    <span className="text-muted-foreground">/tháng</span>
+                    {plan.price !== "Custom" && <span className="text-muted-foreground">/month</span>}
                   </div>
                 </CardHeader>
                 <CardContent className="flex-1">
-                  <ul className="space-y-2 text-sm">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center">
-                        <Check className="mr-2 h-4 w-4 text-primary" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-medium text-sm mb-2">Included features:</p>
+                      <ul className="space-y-2 text-sm">
+                        {plan.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center">
+                            <Check className="mr-2 h-4 w-4 text-primary" />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {plan.notIncluded.length > 0 && (
+                      <div>
+                        <p className="font-medium text-sm mb-2 text-muted-foreground">Not included:</p>
+                        <ul className="space-y-2 text-sm">
+                          {plan.notIncluded.map((feature, featureIndex) => (
+                            <li key={featureIndex} className="flex items-center text-muted-foreground">
+                              <X className="mr-2 h-4 w-4" />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                 </CardContent>
                 <CardFooter>
                   <Button
@@ -123,7 +157,7 @@ export default function PricingSection() {
                         : ""
                     }`}
                   >
-                    Đăng ký ngay
+                    {plan.price === "Custom" ? "Contact Sales" : "Get Started"}
                   </Button>
                 </CardFooter>
               </Card>

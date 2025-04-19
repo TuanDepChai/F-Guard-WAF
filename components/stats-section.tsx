@@ -2,11 +2,8 @@
 
 import { motion } from "framer-motion"
 import { Shield, Server, Clock, Users } from "lucide-react"
-import { useI18n } from "@/lib/i18n/i18n-provider"
 
 export default function StatsSection() {
-  const { t } = useI18n()
-
   return (
     <section className="py-12 bg-white dark:bg-slate-950 border-y border-slate-200 dark:border-slate-800">
       <div className="container px-4 md:px-6">
@@ -20,7 +17,7 @@ export default function StatsSection() {
           >
             <Shield className="h-8 w-8 text-primary mb-2" />
             <h3 className="text-3xl font-bold">99.9%</h3>
-            <p className="text-muted-foreground">{t("stats.blockRate")}</p>
+            <p className="text-muted-foreground">Threat Detection Rate</p>
           </motion.div>
           <motion.div
             className="flex flex-col items-center text-center"
@@ -30,8 +27,8 @@ export default function StatsSection() {
             viewport={{ once: true }}
           >
             <Server className="h-8 w-8 text-primary mb-2" />
-            <h3 className="text-3xl font-bold">10TB+</h3>
-            <p className="text-muted-foreground">{t("stats.trafficProtected")}</p>
+            <h3 className="text-3xl font-bold">50TB+</h3>
+            <p className="text-muted-foreground">Daily Traffic Secured</p>
           </motion.div>
           <motion.div
             className="flex flex-col items-center text-center"
@@ -41,8 +38,8 @@ export default function StatsSection() {
             viewport={{ once: true }}
           >
             <Clock className="h-8 w-8 text-primary mb-2" />
-            <h3 className="text-3xl font-bold">99.99%</h3>
-            <p className="text-muted-foreground">{t("stats.uptime")}</p>
+            <h3 className="text-3xl font-bold">99.999%</h3>
+            <p className="text-muted-foreground">Service Availability</p>
           </motion.div>
           <motion.div
             className="flex flex-col items-center text-center"
@@ -52,8 +49,8 @@ export default function StatsSection() {
             viewport={{ once: true }}
           >
             <Users className="h-8 w-8 text-primary mb-2" />
-            <h3 className="text-3xl font-bold">5,000+</h3>
-            <p className="text-muted-foreground">{t("stats.customers")}</p>
+            <h3 className="text-3xl font-bold">1,000+</h3>
+            <p className="text-muted-foreground">Enterprise Clients</p>
           </motion.div>
         </div>
       </div>
