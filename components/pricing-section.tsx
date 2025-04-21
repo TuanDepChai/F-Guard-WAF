@@ -87,7 +87,9 @@ export default function PricingSection() {
               <span>Enterprise Pricing</span>
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Security Solutions for Every Scale
+              <span className="bg-gradient-to-r from-primary via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+                Security Solutions for Every Scale
+              </span>
             </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
               Enterprise-grade WAF protection with flexible pricing options to meet your organization's security needs
@@ -103,20 +105,35 @@ export default function PricingSection() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
               className="h-full"
+              whileHover={{
+                y: -10,
+                transition: { duration: 0.2 },
+              }}
             >
               <Card
-                className={`flex flex-col h-full ${plan.popular ? "border-primary shadow-lg shadow-primary/10" : ""}`}
+                className={`flex flex-col h-full relative overflow-hidden ${
+                  plan.popular ? "border-primary shadow-lg shadow-primary/10" : ""
+                }`}
               >
-                <CardHeader className="flex flex-col space-y-1.5">
-                  {plan.popular && (
-                    <div className="mx-auto rounded-full bg-primary/10 px-3 py-1 text-sm text-primary mb-2">
-                      Most Popular
+                {plan.popular && (
+                  <div className="absolute top-0 right-0 w-40 h-40 overflow-hidden">
+                    <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-r from-primary to-blue-600 shadow-md transform rotate-45 translate-x-12 -translate-y-2"></div>
+                    <div className="absolute top-[22px] right-[-22px] transform rotate-45 text-xs text-white font-medium py-1 px-4">
+                      Popular
                     </div>
-                  )}
-                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
+                  </div>
+                )}
+                <CardHeader className="flex flex-col space-y-1.5">
+                  <CardTitle className="text-2xl">
+                    <span className="bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+                      {plan.name}
+                    </span>
+                  </CardTitle>
                   <CardDescription>{plan.description}</CardDescription>
                   <div className="mt-4">
-                    <span className="text-4xl font-bold">{plan.price}</span>
+                    <span className="text-4xl font-bold bg-gradient-to-r from-primary to-blue-700 bg-clip-text text-transparent">
+                      {plan.price}
+                    </span>
                     {plan.price !== "Custom" && <span className="text-muted-foreground">/month</span>}
                   </div>
                 </CardHeader>
@@ -126,10 +143,17 @@ export default function PricingSection() {
                       <p className="font-medium text-sm mb-2">Included features:</p>
                       <ul className="space-y-2 text-sm">
                         {plan.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center">
+                          <motion.li
+                            key={featureIndex}
+                            className="flex items-center"
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: 0.1 + featureIndex * 0.05 }}
+                            viewport={{ once: true }}
+                          >
                             <Check className="mr-2 h-4 w-4 text-primary" />
                             <span>{feature}</span>
-                          </li>
+                          </motion.li>
                         ))}
                       </ul>
                     </div>
@@ -139,10 +163,17 @@ export default function PricingSection() {
                         <p className="font-medium text-sm mb-2 text-muted-foreground">Not included:</p>
                         <ul className="space-y-2 text-sm">
                           {plan.notIncluded.map((feature, featureIndex) => (
-                            <li key={featureIndex} className="flex items-center text-muted-foreground">
+                            <motion.li
+                              key={featureIndex}
+                              className="flex items-center text-muted-foreground"
+                              initial={{ opacity: 0, x: -10 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.3, delay: 0.1 + (plan.features.length + featureIndex) * 0.05 }}
+                              viewport={{ once: true }}
+                            >
                               <X className="mr-2 h-4 w-4" />
                               <span>{feature}</span>
-                            </li>
+                            </motion.li>
                           ))}
                         </ul>
                       </div>
@@ -153,8 +184,8 @@ export default function PricingSection() {
                   <Button
                     className={`w-full ${
                       plan.popular
-                        ? "bg-gradient-to-r from-primary to-blue-700 hover:from-primary/90 hover:to-blue-700/90"
-                        : ""
+                        ? "bg-gradient-to-r from-primary via-blue-600 to-blue-700 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
+                        : "hover:bg-primary/90 hover:shadow-md transition-all duration-300"
                     }`}
                   >
                     {plan.price === "Custom" ? "Contact Sales" : "Get Started"}

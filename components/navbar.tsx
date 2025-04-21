@@ -2,192 +2,127 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Shield, Menu, X, Moon, Sun, ChevronDown } from "lucide-react"
+import { usePathname } from "next/navigation"
+import { Shield, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useTheme } from "@/components/theme-provider"
+import { ThemeSwitcher } from "@/components/theme-switcher"
 import { motion } from "framer-motion"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { cn } from "@/lib/utils"
+import { useTheme } from "@/components/theme-provider"
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const pathname = usePathname()
+  const { theme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
-      }
+      setIsScrolled(window.scrollY > 10)
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  return (
-    <motion.header
-      className={`sticky top-0 z-50 w-full backdrop-blur transition-all duration-300 ${
-        isScrolled ? "bg-white/90 dark:bg-slate-900/90 border-b shadow-sm" : "bg-transparent border-transparent"
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-    >
-      <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Shield className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold">FGuard</span>
-        </div>
-        <nav className="hidden md:flex items-center gap-6">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors">
-                Solutions
-                <ChevronDown className="h-4 w-4" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" className="w-56">
-              <DropdownMenuItem>Enterprise WAF</DropdownMenuItem>
-              <DropdownMenuItem>API Security</DropdownMenuItem>
-              <DropdownMenuItem>Bot Management</DropdownMenuItem>
-              <DropdownMenuItem>DDoS Protection</DropdownMenuItem>
-              <DropdownMenuItem>Managed WAF Services</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+  const navItems = [
+    { name: "Home", href: "/" },
+    { name: "Features", href: "/#features" },
+    { name: "How It Works", href: "/#how-it-works" },
+    { name: "Pricing", href: "/#pricing" },
+    { name: "Comparison", href: "/comparison" },
+    { name: "Case Studies", href: "/case-studies" },
+    { name: "Documentation", href: "/documentation" },
+  ]
 
-          <Link href="#features" className="text-sm font-medium hover:text-primary transition-colors">
-            Features
+  return (
+    <header
+      className={cn(
+        "fixed top-0 w-full z-50 transition-all duration-300 theme-transition",
+        isScrolled ? "bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm" : "bg-transparent",
+      )}
+    >
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex h-16 items-center justify-between">
+          <Link href="/" className="flex items-center space-x-2">
+            <motion.div
+              initial={{ rotate: 0 }}
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{
+                duration: 2,
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "loop",
+                ease: "easeInOut",
+                repeatDelay: 5,
+              }}
+            >
+              <Shield className="h-8 w-8 text-primary" />
+            </motion.div>
+            <span className="font-bold text-xl gradient-text">FGuard</span>
           </Link>
-          <Link href="#pricing" className="text-sm font-medium hover:text-primary transition-colors">
-            Pricing
-          </Link>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors">
-                Resources
-                <ChevronDown className="h-4 w-4" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="center" className="w-56">
-              <DropdownMenuItem>Security Blog</DropdownMenuItem>
-              <DropdownMenuItem>Case Studies</DropdownMenuItem>
-              <DropdownMenuItem>Documentation</DropdownMenuItem>
-              <DropdownMenuItem>Threat Research</DropdownMenuItem>
-              <DropdownMenuItem>Security Academy</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Link href="#enterprise" className="text-sm font-medium hover:text-primary transition-colors">
-            Enterprise
-          </Link>
-          <Link href="#contact" className="text-sm font-medium hover:text-primary transition-colors">
-            Contact
-          </Link>
-        </nav>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="hidden md:flex"
-          >
-            {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            <span className="sr-only">Toggle theme</span>
-          </Button>
-          <Button variant="outline" size="sm" className="hidden md:flex">
-            Client Portal
-          </Button>
-          <Button size="sm" className="hidden md:flex">
-            Request Demo
-          </Button>
-          <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(true)} className="md:hidden">
-            <Menu className="h-6 w-6" />
-            <span className="sr-only">Open menu</span>
-          </Button>
+
+          {/* Desktop navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  "text-sm font-medium transition-colors hover:text-primary",
+                  pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href))
+                    ? "text-primary"
+                    : "text-foreground/80",
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center space-x-2">
+            <ThemeSwitcher />
+            <Button className="hidden md:flex">Get Started</Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile navigation */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-white dark:bg-slate-950 md:hidden">
-          <div className="container flex h-16 items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Shield className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">FGuard</span>
-            </div>
-            <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
-              <X className="h-6 w-6" />
-              <span className="sr-only">Close menu</span>
-            </Button>
+        <motion.div
+          className="md:hidden glass"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="container mx-auto px-4 py-4 space-y-3">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  "block py-2 text-base font-medium transition-colors hover:text-primary",
+                  pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href))
+                    ? "text-primary"
+                    : "text-foreground/80",
+                )}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Button className="w-full mt-4">Get Started</Button>
           </div>
-          <nav className="container grid gap-6 py-8">
-            <div className="space-y-3">
-              <p className="text-sm font-medium text-muted-foreground">Solutions</p>
-              <Link
-                href="#"
-                className="block text-lg font-medium hover:text-primary"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Enterprise WAF
-              </Link>
-              <Link
-                href="#"
-                className="block text-lg font-medium hover:text-primary"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                API Security
-              </Link>
-              <Link
-                href="#"
-                className="block text-lg font-medium hover:text-primary"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Bot Management
-              </Link>
-              <Link
-                href="#"
-                className="block text-lg font-medium hover:text-primary"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                DDoS Protection
-              </Link>
-            </div>
-
-            <Link
-              href="#features"
-              className="text-lg font-medium hover:text-primary"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Features
-            </Link>
-            <Link
-              href="#pricing"
-              className="text-lg font-medium hover:text-primary"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Pricing
-            </Link>
-            <Link
-              href="#enterprise"
-              className="text-lg font-medium hover:text-primary"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Enterprise
-            </Link>
-            <Link
-              href="#contact"
-              className="text-lg font-medium hover:text-primary"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Contact
-            </Link>
-            <div className="flex flex-col gap-4 mt-4">
-              <div className="flex items-center justify-between" />
-            </div>
-          </nav>
-        </div>
+        </motion.div>
       )}
-    </motion.header>
+    </header>
   )
 }

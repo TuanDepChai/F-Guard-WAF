@@ -1,0 +1,55 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGradient)" rx="15" ry="15" />
+  
+  <!-- Title -->
+  <text x="400" y="80" font-family="Arial" font-size="32" fill="white" text-anchor="middle" font-weight="bold">Enterprise-Grade Protection Process</text>
+  <text x="400" y="120" font-family="Arial" font-size="16" fill="#94a3b8" text-anchor="middle" width="600">Our WAF solution employs a sophisticated multi-layered approach to identify and neutralize threats</text>
+  <text x="400" y="145" font-family="Arial" font-size="16" fill="#94a3b8" text-anchor="middle" width="600">before they reach your applications</text>
+  
+  <!-- Process Flow -->
+  <g transform="translate(100, 250)">
+    <!-- Step 1: Traffic Filtering -->
+    <circle cx="75" cy="75" r="60" fill="#3b82f6" filter="url(#glow)" opacity="0.9" />
+    <text x="75" y="75" font-family="Arial" font-size="40" fill="white" text-anchor="middle" dominant-baseline="middle">1</text>
+    <text x="75" y="160" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Traffic Filtering</text>
+    
+    <!-- Arrow 1 -->
+    <line x1="135" y1="75" x2="215" y2="75" stroke="white" stroke-width="2" stroke-dasharray="5,5" />
+    <polygon points="215,75 205,70 205,80" fill="white" />
+    
+    <!-- Step 2: Threat Detection -->
+    <circle cx="275" cy="75" r="60" fill="#eab308" filter="url(#glow)" opacity="0.9" />
+    <text x="275" y="75" font-family="Arial" font-size="40" fill="white" text-anchor="middle" dominant-baseline="middle">2</text>
+    <text x="275" y="160" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Threat Detection</text>
+    
+    <!-- Arrow 2 -->
+    <line x1="335" y1="75" x2="415" y2="75" stroke="white" stroke-width="2" stroke-dasharray="5,5" />
+    <polygon points="415,75 405,70 405,80" fill="white" />
+    
+    <!-- Step 3: Attack Blocking -->
+    <circle cx="475" cy="75" r="60" fill="#ef4444" filter="url(#glow)" opacity="0.9" />
+    <text x="475" y="75" font-family="Arial" font-size="40" fill="white" text-anchor="middle" dominant-baseline="middle">3</text>
+    <text x="475" y="160" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Attack Blocking</text>
+    
+    <!-- Arrow 3 -->
+    <line x1="535" y1="75" x2="615" y2="75" stroke="white" stroke-width="2" stroke-dasharray="5,5" />
+    <polygon points="615,75 605,70 605,80" fill="white" />
+    
+    <!-- Step 4: Continuous Protection -->
+    <circle cx="675" cy="75" r="60" fill="#22c55e" filter="url(#glow)" opacity="0.9" />
+    <text x="675" y="75" font-family="Arial" font-size="40" fill="white" text-anchor="middle" dominant-baseline="middle">4</text>
+    <text x="675" y="160" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Continuous Protection</text>
+  </g>
+</svg>

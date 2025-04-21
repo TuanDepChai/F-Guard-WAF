@@ -71,30 +71,83 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <div className="relative w-full h-[400px] rounded-xl overflow-hidden bg-slate-800">
+          <div className="relative w-full h-[400px] rounded-xl overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
+            <div className="absolute inset-0 bg-grid-white/5"></div>
+            <motion.div
+              className="absolute inset-0 bg-dot-white/10"
+              animate={{
+                x: [0, 100, 0],
+                y: [0, 50, 0],
+              }}
+              transition={{
+                duration: 30,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: "linear",
+              }}
+            />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent flex items-center">
               <div className="p-8 md:p-12 max-w-lg">
-                <div className="flex space-x-1 mb-4">
+                <motion.div
+                  className="flex space-x-1 mb-4"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.3 + 0.1 * i }}
+                    >
+                      <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+                    </motion.div>
                   ))}
-                </div>
-                <p className="text-white text-xl mb-6 italic">
+                </motion.div>
+                <motion.p
+                  className="text-white text-xl mb-6 italic"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  viewport={{ once: true }}
+                >
                   "FGuard's enterprise WAF solution has been instrumental in protecting our global infrastructure. Their
                   security team's expertise and the platform's advanced capabilities have given us confidence in our web
                   application security posture."
-                </p>
-                <div className="flex items-center">
+                </motion.p>
+                <motion.div
+                  className="flex items-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                  viewport={{ once: true }}
+                >
                   <Avatar className="h-12 w-12 mr-4 border-2 border-white">
-                    <AvatarFallback className="bg-primary text-white">JD</AvatarFallback>
+                    <AvatarFallback className="bg-gradient-to-br from-primary to-blue-600 text-white">
+                      JD
+                    </AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="font-medium text-white">James Davidson</p>
                     <p className="text-white/80">Chief Information Security Officer, Global 500 Company</p>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
+            <motion.div
+              className="absolute right-8 bottom-8 w-32 h-32 opacity-20"
+              animate={{
+                rotate: [0, 360],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                rotate: { duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" },
+                scale: { duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" },
+              }}
+            >
+              <Shield className="w-full h-full text-primary" />
+            </motion.div>
           </div>
         </motion.div>
 
@@ -106,23 +159,37 @@ export default function TestimonialsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
+              whileHover={{
+                y: -5,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                transition: { duration: 0.2 },
+              }}
             >
-              <Card>
-                <CardContent className="p-6">
+              <Card className="overflow-hidden">
+                <CardContent className="p-6 relative">
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl"></div>
                   <div className="flex space-x-1 mb-2">
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
+                      <motion.div
                         key={i}
-                        className={`h-5 w-5 ${
-                          i < testimonial.rating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"
-                        }`}
-                      />
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: 0.1 * i }}
+                      >
+                        <Star
+                          className={`h-5 w-5 ${
+                            i < testimonial.rating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"
+                          }`}
+                        />
+                      </motion.div>
                     ))}
                   </div>
                   <p className="mb-4 text-muted-foreground">{testimonial.content}</p>
                   <div className="flex items-center">
-                    <Avatar className="h-10 w-10 mr-3">
-                      <AvatarFallback className="bg-primary/10 text-primary">{testimonial.initials}</AvatarFallback>
+                    <Avatar className="h-10 w-10 mr-3 border-2 border-primary/10">
+                      <AvatarFallback className="bg-gradient-to-br from-primary/20 to-blue-500/20 text-primary">
+                        {testimonial.initials}
+                      </AvatarFallback>
                     </Avatar>
                     <div>
                       <p className="font-medium">{testimonial.name}</p>

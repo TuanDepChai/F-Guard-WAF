@@ -1,13 +1,11 @@
-import { vi } from "./locales/vi"
 import { en } from "./locales/en"
-import { ja } from "./locales/ja"
-import { zh } from "./locales/zh"
+import { useI18n } from "./i18n-provider"
 
 export const locales = {
-  vi,
   en,
-  ja,
-  zh,
 }
 
 export type Locale = keyof typeof locales
+
+// Export useTranslation as an alias for useI18n
+export const useTranslation = useI18n
