@@ -1,8 +1,10 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from 'next/font/google'
+import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { I18nProvider } from "@/lib/i18n/i18n-provider"
+import CookieConsent from "@/components/cookie-consent"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -21,7 +23,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider>
-          {children}
+          <I18nProvider>
+            {children}
+            <CookieConsent />
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

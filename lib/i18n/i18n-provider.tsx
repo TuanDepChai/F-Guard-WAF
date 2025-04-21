@@ -1,9 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import { translations } from "./translations"
-
-type Locale = "vi" | "en" | "ja" | "zh"
+import { locales, type Locale } from "./index"
 
 interface I18nContextProps {
   locale: Locale
@@ -22,7 +20,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const savedLocale = localStorage.getItem("locale") as Locale | null
-    if (savedLocale && Object.keys(translations).includes(savedLocale)) {
+    if (savedLocale && Object.keys(locales).includes(savedLocale)) {
       setLocale(savedLocale)
     }
   }, [])
@@ -35,7 +33,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const t = (key: string): string => {
     try {
       const keys = key.split(".")
-      let value: any = translations[locale]
+      let value: any = locales[locale]
 
       for (const k of keys) {
         if (value === undefined || value === null) {
