@@ -2,6 +2,7 @@ import type React from "react"
 import "./globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
+import { I18nProvider } from "@/lib/i18n/i18n-provider"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import CookieConsent from "@/components/cookie-consent"
@@ -25,13 +26,15 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen font-sans antialiased", inter.className)}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <CookieConsent />
-            <SupportChat />
-          </div>
+          <I18nProvider>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <CookieConsent />
+              <SupportChat />
+            </div>
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>
