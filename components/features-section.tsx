@@ -95,7 +95,7 @@ export default function FeaturesSection() {
           >
             <div className="relative w-full h-[400px] rounded-xl overflow-hidden shadow-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
               <motion.div
-                className="absolute inset-0 bg-grid-white/5"
+                className="absolute inset-0 bg-grid-slate-700/20"
                 animate={{
                   backgroundPosition: ["0px 0px", "100px 100px"],
                 }}

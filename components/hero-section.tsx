@@ -127,7 +127,7 @@ export default function HeroSection() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary/20 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 gradient-border"
+                className="border-primary/20 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
               >
                 Technical Specifications
               </Button>
@@ -162,7 +162,7 @@ export default function HeroSection() {
               <div
                 className={cn("relative p-6 rounded-xl shadow-2xl glass", "border border-white/10 dark:border-white/5")}
               >
-                <div className="absolute inset-0 bg-grid-white/5 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.5))] rounded-xl"></div>
+                <div className="absolute inset-0 bg-grid-slate-200/50 dark:bg-grid-slate-700/20 rounded-xl"></div>
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2">
                     <motion.div

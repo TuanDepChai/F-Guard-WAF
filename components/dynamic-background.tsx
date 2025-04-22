@@ -1,11 +1,10 @@
 "use client"
 
 import type React from "react"
-
-import { useTheme } from "@/components/theme-provider"
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
+import { useTheme } from "next-themes"
 
 interface DynamicBackgroundProps {
   className?: string
@@ -62,7 +61,7 @@ export function DynamicBackground({
   }
 
   return (
-    <div className={cn("relative theme-transition", getBackgroundClasses())}>
+    <div className={cn("relative transition-colors duration-300", getBackgroundClasses())}>
       {variant === "default" && (
         <div className="absolute inset-0 -z-10">
           <div
@@ -77,55 +76,52 @@ export function DynamicBackground({
 
       {variant === "animated" && (
         <>
-          <div className="animated-background">
-            <motion.div
-              className="absolute top-0 -left-40 w-80 h-80 opacity-30 animated-shape"
-              style={{
-                background: `radial-gradient(circle, hsl(var(--primary-light) / ${getIntensityValue()}), transparent)`,
-              }}
-              animate={{
-                x: [0, 60, 0],
-                y: [0, -30, 0],
-              }}
-              transition={{
-                duration: 20,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-              }}
-            />
-            <motion.div
-              className="absolute bottom-0 right-0 w-96 h-96 opacity-30 animated-shape"
-              style={{
-                background: `radial-gradient(circle, hsl(var(--primary-dark) / ${getIntensityValue()}), transparent)`,
-              }}
-              animate={{
-                x: [0, -60, 0],
-                y: [0, 30, 0],
-              }}
-              transition={{
-                duration: 25,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-                delay: 2,
-              }}
-            />
-            <motion.div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-20 animated-shape"
-              style={{
-                background: `radial-gradient(circle, hsl(var(--primary) / ${getIntensityValue()}), transparent)`,
-              }}
-              animate={{
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 15,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-            />
-          </div>
-          <div className="noise"></div>
+          <motion.div
+            className="absolute top-0 -left-40 w-80 h-80 opacity-30"
+            style={{
+              background: `radial-gradient(circle, ${isDark ? "rgba(59, 130, 246, 0.3)" : "rgba(59, 130, 246, 0.15)"}, transparent)`,
+            }}
+            animate={{
+              x: [0, 60, 0],
+              y: [0, -30, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-0 right-0 w-96 h-96 opacity-30"
+            style={{
+              background: `radial-gradient(circle, ${isDark ? "rgba(14, 165, 233, 0.3)" : "rgba(14, 165, 233, 0.15)"}, transparent)`,
+            }}
+            animate={{
+              x: [0, -60, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+          />
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-20"
+            style={{
+              background: `radial-gradient(circle, ${isDark ? "rgba(37, 99, 235, 0.3)" : "rgba(37, 99, 235, 0.15)"}, transparent)`,
+            }}
+            animate={{
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+          />
         </>
       )}
 

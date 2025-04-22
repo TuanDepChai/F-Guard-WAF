@@ -1,11 +1,13 @@
-import { en } from "./locales/en"
+"use client"
+
 import { useI18n } from "./i18n-provider"
 
-export const locales = {
-  en,
+export function useTranslation() {
+  return useI18n()
 }
 
-export type Locale = keyof typeof locales
-
-// Export useTranslation as an alias for useI18n
-export const useTranslation = useI18n
+export function getTranslation(key: string) {
+  // This is a simplified version for client components
+  // The actual implementation would use the server-side function
+  return key
+}

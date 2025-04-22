@@ -3,18 +3,14 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Shield, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { ThemeSwitcher } from "@/components/theme-switcher"
-import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { useTheme } from "@/components/theme-provider"
+import { Menu, X, Shield } from "lucide-react"
 
 export default function Navbar() {
+  const pathname = usePathname()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const pathname = usePathname()
-  const { theme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,103 +21,93 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const navItems = [
-    { name: "Home", href: "/" },
-    { name: "Features", href: "/#features" },
-    { name: "How It Works", href: "/#how-it-works" },
-    { name: "Pricing", href: "/#pricing" },
-    { name: "Comparison", href: "/comparison" },
-    { name: "Case Studies", href: "/case-studies" },
-    { name: "Documentation", href: "/documentation" },
+  const navLinks = [
+    { href: "/#features", label: "Features" },
+    { href: "/#how-it-works", label: "How It Works" },
+    { href: "/#pricing", label: "Pricing" },
+    { href: "/#enterprise", label: "Enterprise" },
+    { href: "/#faq", label: "FAQ" },
   ]
 
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 theme-transition",
+        "sticky top-0 z-40 w-full transition-all duration-300",
         isScrolled ? "bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm" : "bg-transparent",
       )}
     >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <motion.div
-              initial={{ rotate: 0 }}
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{
-                duration: 2,
-                repeat: Number.POSITIVE_INFINITY,
-                repeatType: "loop",
-                ease: "easeInOut",
-                repeatDelay: 5,
-              }}
-            >
-              <Shield className="h-8 w-8 text-primary" />
-            </motion.div>
-            <span className="font-bold text-xl gradient-text">FGuard</span>
+      <div className="container flex h-16 items-center justify-between">
+        <div className="flex items-center gap-8">
+          <Link href="/" className="flex items-center gap-2">
+            <Shield className="h-6 w-6 text-primary" />
+            <span className="font-bold text-xl hidden sm:inline-block">FGuard</span>
           </Link>
-
-          {/* Desktop navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
-            {navItems.map((item) => (
+          <nav className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
               <Link
-                key={item.name}
-                href={item.href}
+                key={link.href}
+                href={link.href}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-primary",
-                  pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href))
-                    ? "text-primary"
-                    : "text-foreground/80",
+                  pathname === link.href ? "text-primary" : "text-muted-foreground",
                 )}
               >
-                {item.name}
+                {link.label}
               </Link>
             ))}
           </nav>
-
-          <div className="flex items-center space-x-2">
-            <ThemeSwitcher />
-            <Button className="hidden md:flex">Get Started</Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-2">
+            <Link href="/login">
+              <Button variant="ghost" size="sm">
+                Login
+              </Button>
+            </Link>
+            <Link href="/signup">
+              <Button size="sm">Try For Free</Button>
+            </Link>
           </div>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
         </div>
       </div>
 
-      {/* Mobile navigation */}
       {isMobileMenuOpen && (
-        <motion.div
-          className="md:hidden glass"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="container mx-auto px-4 py-4 space-y-3">
-            {navItems.map((item) => (
+        <div className="md:hidden">
+          <div className="container px-4 py-4 space-y-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md">
+            {navLinks.map((link) => (
               <Link
-                key={item.name}
-                href={item.href}
+                key={link.href}
+                href={link.href}
                 className={cn(
-                  "block py-2 text-base font-medium transition-colors hover:text-primary",
-                  pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href))
-                    ? "text-primary"
-                    : "text-foreground/80",
+                  "block py-2 text-lg font-medium transition-colors hover:text-primary",
+                  pathname === link.href ? "text-primary" : "text-muted-foreground",
                 )}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {item.name}
+                {link.label}
               </Link>
             ))}
-            <Button className="w-full mt-4">Get Started</Button>
+            <div className="pt-4 flex flex-col space-y-4">
+              <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="outline" className="w-full">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                <Button className="w-full">Try For Free</Button>
+              </Link>
+            </div>
           </div>
-        </motion.div>
+        </div>
       )}
     </header>
   )

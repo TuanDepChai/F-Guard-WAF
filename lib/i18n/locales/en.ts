@@ -1,25 +1,32 @@
 export const en = {
+  common: {
+    title: "FGuard - Advanced Web Application Firewall",
+    description: "Protect your web applications from threats with FGuard WAF",
+  },
   nav: {
     home: "Home",
     features: "Features",
     howItWorks: "How It Works",
     pricing: "Pricing",
+    comparison: "Comparison",
+    caseStudies: "Case Studies",
+    documentation: "Documentation",
+    contact: "Contact",
     enterprise: "Enterprise",
     faq: "FAQ",
     login: "Login",
     tryForFree: "Try for Free",
-    comparison: "Comparison",
-    caseStudies: "Case Studies",
-    documentation: "Documentation",
     demo: "Demo",
-    contact: "Contact",
   },
   hero: {
+    title: "Advanced WAF Protection for Business",
+    subtitle:
+      "FGuard delivers enterprise-grade Web Application Firewall solutions with Barracuda-level protection to safeguard your critical web applications from sophisticated cyber threats.",
+    cta: "Request Demo",
+    secondary: "Technical Specifications",
     badge: "Protect your website 24/7",
-    title: {
-      line1: "Protect your website",
-      line2: "from all threats",
-    },
+    line1: "Protect your website",
+    line2: "from all threats",
     description:
       "FGuard provides a comprehensive Web Application Firewall (WAF) solution to protect your website from cyber attacks and online threats.",
     startNow: "Start Now",
@@ -49,8 +56,18 @@ export const en = {
     customers: "Trusted Customers",
   },
   features: {
+    title: "Enterprise-Grade WAF Protection",
+    subtitle:
+      "FGuard delivers comprehensive web application security with advanced features that rival industry leaders like Barracuda WAF",
+    ddos: "Advanced DDoS Protection",
+    zeroDay: "Zero-Day Attack Prevention",
+    owasp: "OWASP Top 10 Protection",
+    api: "API Security",
+    dataLoss: "Data Loss Prevention",
+    cdn: "Global CDN Integration",
+    multiLayer: "Multi-Layer Security",
+    analytics: "Advanced Analytics",
     badge: "Top Security Features",
-    title: "Comprehensive Protection with FGuard WAF",
     description:
       "FGuard provides a comprehensive Web Application Firewall (WAF) solution to protect your website from online threats.",
     items: [
@@ -365,7 +382,22 @@ export const en = {
     and: "and",
   },
   footer: {
-    description: "Leading Web Application Firewall solution protecting your website from online threats.",
+    description: "Enterprise-grade Web Application Firewall solutions to protect your business from cyber threats.",
+    product: "Product",
+    features: "Features",
+    pricing: "Pricing",
+    documentation: "Documentation",
+    comparison: "Comparison",
+    company: "Company",
+    about: "About Us",
+    caseStudies: "Case Studies",
+    blog: "Blog",
+    careers: "Careers",
+    legal: "Legal",
+    privacy: "Privacy Policy",
+    terms: "Terms of Service",
+    security: "Security",
+    rights: "All rights reserved.",
     services: {
       title: "Services",
       waf: "Web Application Firewall",
@@ -373,14 +405,6 @@ export const en = {
       api: "API Protection",
       consulting: "Security Consulting",
       assessment: "Security Assessment",
-    },
-    company: {
-      title: "Company",
-      about: "About Us",
-      team: "Team",
-      customers: "Customers",
-      blog: "Blog",
-      careers: "Careers",
     },
     contact: {
       title: "Contact",
@@ -481,4 +505,12 @@ export const en = {
     sendButton: "Send",
     offlineMessage: "We're currently offline. Please leave a message and we'll get back to you soon.",
   },
+  notFound: {
+    title: "404",
+    subtitle: "Page Not Found",
+    description:
+      "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    button: "Return to Homepage",
+  },
+  // Add other translations as needed
 }

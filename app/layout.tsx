@@ -2,12 +2,10 @@ import type React from "react"
 import "./globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
-import { I18nProvider } from "@/lib/i18n/i18n-provider"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import CookieConsent from "@/components/cookie-consent"
 import SupportChat from "@/components/support-chat"
-import { DynamicBackground } from "@/components/dynamic-background"
 import { cn } from "@/lib/utils"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -25,19 +23,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("min-h-screen font-sans antialiased theme-transition", inter.className)}>
-        <ThemeProvider>
-          <I18nProvider>
-            <DynamicBackground variant="animated" className="min-h-screen">
-              <div className="flex flex-col min-h-screen">
-                <Navbar />
-                <main className="flex-1">{children}</main>
-                <Footer />
-                <CookieConsent />
-                <SupportChat />
-              </div>
-            </DynamicBackground>
-          </I18nProvider>
+      <body className={cn("min-h-screen font-sans antialiased", inter.className)}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <CookieConsent />
+            <SupportChat />
+          </div>
         </ThemeProvider>
       </body>
     </html>
