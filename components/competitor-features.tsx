@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Shield, Check, AlertTriangle } from "lucide-react"
 
 export default function CompetitorFeatures() {
+  // Define the array directly to ensure it's never undefined
   const competitorComparisons = [
     {
       name: "Barracuda WAF",
@@ -71,54 +72,76 @@ export default function CompetitorFeatures() {
         </motion.div>
 
         <div className="space-y-16">
-          {competitorComparisons.map((competitor, index) => (
-            <motion.div
-              key={index}
-              className="bg-white dark:bg-slate-800 rounded-lg shadow-lg border overflow-hidden"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="p-6 border-b">
-                <h3 className="text-2xl font-bold">FGuard WAF vs. {competitor.name}</h3>
-              </div>
-              <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x">
-                <div className="p-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="rounded-full bg-primary/10 p-2">
-                      <Shield className="h-5 w-5 text-primary" />
-                    </div>
-                    <h4 className="text-lg font-medium">FGuard Advantages</h4>
-                  </div>
-                  <ul className="space-y-3">
-                    {competitor.fguardAdvantages.map((advantage, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span>{advantage}</span>
-                      </li>
-                    ))}
-                  </ul>
+          {/* Add conditional rendering to ensure we don't map over undefined */}
+          {competitorComparisons &&
+            competitorComparisons.map((competitor, index) => (
+              <motion.div
+                key={index}
+                className="bg-white dark:bg-slate-800 rounded-lg shadow-lg border overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="p-6 border-b">
+                  <h3 className="text-2xl font-bold">FGuard WAF vs. {competitor.name}</h3>
                 </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="rounded-full bg-slate-200 dark:bg-slate-700 p-2">
-                      <AlertTriangle className="h-5 w-5 text-slate-700 dark:text-slate-300" />
+                <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x">
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="rounded-full bg-primary/10 p-2">
+                        <Shield className="h-5 w-5 text-primary" />
+                      </div>
+                      <h4 className="text-lg font-medium">FGuard Advantages</h4>
                     </div>
-                    <h4 className="text-lg font-medium">{competitor.name} Advantages</h4>
+                    <ul className="space-y-3">
+                      {competitor.fguardAdvantages &&
+                        competitor.fguardAdvantages.map((advantage, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                            <span>{advantage}</span>
+                          </li>
+                        ))}
+                    </ul>
                   </div>
-                  <ul className="space-y-3">
-                    {competitor.barracudaAdvantages.map((advantage, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-slate-500 mt-0.5 flex-shrink-0" />
-                        <span>{advantage}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <div className="rounded-full bg-slate-200 dark:bg-slate-700 p-2">
+                        <AlertTriangle className="h-5 w-5 text-slate-700 dark:text-slate-300" />
+                      </div>
+                      <h4 className="text-lg font-medium">{competitor.name} Advantages</h4>
+                    </div>
+                    <ul className="space-y-3">
+                      {/* Fix the property name to match the competitor */}
+                      {competitor.name === "Barracuda WAF" &&
+                        competitor.barracudaAdvantages &&
+                        competitor.barracudaAdvantages.map((advantage, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <Check className="h-5 w-5 text-slate-500 mt-0.5 flex-shrink-0" />
+                            <span>{advantage}</span>
+                          </li>
+                        ))}
+                      {competitor.name === "Cloudflare WAF" &&
+                        competitor.cloudflareAdvantages &&
+                        competitor.cloudflareAdvantages.map((advantage, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <Check className="h-5 w-5 text-slate-500 mt-0.5 flex-shrink-0" />
+                            <span>{advantage}</span>
+                          </li>
+                        ))}
+                      {competitor.name === "AWS WAF" &&
+                        competitor.awsAdvantages &&
+                        competitor.awsAdvantages.map((advantage, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <Check className="h-5 w-5 text-slate-500 mt-0.5 flex-shrink-0" />
+                            <span>{advantage}</span>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
         </div>
       </div>
     </section>

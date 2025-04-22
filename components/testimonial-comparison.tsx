@@ -5,6 +5,7 @@ import { Shield, Star } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 export default function TestimonialComparison() {
+  // Define the array directly to ensure it's never undefined
   const testimonials = [
     {
       name: "Michael Chen",
@@ -55,40 +56,42 @@ export default function TestimonialComparison() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              className="bg-white dark:bg-slate-800 rounded-lg shadow-lg border overflow-hidden"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <div className="p-6">
-                <div className="flex space-x-1 mb-4">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow-500 fill-yellow-500" />
-                  ))}
-                </div>
-                <p className="mb-6 text-muted-foreground">{testimonial.content}</p>
-                <div className="flex items-center">
-                  <Avatar className="h-10 w-10 mr-3">
-                    <AvatarFallback className="bg-primary/10 text-primary">{testimonial.initials}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-medium">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+          {/* Add conditional rendering to ensure we don't map over undefined */}
+          {testimonials &&
+            testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                className="bg-white dark:bg-slate-800 rounded-lg shadow-lg border overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="p-6">
+                  <div className="flex space-x-1 mb-4">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+                    ))}
+                  </div>
+                  <p className="mb-6 text-muted-foreground">{testimonial.content}</p>
+                  <div className="flex items-center">
+                    <Avatar className="h-10 w-10 mr-3">
+                      <AvatarFallback className="bg-primary/10 text-primary">{testimonial.initials}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-medium">{testimonial.name}</p>
+                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t">
+                    <p className="text-sm">
+                      <span className="text-muted-foreground">Previously using: </span>
+                      <span className="font-medium">{testimonial.previousProvider}</span>
+                    </p>
                   </div>
                 </div>
-                <div className="mt-4 pt-4 border-t">
-                  <p className="text-sm">
-                    <span className="text-muted-foreground">Previously using: </span>
-                    <span className="font-medium">{testimonial.previousProvider}</span>
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
         </div>
 
         <motion.div
