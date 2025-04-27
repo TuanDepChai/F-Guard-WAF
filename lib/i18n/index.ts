@@ -11,5 +11,4 @@ export type Locale = keyof typeof locales
 // Export useTranslation as an alias for useI18n
 export const useTranslation = useI18n
 
-// Export server-compatible translation function
-export { serverGetTranslation as getTranslation }
+export const getTranslation = serverGetTranslation

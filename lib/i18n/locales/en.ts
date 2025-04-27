@@ -506,11 +506,11 @@ export const en = {
     offlineMessage: "We're currently offline. Please leave a message and we'll get back to you soon.",
   },
   notFound: {
-    title: "404",
-    subtitle: "Page Not Found",
-    description:
-      "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
-    button: "Return to Homepage",
+    title: "Page Not Found",
+    message:
+      "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Our security systems are still protecting your other resources.",
+    returnHome: "Return to Homepage",
+    viewDocs: "View Documentation",
   },
   // Add other translations as needed
 }
