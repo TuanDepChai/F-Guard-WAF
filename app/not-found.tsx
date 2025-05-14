@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Shield, AlertTriangle } from "lucide-react"
-import { getTranslation } from "@/lib/i18n/server"
 
 export default function NotFound() {
   return (
@@ -15,17 +14,19 @@ export default function NotFound() {
             <AlertTriangle className="h-12 w-12 text-amber-500 mr-4" />
             <h1 className="text-6xl font-bold">404</h1>
           </div>
-          <h2 className="text-3xl font-semibold mb-6">{getTranslation("notFound.title")}</h2>
-          <p className="text-muted-foreground max-w-md mx-auto mb-8">{getTranslation("notFound.message")}</p>
+          <h2 className="text-3xl font-semibold mb-6">Page Not Found</h2>
+          <p className="text-muted-foreground max-w-md mx-auto mb-8">
+            The page you are looking for doesn't exist or has been moved.
+          </p>
         </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4">
         <Button asChild size="lg" className="px-8">
-          <Link href="/">{getTranslation("notFound.returnHome")}</Link>
+          <Link href="/">Return Home</Link>
         </Button>
         <Button asChild variant="outline" size="lg">
-          <Link href="/documentation">{getTranslation("notFound.viewDocs")}</Link>
+          <Link href="/documentation">View Documentation</Link>
         </Button>
       </div>
     </div>

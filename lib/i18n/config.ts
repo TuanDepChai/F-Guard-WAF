@@ -1,28 +1,8 @@
-export const languages = [
-  {
-    name: "English",
-    code: "en",
-    flag: "🇺🇸",
-    fallbacks: ["en-US", "en-GB", "en-AU", "en-CA"],
-  },
-  {
-    name: "Tiếng Việt",
-    code: "vi",
-    flag: "🇻🇳",
-    fallbacks: [],
-  },
-  {
-    name: "日本語",
-    code: "ja",
-    flag: "🇯🇵",
-    fallbacks: [],
-  },
-  {
-    name: "中文",
-    code: "zh",
-    flag: "🇨🇳",
-    fallbacks: ["zh-CN", "zh-TW", "zh-HK"],
-  },
-]
+/**
+ * Stub implementation for i18n configuration
+ * This file exists to satisfy imports that haven't been fully removed yet
+ */
 
-export const defaultLanguage = "en"
+export const defaultLocale = "en"
+export const locales = ["en"]
+export const defaultNamespace = "common"
