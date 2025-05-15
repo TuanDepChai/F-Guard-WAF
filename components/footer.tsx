@@ -1,182 +1,190 @@
+"use client"
+
 import Link from "next/link"
 import { Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useLanguage } from "@/lib/i18n/language-context"
 
-export function Footer() {
+export default function Footer() {
+  const { t } = useLanguage()
+
   const currentYear = new Date().getFullYear()
 
   return (
     <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
+            <div className="flex items-center space-x-2">
               <Shield className="h-6 w-6 text-primary" />
               <span className="font-bold text-xl">FGuard</span>
-            </Link>
-            <p className="text-muted-foreground">
-              Advanced Web Application Firewall protecting your applications from cyber threats and attacks.
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Enterprise-grade Web Application Firewall protecting your applications from cyber threats and attacks.
             </p>
             <div className="flex space-x-4">
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
+              <a href="#" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">
                 <span className="sr-only">Twitter</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-5 w-5"
-                >
-                  <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
               </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
-                <span className="sr-only">LinkedIn</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-5 w-5"
-                >
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                  <rect width="4" height="12" x="2" y="9"></rect>
-                  <circle cx="4" cy="4" r="2"></circle>
-                </svg>
-              </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-              >
+              <a href="#" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">
                 <span className="sr-only">GitHub</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-5 w-5"
-                >
-                  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-                  <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fillRule="evenodd"
+                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </a>
+              <a href="#" className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary">
+                <span className="sr-only">LinkedIn</span>
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fillRule="evenodd"
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </a>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg mb-4">Product</h3>
+            <h3 className="font-medium text-lg mb-4">Product</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/#features" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link
+                  href="/#features"
+                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                >
                   Features
                 </Link>
               </li>
               <li>
-                <Link href="/demo" className="text-muted-foreground hover:text-primary transition-colors">
-                  Interactive Demo
-                </Link>
-              </li>
-              <li>
-                <Link href="/#pricing" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link
+                  href="/#pricing"
+                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                >
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link href="/comparison" className="text-muted-foreground hover:text-primary transition-colors">
-                  Comparison
-                </Link>
-              </li>
-              <li>
-                <Link href="/#enterprise" className="text-muted-foreground hover:text-primary transition-colors">
-                  Enterprise
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-lg mb-4">Resources</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link href="/documentation" className="text-muted-foreground hover:text-primary transition-colors">
-                  Documentation
-                </Link>
-              </li>
-              <li>
-                <Link href="/case-studies" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link
+                  href="/case-studies"
+                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                >
                   Case Studies
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-muted-foreground hover:text-primary transition-colors">
-                  FAQ
+                <Link
+                  href="/documentation"
+                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                >
+                  Documentation
                 </Link>
               </li>
               <li>
-                <Link href="/security" className="text-muted-foreground hover:text-primary transition-colors">
-                  Security
+                <Link
+                  href="/api-docs"
+                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                >
+                  API
                 </Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg mb-4">Subscribe</h3>
-            <p className="text-muted-foreground mb-4">
-              Get the latest security updates and news delivered to your inbox.
-            </p>
-            <div className="flex space-x-2">
-              <Input type="email" placeholder="Your email" className="max-w-[220px]" />
-              <Button type="submit">Subscribe</Button>
-            </div>
+            <h3 className="font-medium text-lg mb-4">Company</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  href="/about"
+                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/blog"
+                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                >
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/careers"
+                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                >
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                >
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/partners"
+                  className="text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+                >
+                  Partners
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-medium text-lg mb-4">{t("footer.subscribe")}</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{t("footer.subscribeText")}</p>
+            <form className="space-y-2">
+              <Input
+                type="email"
+                placeholder={t("footer.emailPlaceholder")}
+                className="bg-white dark:bg-gray-800"
+                required
+              />
+              <Button type="submit" className="w-full">
+                {t("footer.submitButton")}
+              </Button>
+            </form>
           </div>
         </div>
 
         <div className="border-t border-gray-200 dark:border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-muted-foreground">&copy; {currentYear} FGuard. All rights reserved.</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              &copy; {currentYear} FGuard. {t("footer.copyright")}
+            </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Privacy Policy
+              <Link
+                href="/privacy"
+                className="text-sm text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+              >
+                {t("footer.privacyPolicy")}
               </Link>
-              <Link href="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Terms of Service
+              <Link
+                href="/terms"
+                className="text-sm text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+              >
+                {t("footer.termsOfService")}
               </Link>
-              <Link href="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Contact Us
+              <Link
+                href="/contact"
+                className="text-sm text-gray-600 hover:text-primary dark:text-gray-400 dark:hover:text-primary"
+              >
+                {t("footer.contactUs")}
               </Link>
             </div>
           </div>
@@ -185,5 +193,3 @@ export function Footer() {
     </footer>
   )
 }
-
-export default Footer

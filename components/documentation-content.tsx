@@ -5,6 +5,7 @@ import { Shield, AlertTriangle, Info, Copy, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
+import PrintButton from "@/components/print-button"
 
 export default function DocumentationContent() {
   const [copied, setCopied] = useState(false)
@@ -19,19 +20,24 @@ export default function DocumentationContent() {
 
   return (
     <motion.div
-      className="space-y-8"
+      className="space-y-8 documentation-content"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div>
-        <h1 className="text-3xl font-bold mb-4">Getting Started with FGuard WAF</h1>
-        <p className="text-muted-foreground mb-6">
-          This guide will help you get started with FGuard WAF, from initial setup to advanced configuration.
-        </p>
-        <div className="flex items-center gap-2 mb-6">
-          <div className="text-sm text-muted-foreground">Last updated: April 15, 2023</div>
-          <div className="text-sm bg-primary/10 text-primary px-2 py-0.5 rounded">v2.5.0</div>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold mb-4">Getting Started with FGuard WAF</h1>
+          <p className="text-muted-foreground mb-6">
+            This guide will help you get started with FGuard WAF, from initial setup to advanced configuration.
+          </p>
+          <div className="flex items-center gap-2 mb-6">
+            <div className="text-sm text-muted-foreground">Last updated: April 15, 2023</div>
+            <div className="text-sm bg-primary/10 text-primary px-2 py-0.5 rounded">v2.5.0</div>
+          </div>
+        </div>
+        <div className="print:hidden">
+          <PrintButton />
         </div>
       </div>
 

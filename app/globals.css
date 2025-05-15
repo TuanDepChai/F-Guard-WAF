@@ -90,6 +90,11 @@
 @layer utilities {
   /* Define gradient text using direct CSS properties instead of @apply */
   .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600 dark:from-primary dark:to-blue-400;
+  }
+
+  /* Define gradient text using direct CSS properties instead of @apply */
+  .gradient-text {
     background-image: linear-gradient(
       to right,
       hsl(var(--gradient-start)),
