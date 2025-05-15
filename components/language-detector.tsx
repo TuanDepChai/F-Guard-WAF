@@ -1,104 +1,51 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
+import { useLanguage } from "@/lib/i18n/language-context"
 import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useLanguage } from "@/lib/i18n/language-context"
-import { motion, AnimatePresence } from "framer-motion"
-import type { Locale } from "@/lib/i18n/translations"
-
-const languageNames: Record<Locale, string> = {
-  en: "English",
-  vi: "Tiếng Việt",
-  fr: "Français",
-  de: "Deutsch",
-  es: "Español",
-  ja: "日本語",
-  zh: "中文",
-}
 
 export function LanguageDetector() {
-  const { locale, setLocale } = useLanguage()
-  const [browserLocale, setBrowserLocale] = useState<Locale | null>(null)
-  const [dismissed, setDismissed] = useState(false)
-  const [visible, setVisible] = useState(false)
+  const [showBanner, setShowBanner] = useState(false)
+  const { language, setLanguage } = useLanguage()
 
   useEffect(() => {
-    // Check if the user has previously dismissed the banner
-    const hasDismissed = localStorage.getItem("language-banner-dismissed") === "true"
-    if (hasDismissed) {
-      setDismissed(true)
-      return
-    }
+    // Get browser language
+    const browserLang = navigator.language.split("-")[0]
 
-    // Detect browser language
-    const detectedLocale = navigator.language.split("-")[0] as Locale
-    if (
-      detectedLocale &&
-      Object.keys(languageNames).includes(detectedLocale) &&
-      detectedLocale !== locale &&
-      !localStorage.getItem(`language-banner-dismissed-${detectedLocale}`)
-    ) {
-      setBrowserLocale(detectedLocale)
-      setVisible(true)
-    }
-  }, [locale])
+    // Check if browser language is supported and different from current
+    const supportedLanguages = ["en", "fr", "es", "de", "ja", "zh"]
 
-  const handleDismiss = () => {
-    setVisible(false)
-    setDismissed(true)
-    localStorage.setItem("language-banner-dismissed", "true")
-    if (browserLocale) {
-      localStorage.setItem(`language-banner-dismissed-${browserLocale}`, "true")
+    if (supportedLanguages.includes(browserLang) && browserLang !== language) {
+      // Show language banner
+      setShowBanner(true)
     }
+  }, [language])
+
+  const switchLanguage = () => {
+    const browserLang = navigator.language.split("-")[0]
+    setLanguage(browserLang)
+    setShowBanner(false)
   }
 
-  const handleSwitch = () => {
-    if (browserLocale) {
-      setLocale(browserLocale)
-      setVisible(false)
-      setDismissed(true)
-      localStorage.setItem("language-banner-dismissed", "true")
-    }
-  }
-
-  if (!browserLocale || dismissed || !visible) {
-    return null
-  }
+  if (!showBanner) return null
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -50 }}
-          className="fixed top-16 inset-x-0 z-40 p-4"
-        >
-          <div className="container mx-auto">
-            <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <p className="text-sm">
-                  We detected that your browser language is{" "}
-                  <span className="font-medium">{languageNames[browserLocale]}</span>. Would you like to switch?
-                </p>
-                <Button size="sm" variant="outline" onClick={handleSwitch}>
-                  Switch to {languageNames[browserLocale]}
-                </Button>
-              </div>
-              <Button
-                size="icon"
-                variant="ghost"
-                className="h-8 w-8 rounded-full"
-                onClick={handleDismiss}
-                aria-label="Dismiss"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className="bg-primary/10 border-b border-primary/20 py-2 px-4">
+      <div className="container mx-auto flex items-center justify-between">
+        <p className="text-sm">
+          We detected that your browser language is different. Would you like to switch to {navigator.language}?
+        </p>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={switchLanguage}>
+            Switch Language
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => setShowBanner(false)}>
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </Button>
+        </div>
+      </div>
+    </div>
   )
 }

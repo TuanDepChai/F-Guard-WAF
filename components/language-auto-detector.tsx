@@ -2,24 +2,22 @@
 
 import { useEffect } from "react"
 import { useLanguage } from "@/lib/i18n/language-context"
-import type { Locale } from "@/lib/i18n/translations"
 
 export function LanguageAutoDetector() {
-  const { locale, setLocale } = useLanguage()
+  const { setLanguage } = useLanguage()
 
   useEffect(() => {
-    // Check if user has already selected a language
-    const savedLocale = localStorage.getItem("locale")
-    if (savedLocale) return
+    // Get browser language
+    const browserLang = navigator.language.split("-")[0]
 
-    // Detect browser language
-    const browserLang = navigator.language.split("-")[0] as Locale
-    const supportedLanguages: Locale[] = ["en", "vi", "fr", "de", "es", "ja", "zh"]
+    // Check if browser language is supported
+    const supportedLanguages = ["en", "fr", "es", "de", "ja", "zh"]
 
-    if (supportedLanguages.includes(browserLang) && browserLang !== locale) {
-      setLocale(browserLang)
+    if (supportedLanguages.includes(browserLang) && browserLang !== "en") {
+      // Set language based on browser preference
+      setLanguage(browserLang)
     }
-  }, [locale, setLocale])
+  }, [setLanguage])
 
   return null
 }

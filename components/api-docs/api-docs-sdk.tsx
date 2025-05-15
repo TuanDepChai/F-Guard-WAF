@@ -1,449 +1,323 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { Download } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function ApiDocsSdk() {
   return (
-    <section id="sdk" className="mt-12">
-      <h2 className="text-3xl font-bold mb-6">SDK & Libraries</h2>
+    <div className="space-y-8">
+      <h2 className="text-3xl font-bold mb-6">SDK Libraries</h2>
+      <p className="mb-6">
+        FGuard provides official SDK libraries for popular programming languages to make integration with our API even
+        easier. These SDKs handle authentication, error handling, and provide a more intuitive interface for working
+        with the API.
+      </p>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Official FGuard SDKs</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="mb-6">
-            We provide official SDKs for popular programming languages to make integrating with the FGuard API easier.
-            These SDKs handle authentication, rate limiting, and provide type-safe interfaces for all API endpoints.
-          </p>
+      <Tabs defaultValue="javascript" className="w-full">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
+          <TabsTrigger value="javascript">JavaScript</TabsTrigger>
+          <TabsTrigger value="python">Python</TabsTrigger>
+          <TabsTrigger value="go">Go</TabsTrigger>
+          <TabsTrigger value="java">Java</TabsTrigger>
+        </TabsList>
 
-          <Tabs defaultValue="node">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
-              <TabsTrigger value="node">Node.js</TabsTrigger>
-              <TabsTrigger value="python">Python</TabsTrigger>
-              <TabsTrigger value="java">Java</TabsTrigger>
-              <TabsTrigger value="dotnet">.NET</TabsTrigger>
-            </TabsList>
+        <TabsContent value="javascript" className="mt-6 space-y-6">
+          <Card>
+            <CardContent className="pt-6">
+              <h3 className="text-xl font-semibold mb-4">JavaScript SDK</h3>
+              <p className="mb-4">
+                Our JavaScript SDK works in both Node.js and browser environments. It provides a Promise-based API for
+                easy integration with modern JavaScript applications.
+              </p>
 
-            <TabsContent value="node" className="pt-4">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">Node.js SDK</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Compatible with Node.js 14+ and TypeScript</p>
-                </div>
-                <Link href="#">
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
-                    <Download className="h-4 w-4" />
-                    <span>Download</span>
-                  </Button>
-                </Link>
+              <h4 className="text-lg font-medium mb-2">Installation</h4>
+              <div className="bg-slate-900 text-white rounded-lg p-4 font-mono text-sm overflow-x-auto mb-6">
+                <pre>{`npm install @fguard/sdk
+# or
+yarn add @fguard/sdk`}</pre>
               </div>
 
-              <h4 className="font-medium mb-2">Installation</h4>
-              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4">
-                <code>npm install fguard-sdk</code>
-              </pre>
+              <h4 className="text-lg font-medium mb-2">Usage Example</h4>
+              <div className="bg-slate-900 text-white rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                <pre>{`import { FGuardClient } from '@fguard/sdk';
 
-              <h4 className="font-medium mb-2">Usage Example</h4>
-              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto">
-                <code>
-                  const {"{"} FGuardClient {"}"} = require('fguard-sdk');
-                  <br />
-                  <br />
-                  // Initialize the client
-                  <br />
-                  const client = new FGuardClient({"{"} apiKey: 'YOUR_API_KEY' {"}"});
-                  <br />
-                  <br />
-                  // List all rules
-                  <br />
-                  async function listRules() {"{"}
-                  <br />
-                  &nbsp;&nbsp;try {"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;const rules = await client.rules.list();
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;console.log('Rules:', rules);
-                  <br />
-                  &nbsp;&nbsp;{"}"} catch (error) {"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error:', error);
-                  <br />
-                  &nbsp;&nbsp;{"}"}
-                  <br />
-                  {"}"}
-                  <br />
-                  <br />
-                  // Create a new rule
-                  <br />
-                  async function createRule() {"{"}
-                  <br />
-                  &nbsp;&nbsp;try {"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;const newRule = await client.rules.create({"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: 'Block SQL Injection',
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description: 'Block SQL injection attempts',
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action: 'block',
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conditions: [
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field: 'request.uri',
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;operator: 'contains',
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value: 'SELECT'
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;{"}"});
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;console.log('New rule created:', newRule);
-                  <br />
-                  &nbsp;&nbsp;{"}"} catch (error) {"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;console.error('Error:', error);
-                  <br />
-                  &nbsp;&nbsp;{"}"}
-                  <br />
-                  {"}"}
-                </code>
-              </pre>
-            </TabsContent>
+// Initialize the client
+const client = new FGuardClient({
+  apiKey: 'YOUR_API_KEY'
+});
 
-            <TabsContent value="python" className="pt-4">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">Python SDK</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Compatible with Python 3.7+</p>
-                </div>
-                <Link href="#">
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
-                    <Download className="h-4 w-4" />
-                    <span>Download</span>
-                  </Button>
-                </Link>
+// List all rules
+async function listRules() {
+  try {
+    const rules = await client.rules.list();
+    console.log('Rules:', rules);
+    
+    // Create a new rule
+    const newRule = await client.rules.create({
+      name: 'Block XSS Attacks',
+      description: 'Blocks common cross-site scripting patterns',
+      priority: 1,
+      action: 'block',
+      conditions: [
+        {
+          field: 'request.headers.user-agent',
+          operator: 'contains',
+          value: 'script'
+        }
+      ]
+    });
+    
+    console.log('Created rule:', newRule);
+    
+    // Get a specific rule
+    const rule = await client.rules.get(newRule.id);
+    console.log('Retrieved rule:', rule);
+    
+    // Update a rule
+    const updatedRule = await client.rules.update(newRule.id, {
+      priority: 2
+    });
+    
+    console.log('Updated rule:', updatedRule);
+    
+    // Delete a rule
+    await client.rules.delete(newRule.id);
+    console.log('Rule deleted successfully');
+    
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+listRules();`}</pre>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="python" className="mt-6 space-y-6">
+          <Card>
+            <CardContent className="pt-6">
+              <h3 className="text-xl font-semibold mb-4">Python SDK</h3>
+              <p className="mb-4">
+                Our Python SDK provides a simple and intuitive interface for interacting with the FGuard API. It
+                supports Python 3.6 and above.
+              </p>
+
+              <h4 className="text-lg font-medium mb-2">Installation</h4>
+              <div className="bg-slate-900 text-white rounded-lg p-4 font-mono text-sm overflow-x-auto mb-6">
+                <pre>{`pip install fguard-sdk`}</pre>
               </div>
 
-              <h4 className="font-medium mb-2">Installation</h4>
-              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4">
-                <code>pip install fguard-sdk</code>
-              </pre>
+              <h4 className="text-lg font-medium mb-2">Usage Example</h4>
+              <div className="bg-slate-900 text-white rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                <pre>{`from fguard import FGuardClient
 
-              <h4 className="font-medium mb-2">Usage Example</h4>
-              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto">
-                <code>
-                  from fguard_sdk import FGuardClient
-                  <br />
-                  <br /># Initialize the client
-                  <br />
-                  client = FGuardClient(api_key="YOUR_API_KEY")
-                  <br />
-                  <br /># List all rules
-                  <br />
-                  def list_rules():
-                  <br />
-                  &nbsp;&nbsp;try:
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;rules = client.rules.list()
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;print("Rules:", rules)
-                  <br />
-                  &nbsp;&nbsp;except Exception as e:
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;print("Error:", e)
-                  <br />
-                  <br /># Create a new rule
-                  <br />
-                  def create_rule():
-                  <br />
-                  &nbsp;&nbsp;try:
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;new_rule = client.rules.create(
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name="Block SQL Injection",
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description="Block SQL injection attempts",
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;action="block",
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conditions=[
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"field": "request.uri",
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"operator": "contains",
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"value": "SELECT"
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;)
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;print("New rule created:", new_rule)
-                  <br />
-                  &nbsp;&nbsp;except Exception as e:
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;print("Error:", e)
-                </code>
-              </pre>
-            </TabsContent>
+# Initialize the client
+client = FGuardClient(api_key="YOUR_API_KEY")
 
-            <TabsContent value="java" className="pt-4">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">Java SDK</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Compatible with Java 8+</p>
-                </div>
-                <Link href="#">
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
-                    <Download className="h-4 w-4" />
-                    <span>Download</span>
-                  </Button>
-                </Link>
+# List all rules
+rules = client.rules.list()
+print("Rules:", rules)
+
+# Create a new rule
+new_rule = client.rules.create(
+    name="Block XSS Attacks",
+    description="Blocks common cross-site scripting patterns",
+    priority=1,
+    action="block",
+    conditions=[
+        {
+            "field": "request.headers.user-agent",
+            "operator": "contains",
+            "value": "script"
+        }
+    ]
+)
+
+print("Created rule:", new_rule)
+
+# Get a specific rule
+rule = client.rules.get(new_rule["id"])
+print("Retrieved rule:", rule)
+
+# Update a rule
+updated_rule = client.rules.update(
+    new_rule["id"],
+    priority=2
+)
+
+print("Updated rule:", updated_rule)
+
+# Delete a rule
+client.rules.delete(new_rule["id"])
+print("Rule deleted successfully")`}</pre>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="go" className="mt-6 space-y-6">
+          <Card>
+            <CardContent className="pt-6">
+              <h3 className="text-xl font-semibold mb-4">Go SDK</h3>
+              <p className="mb-4">
+                Our Go SDK provides a type-safe interface for interacting with the FGuard API. It's designed to be
+                simple to use while maintaining Go's performance and safety guarantees.
+              </p>
+
+              <h4 className="text-lg font-medium mb-2">Installation</h4>
+              <div className="bg-slate-900 text-white rounded-lg p-4 font-mono text-sm overflow-x-auto mb-6">
+                <pre>{`go get github.com/fguard/fguard-go`}</pre>
               </div>
 
-              <h4 className="font-medium mb-2">Installation</h4>
-              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4">
-                <code>
-                  // Maven
-                  <br />
-                  &lt;dependency&gt;
-                  <br />
-                  &nbsp;&nbsp;&lt;groupId&gt;com.fguard&lt;/groupId&gt;
-                  <br />
-                  &nbsp;&nbsp;&lt;artifactId&gt;fguard-sdk&lt;/artifactId&gt;
-                  <br />
-                  &nbsp;&nbsp;&lt;version&gt;1.0.0&lt;/version&gt;
-                  <br />
-                  &lt;/dependency&gt;
-                </code>
-              </pre>
+              <h4 className="text-lg font-medium mb-2">Usage Example</h4>
+              <div className="bg-slate-900 text-white rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                <pre>{`package main
 
-              <h4 className="font-medium mb-2">Usage Example</h4>
-              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto">
-                <code>
-                  import com.fguard.sdk.FGuardClient;
-                  <br />
-                  import com.fguard.sdk.models.Rule;
-                  <br />
-                  import com.fguard.sdk.models.RuleCondition;
-                  <br />
-                  <br />
-                  public class FGuardExample {"{"}
-                  <br />
-                  &nbsp;&nbsp;public static void main(String[] args) {"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;// Initialize the client
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;FGuardClient client = new FGuardClient("YOUR_API_KEY");
-                  <br />
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;// List all rules
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;try {"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&lt;Rule&gt; rules = client.rules().list();
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Rules: " + rules);
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;{"}"} catch (Exception e) {"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.err.println("Error: " + e.getMessage());
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;// Create a new rule
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;try {"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RuleCondition condition = new RuleCondition();
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;condition.setField("request.uri");
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;condition.setOperator("contains");
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;condition.setValue("SELECT");
-                  <br />
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rule newRule = new Rule();
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newRule.setName("Block SQL Injection");
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newRule.setDescription("Block SQL injection attempts");
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newRule.setAction("block");
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newRule.setConditions(Collections.singletonList(condition));
-                  <br />
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rule createdRule = client.rules().create(newRule);
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("New rule created: " + createdRule);
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;{"}"} catch (Exception e) {"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.err.println("Error: " + e.getMessage());
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  &nbsp;&nbsp;{"}"}
-                  <br />
-                  {"}"}
-                </code>
-              </pre>
-            </TabsContent>
+import (
+    "fmt"
+    "log"
 
-            <TabsContent value="dotnet" className="pt-4">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">.NET SDK</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Compatible with .NET Standard 2.0+</p>
-                </div>
-                <Link href="#">
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
-                    <Download className="h-4 w-4" />
-                    <span>Download</span>
-                  </Button>
-                </Link>
+    "github.com/fguard/fguard-go"
+)
+
+func main() {
+    // Initialize the client
+    client := fguard.NewClient("YOUR_API_KEY")
+
+    // List all rules
+    rules, err := client.Rules.List()
+    if err != nil {
+        log.Fatalf("Error listing rules: %v", err)
+    }
+    fmt.Println("Rules:", rules)
+
+    // Create a new rule
+    condition := fguard.Condition{
+        Field:    "request.headers.user-agent",
+        Operator: "contains",
+        Value:    "script",
+    }
+
+    newRule, err := client.Rules.Create(&fguard.Rule{
+        Name:        "Block XSS Attacks",
+        Description: "Blocks common cross-site scripting patterns",
+        Priority:    1,
+        Action:      "block",
+        Conditions:  []fguard.Condition{condition},
+    })
+    if err != nil {
+        log.Fatalf("Error creating rule: %v", err)
+    }
+    fmt.Println("Created rule:", newRule)
+
+    // Get a specific rule
+    rule, err := client.Rules.Get(newRule.ID)
+    if err != nil {
+        log.Fatalf("Error getting rule: %v", err)
+    }
+    fmt.Println("Retrieved rule:", rule)
+
+    // Update a rule
+    newRule.Priority = 2
+    updatedRule, err := client.Rules.Update(newRule.ID, newRule)
+    if err != nil {
+        log.Fatalf("Error updating rule: %v", err)
+    }
+    fmt.Println("Updated rule:", updatedRule)
+
+    // Delete a rule
+    err = client.Rules.Delete(newRule.ID)
+    if err != nil {
+        log.Fatalf("Error deleting rule: %v", err)
+    }
+    fmt.Println("Rule deleted successfully")
+}`}</pre>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="java" className="mt-6 space-y-6">
+          <Card>
+            <CardContent className="pt-6">
+              <h3 className="text-xl font-semibold mb-4">Java SDK</h3>
+              <p className="mb-4">
+                Our Java SDK provides a comprehensive interface for interacting with the FGuard API. It's designed for
+                enterprise applications and supports Java 8 and above.
+              </p>
+
+              <h4 className="text-lg font-medium mb-2">Installation</h4>
+              <div className="bg-slate-900 text-white rounded-lg p-4 font-mono text-sm overflow-x-auto mb-6">
+                <pre>{`<!-- Maven -->
+<dependency>
+    <groupId>com.fguard</groupId>
+    <artifactId>fguard-sdk</artifactId>
+    <version>1.0.0</version>
+</dependency>
+
+<!-- Gradle -->
+implementation 'com.fguard:fguard-sdk:1.0.0'`}</pre>
               </div>
 
-              <h4 className="font-medium mb-2">Installation</h4>
-              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4">
-                <code>dotnet add package FGuard.SDK</code>
-              </pre>
+              <h4 className="text-lg font-medium mb-2">Usage Example</h4>
+              <div className="bg-slate-900 text-white rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                <pre>{`import com.fguard.FGuardClient;
+import com.fguard.models.Condition;
+import com.fguard.models.Rule;
+import com.fguard.exceptions.FGuardException;
 
-              <h4 className="font-medium mb-2">Usage Example</h4>
-              <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto">
-                <code>
-                  using FGuard.SDK;
-                  <br />
-                  using FGuard.SDK.Models;
-                  <br />
-                  using System;
-                  <br />
-                  using System.Collections.Generic;
-                  <br />
-                  using System.Threading.Tasks;
-                  <br />
-                  <br />
-                  namespace FGuardExample
-                  <br />
-                  {"{"}
-                  <br />
-                  &nbsp;&nbsp;class Program
-                  <br />
-                  &nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;static async Task Main(string[] args)
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Initialize the client
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var client = new FGuardClient("YOUR_API_KEY");
-                  <br />
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// List all rules
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var rules = await client.Rules.ListAsync();
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine($"Rules: {"{"}rules{"}"}");
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;catch (Exception ex)
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine($"Error: {"{"}ex.Message{"}"}");
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Create a new rule
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var newRule = new Rule
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name = "Block SQL Injection",
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description = "Block SQL injection
-                  attempts",
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Action = "block",
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conditions = new List&lt;RuleCondition&gt;
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new RuleCondition
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Field =
-                  "request.uri",
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Operator =
-                  "contains",
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value = "SELECT"
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"}"};
-                  <br />
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var createdRule = await
-                  client.Rules.CreateAsync(newRule);
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine($"New rule created: {"{"}createdRule
-                  {"}"}");
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;catch (Exception ex)
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"{"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine($"Error: {"{"}ex.Message{"}"}");
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;{"}"}
-                  <br />
-                  &nbsp;&nbsp;{"}"}
-                  <br />
-                  {"}"}
-                </code>
-              </pre>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
-    </section>
+import java.util.Arrays;
+import java.util.List;
+
+public class FGuardExample {
+    public static void main(String[] args) {
+        // Initialize the client
+        FGuardClient client = new FGuardClient("YOUR_API_KEY");
+
+        try {
+            // List all rules
+            List<Rule> rules = client.rules().list();
+            System.out.println("Rules: " + rules);
+
+            // Create a new rule
+            Condition condition = new Condition()
+                .setField("request.headers.user-agent")
+                .setOperator("contains")
+                .setValue("script");
+
+            Rule newRule = new Rule()
+                .setName("Block XSS Attacks")
+                .setDescription("Blocks common cross-site scripting patterns")
+                .setPriority(1)
+                .setAction("block")
+                .setConditions(Arrays.asList(condition));
+
+            Rule createdRule = client.rules().create(newRule);
+            System.out.println("Created rule: " + createdRule);
+
+            // Get a specific rule
+            Rule rule = client.rules().get(createdRule.getId());
+            System.out.println("Retrieved rule: " + rule);
+
+            // Update a rule
+            createdRule.setPriority(2);
+            Rule updatedRule = client.rules().update(createdRule.getId(), createdRule);
+            System.out.println("Updated rule: " + updatedRule);
+
+            // Delete a rule
+            client.rules().delete(createdRule.getId());
+            System.out.println("Rule deleted successfully");
+
+        } catch (FGuardException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+}`}</pre>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </div>
   )
 }

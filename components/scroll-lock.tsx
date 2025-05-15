@@ -2,14 +2,8 @@
 
 import { useEffect } from "react"
 
-interface ScrollLockProps {
-  active?: boolean
-}
-
-export function ScrollLock({ active = true }: ScrollLockProps) {
+export function ScrollLock() {
   useEffect(() => {
-    if (!active) return
-
     // Save the current scroll position
     const scrollY = window.scrollY
 
@@ -27,7 +21,7 @@ export function ScrollLock({ active = true }: ScrollLockProps) {
       document.body.style.overflowY = ""
       window.scrollTo(0, scrollY)
     }
-  }, [active])
+  }, [])
 
   return null
 }
