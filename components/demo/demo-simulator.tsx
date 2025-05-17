@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { useTranslation } from "@/lib/i18n"
 import { Shield, Code, AlertTriangle, CheckCircle, Clock, Terminal, Database, FileCode, Folder } from "lucide-react"
 
 type AttackType = "sql" | "xss" | "path" | "command" | "custom"
@@ -24,7 +23,6 @@ type AttackResult = {
 }
 
 export function DemoSimulator() {
-  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<AttackType>("sql")
   const [customPayload, setCustomPayload] = useState("")
   const [isSimulating, setIsSimulating] = useState(false)
@@ -188,11 +186,10 @@ export function DemoSimulator() {
         <CardHeader>
           <CardTitle className="flex items-center text-2xl">
             <Shield className="mr-2 h-6 w-6 text-primary" />
-            {t("demo.simulator.title") || "WAF Attack Simulator"}
+            WAF Attack Simulator
           </CardTitle>
           <CardDescription>
-            {t("demo.simulator.description") ||
-              "Test how FGuard WAF detects and blocks different types of attacks in real-time"}
+            Test how FGuard WAF detects and blocks different types of attacks in real-time
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -207,7 +204,7 @@ export function DemoSimulator() {
 
             <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="font-medium">{t("demo.simulator.payload") || "Attack Payload"}</h3>
+                <h3 className="font-medium">Attack Payload</h3>
                 <Button variant="ghost" size="sm" onClick={() => setShowCode(!showCode)} className="text-xs">
                   <Code className="h-3.5 w-3.5 mr-1" />
                   {showCode ? "Hide Code" : "Show Code"}
@@ -249,28 +246,26 @@ export function DemoSimulator() {
                 {isSimulating ? (
                   <>
                     <div className="h-4 w-4 mr-2 rounded-full border-2 border-t-transparent border-white animate-spin" />
-                    {t("demo.simulator.simulating") || "Simulating..."}
+                    Simulating...
                   </>
                 ) : (
                   <>
                     <AlertTriangle className="h-4 w-4 mr-2" />
-                    {t("demo.simulator.simulate") || "Simulate Attack"}
+                    Simulate Attack
                   </>
                 )}
               </Button>
 
               {result && (
                 <Button variant="outline" onClick={handleReset} className="w-40">
-                  {t("demo.simulator.reset") || "Reset"}
+                  Reset
                 </Button>
               )}
             </div>
 
             {result && (
               <div className="border-t pt-6">
-                <h3 className="font-semibold text-lg mb-4">
-                  {t("demo.simulator.results") || "Attack Simulation Results"}
-                </h3>
+                <h3 className="font-semibold text-lg mb-4">Attack Simulation Results</h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
@@ -279,24 +274,16 @@ export function DemoSimulator() {
                         {result.detected ? <CheckCircle className="h-6 w-6" /> : <AlertTriangle className="h-6 w-6" />}
                       </div>
                       <div>
-                        <div className="font-medium">
-                          {result.detected
-                            ? t("demo.simulator.attackDetected") || "Attack Detected"
-                            : t("demo.simulator.attackNotDetected") || "Attack Not Detected"}
-                        </div>
+                        <div className="font-medium">{result.detected ? "Attack Detected" : "Attack Not Detected"}</div>
                         <div className="text-sm text-muted-foreground">
-                          {result.blocked
-                            ? t("demo.simulator.requestBlocked") || "Request was blocked"
-                            : t("demo.simulator.requestNotBlocked") || "Request was not blocked"}
+                          {result.blocked ? "Request was blocked" : "Request was not blocked"}
                         </div>
                       </div>
                     </div>
 
                     <div className="space-y-3">
                       <div>
-                        <div className="text-sm font-medium mb-1">
-                          {t("demo.simulator.attackType") || "Attack Type"}
-                        </div>
+                        <div className="text-sm font-medium mb-1">Attack Type</div>
                         <div className="flex items-center">
                           {getAttackIcon(activeTab)}
                           <span className="ml-2">{result.type}</span>
@@ -304,14 +291,14 @@ export function DemoSimulator() {
                       </div>
 
                       <div>
-                        <div className="text-sm font-medium mb-1">{t("demo.simulator.severity") || "Severity"}</div>
+                        <div className="text-sm font-medium mb-1">Severity</div>
                         <div className={`font-medium ${getSeverityColor(result.severity)}`}>
                           {result.severity.charAt(0).toUpperCase() + result.severity.slice(1)}
                         </div>
                       </div>
 
                       <div>
-                        <div className="text-sm font-medium mb-1">{t("demo.simulator.details") || "Details"}</div>
+                        <div className="text-sm font-medium mb-1">Details</div>
                         <div className="text-sm">{result.details}</div>
                       </div>
                     </div>
@@ -320,13 +307,13 @@ export function DemoSimulator() {
                   <div>
                     <div className="flex items-center mb-4">
                       <Clock className="h-5 w-5 mr-2 text-primary" />
-                      <div className="font-medium">{t("demo.simulator.responseTime") || "Response Timeline"}</div>
+                      <div className="font-medium">Response Timeline</div>
                     </div>
 
                     <div className="space-y-4">
                       <div>
                         <div className="flex justify-between text-sm mb-1">
-                          <span>{t("demo.simulator.detection") || "Detection"}</span>
+                          <span>Detection</span>
                           <span>{result.timeline.detection} ms</span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -339,7 +326,7 @@ export function DemoSimulator() {
 
                       <div>
                         <div className="flex justify-between text-sm mb-1">
-                          <span>{t("demo.simulator.analysis") || "Analysis"}</span>
+                          <span>Analysis</span>
                           <span>{result.timeline.analysis} ms</span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -352,7 +339,7 @@ export function DemoSimulator() {
 
                       <div>
                         <div className="flex justify-between text-sm mb-1">
-                          <span>{t("demo.simulator.mitigation") || "Mitigation"}</span>
+                          <span>Mitigation</span>
                           <span>{result.timeline.mitigation} ms</span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -365,7 +352,7 @@ export function DemoSimulator() {
 
                       <div className="pt-2 border-t">
                         <div className="flex justify-between font-medium">
-                          <span>{t("demo.simulator.totalTime") || "Total Time"}</span>
+                          <span>Total Time</span>
                           <span>{result.timeline.total} ms</span>
                         </div>
                       </div>

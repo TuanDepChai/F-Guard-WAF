@@ -1,37 +1,30 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Shield, Zap, LineChart, Lock } from "lucide-react"
-import { serverGetTranslation } from "@/lib/i18n/server"
 
 export function DemoFeatures() {
-  const t = serverGetTranslation()
-
   const features = [
     {
       icon: <Shield className="h-8 w-8 text-primary" />,
-      title: t("demo.features.realTime.title") || "Real-Time Protection",
+      title: "Real-Time Protection",
       description:
-        t("demo.features.realTime.description") ||
         "FGuard WAF analyzes and blocks malicious traffic in real-time, with response times typically under 200ms.",
     },
     {
       icon: <Zap className="h-8 w-8 text-primary" />,
-      title: t("demo.features.advanced.title") || "Advanced Threat Detection",
+      title: "Advanced Threat Detection",
       description:
-        t("demo.features.advanced.description") ||
         "Our machine learning algorithms continuously adapt to new attack patterns and zero-day vulnerabilities.",
     },
     {
       icon: <LineChart className="h-8 w-8 text-primary" />,
-      title: t("demo.features.detailed.title") || "Detailed Analytics",
+      title: "Detailed Analytics",
       description:
-        t("demo.features.detailed.description") ||
         "Get comprehensive insights into attack patterns, sources, and trends with our advanced analytics dashboard.",
     },
     {
       icon: <Lock className="h-8 w-8 text-primary" />,
-      title: t("demo.features.customizable.title") || "Customizable Rules",
+      title: "Customizable Rules",
       description:
-        t("demo.features.customizable.description") ||
         "Create and fine-tune security rules to match your specific application requirements and security policies.",
     },
   ]
@@ -39,10 +32,9 @@ export function DemoFeatures() {
   return (
     <div className="py-12">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold mb-4">{t("demo.features.title") || "Key Protection Features"}</h2>
+        <h2 className="text-3xl font-bold mb-4">Key Protection Features</h2>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          {t("demo.features.subtitle") ||
-            "FGuard WAF provides comprehensive protection against a wide range of web application threats"}
+          FGuard WAF provides comprehensive protection against a wide range of web application threats
         </p>
       </div>
 

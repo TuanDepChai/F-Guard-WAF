@@ -3,14 +3,12 @@ import { DemoHeader } from "@/components/demo/demo-header"
 import { DemoSimulator } from "@/components/demo/demo-simulator"
 import { DemoFeatures } from "@/components/demo/demo-features"
 import { DemoCta } from "@/components/demo/demo-cta"
-import { generateSeoMetadata } from "@/components/seo-optimization"
 
-export const metadata: Metadata = generateSeoMetadata({
-  title: "Interactive WAF Demo",
+export const metadata: Metadata = {
+  title: "Interactive WAF Demo | FGuard",
   description: "Experience FGuard's Web Application Firewall in action with our interactive demo",
   keywords: ["WAF demo", "security demo", "interactive demo", "attack simulation"],
-  path: "/demo",
-})
+}
 
 export default function DemoPage() {
   return (
