@@ -1,26 +1,18 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ArrowUp } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { motion, AnimatePresence } from "framer-motion"
+import { ChevronUp } from "lucide-react"
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false)
 
-  useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setIsVisible(true)
-      } else {
-        setIsVisible(false)
-      }
+  const toggleVisibility = () => {
+    if (window.scrollY > 300) {
+      setIsVisible(true)
+    } else {
+      setIsVisible(false)
     }
-
-    window.addEventListener("scroll", toggleVisibility)
-
-    return () => window.removeEventListener("scroll", toggleVisibility)
-  }, [])
+  }
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -29,26 +21,21 @@ export default function ScrollToTop() {
     })
   }
 
+  useEffect(() => {
+    window.addEventListener("scroll", toggleVisibility)
+    return () => window.removeEventListener("scroll", toggleVisibility)
+  }, [])
+
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          className="fixed bottom-6 right-6 z-50"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.5 }}
-          transition={{ duration: 0.2 }}
-        >
-          <Button
-            onClick={scrollToTop}
-            size="icon"
-            className="rounded-full shadow-lg bg-primary hover:bg-primary/90"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp className="h-5 w-5 text-white" />
-          </Button>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <button
+      type="button"
+      onClick={scrollToTop}
+      className={`${
+        isVisible ? "opacity-100" : "opacity-0"
+      } fixed bottom-4 right-4 z-40 rounded-full bg-blue-600 p-3 text-white shadow-md transition-opacity duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`}
+      aria-label="Scroll to top"
+    >
+      <ChevronUp className="h-5 w-5" aria-hidden="true" />
+    </button>
   )
 }

@@ -3,14 +3,12 @@ import { ContactForm } from "@/components/contact/contact-form"
 import { ContactInfo } from "@/components/contact/contact-info"
 import { ContactMap } from "@/components/contact/contact-map"
 import { ContactFaq } from "@/components/contact/contact-faq"
-import { generateSeoMetadata } from "@/components/seo-optimization"
 
-export const metadata: Metadata = generateSeoMetadata({
-  title: "Contact Us",
+export const metadata: Metadata = {
+  title: "Contact Us | FGuard WAF",
   description: "Get in touch with our security experts for any questions about FGuard WAF solutions",
   keywords: ["contact", "support", "security consultation", "WAF support"],
-  path: "/contact",
-})
+}
 
 export default function ContactPage() {
   return (

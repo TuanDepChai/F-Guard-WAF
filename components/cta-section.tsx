@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowRight, Shield, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -44,7 +44,7 @@ export default function CtaSection() {
   }
 
   return (
-    <section className="py-20 relative overflow-hidden" aria-labelledby="cta-heading">
+    <section className="py-20 relative overflow-hidden bg-blue-600" aria-labelledby="cta-heading">
       {/* Animated background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary to-blue-700 animate-gradient-xy">
         <div className="absolute inset-0 bg-grid-white/5"></div>
@@ -218,10 +218,17 @@ export default function CtaSection() {
                 </motion.p>
               )}
             </form>
-            <p className="text-xs text-white/80">
-              Enterprise-grade security solutions for organizations of all sizes. Our security experts will contact you
-              within 24 hours.
-            </p>
+            <div className="mt-10 flex items-center gap-x-6 lg:mt-0 lg:flex-shrink-0">
+              <Link
+                href="/signup"
+                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-blue-600 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Get started
+              </Link>
+              <Link href="/contact" className="text-sm font-semibold leading-6 text-white">
+                Contact sales <span aria-hidden="true">→</span>
+              </Link>
+            </div>
           </motion.div>
         </motion.div>
       </div>

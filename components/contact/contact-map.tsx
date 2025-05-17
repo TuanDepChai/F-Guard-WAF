@@ -1,11 +1,8 @@
 "use client"
 
 import { Card } from "@/components/ui/card"
-import { useTranslation } from "@/lib/i18n"
 
 export function ContactMap() {
-  const { t } = useTranslation()
-
   return (
     <Card className="overflow-hidden">
       <div className="aspect-[16/9] md:aspect-[21/9]">
@@ -17,7 +14,7 @@ export function ContactMap() {
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          title={t("contact.officeLocation") || "FGuard Office Location"}
+          title="FGuard Office Location"
         ></iframe>
       </div>
     </Card>

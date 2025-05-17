@@ -1,115 +1,61 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { ArrowRight, Shield } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useTheme } from "@/components/theme-provider"
 import Link from "next/link"
-import { motion } from "framer-motion"
-import BlurImage from "@/components/blur-image"
-import { useLanguage } from "@/lib/i18n/language-context"
+import Image from "next/image"
 
 export default function HeroSection() {
-  const [scrollY, setScrollY] = useState(0)
-  const { theme } = useTheme()
-  const isDark = theme === "dark"
-  const { t } = useLanguage()
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const calculateTransform = (factor: number) => {
-    return `translateY(${scrollY * factor}px)`
-  }
-
   return (
-    <section className="relative py-16 md:py-24 lg:py-28 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950 z-0"></div>
-
-      {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 right-0 w-64 h-64 bg-primary/5 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-blue-500/5 rounded-full filter blur-3xl"></div>
-      </div>
-
-      <div className="container relative z-10 mx-auto px-4">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          <motion.div
-            className="inline-flex items-center px-3 py-1 rounded-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm mb-6"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Shield className="h-4 w-4 text-primary mr-2" />
-            <span className="text-sm font-medium">Enterprise-grade Web Application Firewall</span>
-          </motion.div>
-
-          <motion.h1
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            {t("hero.title")}
-          </motion.h1>
-
-          <motion.p
-            className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            {t("hero.subtitle")}
-          </motion.p>
-
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <Link href="/demo">
-              <Button size="lg" className="px-8 w-full sm:w-auto">
-                {t("hero.tryDemo")}
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+    <div className="relative isolate overflow-hidden bg-white dark:bg-gray-900">
+      <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
+        <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
+          <div className="mt-24 sm:mt-32 lg:mt-16">
+            <a href="/technical-specs" className="inline-flex space-x-6">
+              <span className="rounded-full bg-blue-600/10 px-3 py-1 text-sm font-semibold leading-6 text-blue-600 dark:text-blue-400 ring-1 ring-inset ring-blue-600/10">
+                What's new
+              </span>
+              <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600 dark:text-gray-400">
+                <span>Just released: v2.1.0</span>
+                <svg className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path
+                    fillRule="evenodd"
+                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
+          <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
+            Enterprise Web Application Firewall
+          </h1>
+          <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
+            Protect your web applications from cyber threats with our advanced WAF solution. FGuard provides
+            comprehensive security against OWASP Top 10, DDoS attacks, and zero-day vulnerabilities.
+          </p>
+          <div className="mt-10 flex items-center gap-x-6">
+            <Link
+              href="/demo"
+              className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            >
+              Try Demo
             </Link>
-            <Link href="/documentation">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                {t("hero.documentation")}
-              </Button>
+            <Link href="/documentation" className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+              Learn more <span aria-hidden="true">→</span>
             </Link>
-          </motion.div>
-
-          <motion.div
-            className="relative w-full max-w-5xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <div className="aspect-[16/9] rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-2xl">
-              <BlurImage
+          </div>
+        </div>
+        <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
+          <div className="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
+            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+              <Image
                 src="/images/waf-dashboard.jpg"
                 alt="FGuard WAF Dashboard"
-                className="w-full h-full"
-                priority={true}
+                width={2432}
+                height={1442}
+                className="w-[76rem] rounded-md shadow-2xl ring-1 ring-gray-900/10"
               />
             </div>
-            <div className="absolute -bottom-4 -right-4 bg-white dark:bg-gray-900 p-2 rounded-lg border border-gray-200 dark:border-gray-800 shadow-lg hidden md:block">
-              <div className="flex items-center gap-2 px-3 py-1">
-                <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-sm font-medium">Active Protection</span>
-              </div>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

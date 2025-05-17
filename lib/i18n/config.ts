@@ -1,8 +1,8 @@
-/**
- * Stub implementation for i18n configuration
- * This file exists to satisfy imports that haven't been fully removed yet
- */
+export const i18nConfig = {
+  defaultLocale: "en",
+  locales: ["en"],
+  localeCookieName: "NEXT_LOCALE",
+  localeDetection: true,
+}
 
-export const defaultLocale = "en"
-export const locales = ["en"]
-export const defaultNamespace = "common"
+export type Locale = (typeof i18nConfig)["locales"][number]

@@ -1,20 +1,28 @@
-/**
- * Stub implementation for i18n functionality
- * This file exists to satisfy imports that haven't been fully removed yet
- */
-
-export const useTranslation = () => {
-  // Return a function that returns the input string
-  // This way any t("some.key") calls will just return "some.key"
+// Simplified i18n implementation without actual translation functionality
+export function useTranslation() {
+  // Return a simple translation function that just returns the key
   return {
-    t: (key: string) => key,
-    locale: "en",
-    changeLocale: () => {},
+    t: (key: string, options?: any) => {
+      // If options contains count, handle plural forms simply
+      if (options?.count !== undefined) {
+        return options.count === 1 ? key : `${key}s`
+      }
+      return key
+    },
+    i18n: {
+      language: "en",
+      changeLanguage: (lang: string) => Promise.resolve(),
+    },
   }
 }
 
-// Add any other exports that might be needed
-export const getI18n = () => ({
-  language: "en",
-  changeLanguage: () => Promise.resolve(),
-})
+// Simple language detection
+export function detectLanguage(): string {
+  return "en"
+}
+
+// Simple language list
+export const languages = ["en"]
+
+// Default language
+export const defaultLanguage = "en"

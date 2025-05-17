@@ -3,16 +3,11 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { LanguageProvider } from "@/lib/i18n/language-context"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import CookieConsent from "@/components/cookie-consent"
 import ScrollToTop from "@/components/scroll-to-top"
 import SkipToContent from "@/components/skip-to-content"
-import ErrorBoundary from "@/components/error-boundary"
-import PageLoading from "@/components/page-loading"
-import { LanguageDetector } from "@/components/language-detector"
-import { LanguageAutoDetector } from "@/components/language-auto-detector"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -76,23 +71,16 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <LanguageProvider>
-            <LanguageAutoDetector />
-            <div className="flex flex-col min-h-screen">
-              <PageLoading />
-              <SkipToContent />
-              <Navbar />
-              <LanguageDetector />
-              <ErrorBoundary>
-                <main id="main-content" className="flex-1">
-                  {children}
-                </main>
-              </ErrorBoundary>
-              <Footer />
-              <CookieConsent />
-              <ScrollToTop />
-            </div>
-          </LanguageProvider>
+          <div className="flex flex-col min-h-screen">
+            <SkipToContent />
+            <Navbar />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+            <CookieConsent />
+            <ScrollToTop />
+          </div>
         </ThemeProvider>
       </body>
     </html>

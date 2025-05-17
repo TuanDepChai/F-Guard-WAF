@@ -2,238 +2,269 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Shield, Menu, X, ChevronDown } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { DarkModeToggle } from "@/components/dark-mode-toggle"
-import { SearchDialog } from "@/components/search-dialog"
-import { LanguageSwitcher } from "@/components/language-switcher"
-import KeyboardShortcuts from "@/components/keyboard-shortcuts"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { motion, AnimatePresence } from "framer-motion"
-import { useLanguage } from "@/lib/i18n/language-context"
+import { Menu, X, ChevronDown } from "lucide-react"
+import DarkModeToggle from "./dark-mode-toggle"
+
+const navigation = [
+  { name: "Home", href: "/" },
+  {
+    name: "Products",
+    href: "#",
+    children: [
+      { name: "WAF Solution", href: "/products/waf" },
+      { name: "DDoS Protection", href: "/products/ddos" },
+      { name: "API Security", href: "/products/api" },
+      { name: "Bot Management", href: "/products/bot" },
+    ],
+  },
+  {
+    name: "Solutions",
+    href: "#",
+    children: [
+      { name: "Enterprise", href: "/solutions/enterprise" },
+      { name: "Small Business", href: "/solutions/small-business" },
+      { name: "E-commerce", href: "/solutions/ecommerce" },
+      { name: "Healthcare", href: "/solutions/healthcare" },
+      { name: "Financial Services", href: "/solutions/financial" },
+    ],
+  },
+  { name: "Pricing", href: "/pricing" },
+  {
+    name: "Resources",
+    href: "#",
+    children: [
+      { name: "Documentation", href: "/documentation" },
+      { name: "API Docs", href: "/api-docs" },
+      { name: "Blog", href: "/blog" },
+      { name: "Case Studies", href: "/case-studies" },
+      { name: "Security Academy", href: "/security-academy" },
+      { name: "Technical Specs", href: "/technical-specs" },
+      { name: "System Status", href: "/status" },
+      { name: "Compliance", href: "/compliance" },
+      { name: "Roadmap", href: "/roadmap" },
+    ],
+  },
+  { name: "Partners", href: "/partners" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
+]
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
-  const { t } = useLanguage()
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
+      setScrolled(window.scrollY > 10)
     }
-
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
+  const toggleDropdown = (name: string) => {
+    setActiveDropdown(activeDropdown === name ? null : name)
   }
 
-  const closeMenu = () => {
-    setIsMenuOpen(false)
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/"
+    }
+    return pathname.startsWith(href)
   }
-
-  const navigationItems = [
-    { name: t("common.home"), href: "/" },
-    { name: t("common.features"), href: "/#features" },
-    { name: t("common.pricing"), href: "/#pricing" },
-    {
-      name: t("common.solutions"),
-      href: "#",
-      children: [
-        { name: t("common.enterprise"), href: "/#enterprise" },
-        { name: t("common.caseStudies"), href: "/case-studies" },
-        { name: t("common.comparison"), href: "/comparison" },
-        { name: t("common.technicalSpecs"), href: "/technical-specs" },
-      ],
-    },
-    {
-      name: t("common.resources"),
-      href: "#",
-      children: [
-        { name: t("common.documentation"), href: "/documentation" },
-        { name: t("common.apiDocs"), href: "/api-docs" },
-        { name: t("common.securityAcademy"), href: "/security-academy" },
-        { name: t("common.blog"), href: "/blog" },
-      ],
-    },
-    {
-      name: t("common.company"),
-      href: "#",
-      children: [
-        { name: t("common.aboutUs"), href: "/about" },
-        { name: t("common.partners"), href: "/partners" },
-        { name: t("common.compliance"), href: "/compliance" },
-        { name: t("common.roadmap"), href: "/roadmap" },
-        { name: t("common.contact"), href: "/contact" },
-      ],
-    },
-  ]
 
   return (
     <header
-      className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-200",
-        isScrolled ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm" : "bg-transparent",
-      )}
+      className={`sticky top-0 z-50 w-full transition-all duration-200 ${
+        scrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm" : "bg-white dark:bg-gray-900"
+      }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2" onClick={closeMenu}>
-              <Shield className="h-6 w-6 text-primary" />
-              <span className="font-bold text-xl">FGuard</span>
-            </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
-            {navigationItems.map((item) =>
-              item.children ? (
-                <DropdownMenu
-                  key={item.name}
-                  onOpenChange={(open) => {
-                    if (open) setActiveDropdown(item.name)
-                    else if (activeDropdown === item.name) setActiveDropdown(null)
-                  }}
-                >
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      className={cn(
-                        "flex items-center gap-1 h-10 px-4",
-                        activeDropdown === item.name ? "text-primary" : "text-foreground/80",
-                      )}
-                    >
-                      {item.name}
-                      <ChevronDown className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="center" className="w-48">
-                    {item.children.map((child) => (
-                      <DropdownMenuItem key={child.name} asChild>
-                        <Link href={child.href} className={cn("w-full", pathname === child.href ? "text-primary" : "")}>
-                          {child.name}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    "text-sm font-medium transition-colors hover:text-primary px-4 py-2",
-                    pathname === item.href ? "text-primary" : "text-foreground/80",
-                  )}
-                >
-                  {item.name}
-                </Link>
-              ),
-            )}
-          </nav>
-
-          <div className="hidden md:flex items-center space-x-2">
-            <SearchDialog />
-            <LanguageSwitcher />
-            <KeyboardShortcuts />
-            <DarkModeToggle />
-            <Link href="/login">
-              <Button variant="ghost" size="sm">
-                {t("common.login")}
-              </Button>
-            </Link>
-            <Link href="/signup">
-              <Button size="sm">{t("common.getStarted")}</Button>
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button and Dark Mode Toggle */}
-          <div className="md:hidden flex items-center space-x-2">
-            <SearchDialog />
-            <LanguageSwitcher />
-            <KeyboardShortcuts />
-            <DarkModeToggle />
-            <button
-              className="flex items-center text-gray-500 dark:text-gray-400"
-              onClick={toggleMenu}
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
+        <div className="flex lg:flex-1">
+          <Link href="/" className="-m-1.5 p-1.5 flex items-center">
+            <span className="sr-only">FGuard</span>
+            <div className="h-8 w-8 bg-blue-600 rounded-md mr-2"></div>
+            <span className="text-xl font-bold">FGuard</span>
+          </Link>
         </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            className="md:hidden bg-white dark:bg-gray-900 border-b dark:border-gray-800"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+        <div className="flex lg:hidden">
+          <button
+            type="button"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5"
+            onClick={() => setMobileMenuOpen(true)}
           >
-            <div className="container mx-auto px-4 py-4">
-              <nav className="flex flex-col space-y-1">
-                {navigationItems.map((item) =>
-                  item.children ? (
-                    <div key={item.name} className="py-2">
-                      <div className="flex items-center justify-between py-2 px-3 font-medium">{item.name}</div>
-                      <div className="pl-4 border-l-2 border-gray-200 dark:border-gray-700 ml-3 space-y-1">
+            <span className="sr-only">Open main menu</span>
+            <Menu className="h-6 w-6" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="hidden lg:flex lg:gap-x-8">
+          {navigation.map((item) => (
+            <div key={item.name} className="relative">
+              {item.children ? (
+                <div>
+                  <button
+                    onClick={() => toggleDropdown(item.name)}
+                    className={`flex items-center gap-x-1 text-sm font-semibold leading-6 ${
+                      activeDropdown === item.name
+                        ? "text-blue-600 dark:text-blue-400"
+                        : "text-gray-900 dark:text-gray-100"
+                    }`}
+                    aria-expanded={activeDropdown === item.name}
+                  >
+                    {item.name}
+                    <ChevronDown className="h-4 w-4" aria-hidden="true" />
+                  </button>
+                  {activeDropdown === item.name && (
+                    <div className="absolute left-0 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white dark:bg-gray-800 shadow-lg ring-1 ring-gray-900/5">
+                      <div className="p-4">
                         {item.children.map((child) => (
-                          <Link
+                          <div
                             key={child.name}
-                            href={child.href}
-                            className={cn(
-                              "block py-2 px-3 text-sm transition-colors hover:text-primary",
-                              pathname === child.href ? "text-primary" : "text-foreground/80",
-                            )}
-                            onClick={closeMenu}
+                            className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50 dark:hover:bg-gray-700"
                           >
-                            {child.name}
-                          </Link>
+                            <div className="flex-auto">
+                              <Link
+                                href={child.href}
+                                className="block font-semibold text-gray-900 dark:text-gray-100"
+                                onClick={() => setActiveDropdown(null)}
+                              >
+                                {child.name}
+                                <span className="absolute inset-0" />
+                              </Link>
+                            </div>
+                          </div>
                         ))}
                       </div>
                     </div>
-                  ) : (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className={cn(
-                        "py-2 px-3 text-sm font-medium transition-colors hover:text-primary",
-                        pathname === item.href ? "text-primary" : "text-foreground/80",
+                  )}
+                </div>
+              ) : (
+                <Link
+                  href={item.href}
+                  className={`text-sm font-semibold leading-6 ${
+                    isActive(item.href) ? "text-blue-600 dark:text-blue-400" : "text-gray-900 dark:text-gray-100"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
+          <DarkModeToggle />
+          <Link
+            href="/demo"
+            className="rounded-md bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          >
+            Try Demo
+          </Link>
+          <Link
+            href="/login"
+            className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
+          >
+            Log in <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
+      </nav>
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden">
+          <div className="fixed inset-0 z-50" />
+          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div className="flex items-center justify-between">
+              <Link href="/" className="-m-1.5 p-1.5 flex items-center">
+                <span className="sr-only">FGuard</span>
+                <div className="h-8 w-8 bg-blue-600 rounded-md mr-2"></div>
+                <span className="text-xl font-bold">FGuard</span>
+              </Link>
+              <button type="button" className="-m-2.5 rounded-md p-2.5" onClick={() => setMobileMenuOpen(false)}>
+                <span className="sr-only">Close menu</span>
+                <X className="h-6 w-6" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="mt-6 flow-root">
+              <div className="-my-6 divide-y divide-gray-500/10">
+                <div className="space-y-2 py-6">
+                  {navigation.map((item) => (
+                    <div key={item.name} className="-mx-3">
+                      {item.children ? (
+                        <div>
+                          <button
+                            onClick={() => toggleDropdown(item.name)}
+                            className={`flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 ${
+                              activeDropdown === item.name
+                                ? "text-blue-600 dark:text-blue-400"
+                                : "text-gray-900 dark:text-gray-100"
+                            }`}
+                            aria-expanded={activeDropdown === item.name}
+                          >
+                            {item.name}
+                            <ChevronDown
+                              className={`h-5 w-5 flex-none ${
+                                activeDropdown === item.name ? "rotate-180" : ""
+                              } transition-transform`}
+                              aria-hidden="true"
+                            />
+                          </button>
+                          {activeDropdown === item.name && (
+                            <div className="mt-2 space-y-2">
+                              {item.children.map((child) => (
+                                <Link
+                                  key={child.name}
+                                  href={child.href}
+                                  className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800"
+                                  onClick={() => setMobileMenuOpen(false)}
+                                >
+                                  {child.name}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          className={`block rounded-lg py-2 pl-3 pr-3 text-base font-semibold leading-7 ${
+                            isActive(item.href)
+                              ? "text-blue-600 dark:text-blue-400"
+                              : "text-gray-900 dark:text-gray-100"
+                          } hover:bg-gray-50 dark:hover:bg-gray-800`}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {item.name}
+                        </Link>
                       )}
-                      onClick={closeMenu}
-                    >
-                      {item.name}
-                    </Link>
-                  ),
-                )}
-                <div className="flex flex-col space-y-2 pt-2 border-t dark:border-gray-800 mt-2">
-                  <Link href="/login" onClick={closeMenu}>
-                    <Button variant="ghost" className="w-full justify-start" size="sm">
-                      {t("common.login")}
-                    </Button>
+                    </div>
+                  ))}
+                </div>
+                <div className="py-6 space-y-3">
+                  <div className="flex items-center">
+                    <DarkModeToggle />
+                    <span className="ml-2 text-sm">Toggle theme</span>
+                  </div>
+                  <Link
+                    href="/demo"
+                    className="block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Try Demo
                   </Link>
-                  <Link href="/signup" onClick={closeMenu}>
-                    <Button className="w-full" size="sm">
-                      {t("common.getStarted")}
-                    </Button>
+                  <Link
+                    href="/login"
+                    className="block text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Log in <span aria-hidden="true">&rarr;</span>
                   </Link>
                 </div>
-              </nav>
+              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </header>
   )
 }

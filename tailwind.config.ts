@@ -35,18 +35,6 @@ const config = {
           "Segoe UI Emoji",
           "Segoe UI Symbol",
           "Noto Color Emoji",
-          // Thêm font hỗ trợ tiếng Nhật và tiếng Trung
-          "Hiragino Sans",
-          "Hiragino Kaku Gothic Pro",
-          "Yu Gothic",
-          "YuGothic",
-          "Meiryo",
-          "MS PGothic",
-          "Apple SD Gothic Neo",
-          "Noto Sans CJK JP",
-          "Noto Sans CJK KR",
-          "Noto Sans CJK SC",
-          "Noto Sans CJK TC",
         ],
       },
       colors: {

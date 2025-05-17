@@ -1,65 +1,97 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
+import { Sun, Moon, Laptop } from "lucide-react"
 
-export function DarkModeToggle() {
-  const { theme, setTheme } = useTheme()
+export default function DarkModeToggle() {
   const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const [isOpen, setIsOpen] = useState(false)
 
-  // Ensure component is mounted before accessing theme
   useEffect(() => {
     setMounted(true)
   }, [])
 
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Toggle theme">
-        <div className="h-5 w-5 bg-gray-300 dark:bg-gray-700 rounded-full animate-pulse"></div>
-      </Button>
+      <button
+        type="button"
+        className="rounded-md p-2 text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        aria-label="Toggle dark mode"
+      >
+        <Sun className="h-5 w-5" />
+      </button>
     )
   }
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark")
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const closeDropdown = () => {
+    setIsOpen(false)
   }
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={toggleTheme}
-      className="h-9 w-9 relative overflow-hidden"
-      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
-    >
-      <div className="relative w-5 h-5">
-        <motion.div
-          initial={{ rotate: 0 }}
-          animate={{
-            rotate: theme === "dark" ? 45 : 0,
-            opacity: theme === "dark" ? 0 : 1,
-          }}
-          transition={{ duration: 0.3 }}
-          className="absolute inset-0 flex items-center justify-center"
-        >
-          <Sun className="h-5 w-5" />
-        </motion.div>
-
-        <motion.div
-          initial={{ rotate: -45 }}
-          animate={{
-            rotate: theme === "dark" ? 0 : -45,
-            opacity: theme === "dark" ? 1 : 0,
-          }}
-          transition={{ duration: 0.3 }}
-          className="absolute inset-0 flex items-center justify-center"
-        >
+    <div className="relative">
+      <button
+        type="button"
+        onClick={toggleDropdown}
+        className="rounded-md p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        aria-label="Toggle dark mode"
+      >
+        {theme === "dark" ? (
           <Moon className="h-5 w-5" />
-        </motion.div>
-      </div>
-    </Button>
+        ) : theme === "light" ? (
+          <Sun className="h-5 w-5" />
+        ) : (
+          <Laptop className="h-5 w-5" />
+        )}
+      </button>
+
+      {isOpen && (
+        <>
+          <div className="fixed inset-0 z-10" onClick={closeDropdown}></div>
+          <div className="absolute right-0 z-20 mt-2 w-36 rounded-md bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+              <button
+                onClick={() => {
+                  setTheme("light")
+                  closeDropdown()
+                }}
+                className="flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                role="menuitem"
+              >
+                <Sun className="mr-3 h-4 w-4" />
+                Light
+              </button>
+              <button
+                onClick={() => {
+                  setTheme("dark")
+                  closeDropdown()
+                }}
+                className="flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                role="menuitem"
+              >
+                <Moon className="mr-3 h-4 w-4" />
+                Dark
+              </button>
+              <button
+                onClick={() => {
+                  setTheme("system")
+                  closeDropdown()
+                }}
+                className="flex w-full items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                role="menuitem"
+              >
+                <Laptop className="mr-3 h-4 w-4" />
+                System
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   )
 }

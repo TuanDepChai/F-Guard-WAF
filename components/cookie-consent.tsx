@@ -1,46 +1,53 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
 
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const consent = localStorage.getItem("cookie-consent")
-    if (!consent) {
-      setIsVisible(true)
+    // Check if user has already accepted cookies
+    const hasAccepted = localStorage.getItem("cookieConsent") === "accepted"
+    if (!hasAccepted) {
+      // Show the cookie consent banner after a short delay
+      const timer = setTimeout(() => {
+        setIsVisible(true)
+      }, 1000)
+      return () => clearTimeout(timer)
     }
   }, [])
 
-  const handleAccept = () => {
-    localStorage.setItem("cookie-consent", "accepted")
+  const acceptCookies = () => {
+    localStorage.setItem("cookieConsent", "accepted")
     setIsVisible(false)
   }
 
-  const handleDecline = () => {
-    localStorage.setItem("cookie-consent", "declined")
-    setIsVisible(false)
+  if (!isVisible) {
+    return null
   }
-
-  if (!isVisible) return null
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white dark:bg-gray-900 border-t shadow-lg">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold">Cookie Consent</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-            We use cookies to enhance your browsing experience, analyze site traffic, and personalize content.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" onClick={handleDecline}>
-            Decline
-          </Button>
-          <Button size="sm" onClick={handleAccept}>
-            Accept
-          </Button>
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 shadow-lg border-t border-gray-200 dark:border-gray-700">
+      <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-sm text-gray-700 dark:text-gray-300">
+            We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our
+            traffic. By clicking "Accept All", you consent to our use of cookies.
+          </div>
+          <div className="flex gap-3">
+            <button
+              onClick={acceptCookies}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+            >
+              Accept All
+            </button>
+            <button
+              onClick={acceptCookies}
+              className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-md text-sm font-medium"
+            >
+              Reject Non-Essential
+            </button>
+          </div>
         </div>
       </div>
     </div>

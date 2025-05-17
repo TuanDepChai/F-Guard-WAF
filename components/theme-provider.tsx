@@ -3,7 +3,6 @@
 import type * as React from "react"
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { createContext, useContext, useState, useEffect } from "react"
-import { getCookie, setCookie } from "@/lib/cookies"
 
 type ThemeProviderProps = {
   children: React.ReactNode
@@ -40,15 +39,26 @@ export function ThemeProvider({
   const [resolvedTheme, setResolvedTheme] = useState<string | undefined>(defaultTheme)
 
   useEffect(() => {
-    const savedColor = (getCookie("FGUARD_COLOR") as ColorTheme) || "blue"
-    setColorThemeState(savedColor)
+    // Get color theme from localStorage if available
+    try {
+      const savedColor = localStorage.getItem("FGUARD_COLOR") as ColorTheme
+      if (savedColor) {
+        setColorThemeState(savedColor)
+      }
+    } catch (e) {
+      // Ignore localStorage errors
+    }
     setMounted(true)
   }, [])
 
-  // Set color theme and save to cookie
+  // Set color theme and save to localStorage
   const setColorTheme = (newColorTheme: ColorTheme) => {
     setColorThemeState(newColorTheme)
-    setCookie("FGUARD_COLOR", newColorTheme, 30)
+    try {
+      localStorage.setItem("FGUARD_COLOR", newColorTheme)
+    } catch (e) {
+      // Ignore localStorage errors
+    }
   }
 
   // Update theme
