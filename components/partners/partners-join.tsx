@@ -1,167 +1,87 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ArrowRight, CheckCircle2 } from "lucide-react"
+
+const benefits = [
+  "Access to cutting-edge security technology",
+  "Dedicated partner support team",
+  "Marketing and sales resources",
+  "Technical training and certification",
+  "Revenue sharing opportunities",
+  "Global partner network"
+]
 
 export default function PartnersJoin() {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [company, setCompany] = useState("")
-  const [website, setWebsite] = useState("")
-  const [partnerType, setPartnerType] = useState("")
-  const [message, setMessage] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSuccess(true)
-      setName("")
-      setEmail("")
-      setCompany("")
-      setWebsite("")
-      setPartnerType("")
-      setMessage("")
-
-      // Reset success message after 3 seconds
-      setTimeout(() => {
-        setIsSuccess(false)
-      }, 3000)
-    }, 1000)
-  }
-
   return (
-    <section className="py-16 bg-gray-50 dark:bg-gray-800">
+    <section className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Join Our Partner Ecosystem</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            Take the first step towards a rewarding partnership with FGuard
-          </p>
-        </div>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold mb-4">Join Our Partner Program</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400">
+              Take your business to the next level with FGuard WAF
+            </p>
+          </div>
 
-        <div className="max-w-3xl mx-auto">
-          <Card>
-            <CardHeader>
-              <CardTitle>Partner Application</CardTitle>
-              <CardDescription>
-                Fill out the form below to express your interest in becoming a FGuard partner
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Card className="border-0 shadow-lg">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-semibold mb-6">Partner Benefits</h3>
+                <ul className="space-y-4">
+                  {benefits.map((benefit, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-600 dark:text-gray-400">{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-semibold mb-6">Apply Now</h3>
+                <form className="space-y-6">
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium">
-                      Contact Name
-                    </label>
-                    <Input
-                      id="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Your name"
-                      required
+                    <label className="text-sm font-medium">Company Name</label>
+                    <Input placeholder="Enter your company name" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Your Name</label>
+                    <Input placeholder="Enter your name" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Email</label>
+                    <Input type="email" placeholder="Enter your email" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Phone</label>
+                    <Input type="tel" placeholder="Enter your phone number" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Message</label>
+                    <Textarea
+                      placeholder="Tell us about your company and why you want to partner with us"
+                      className="min-h-[100px]"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium">
-                      Business Email
-                    </label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="your.email@company.com"
-                      required
-                    />
-                  </div>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label htmlFor="company" className="text-sm font-medium">
-                      Company Name
-                    </label>
-                    <Input
-                      id="company"
-                      value={company}
-                      onChange={(e) => setCompany(e.target.value)}
-                      placeholder="Your company"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="website" className="text-sm font-medium">
-                      Company Website
-                    </label>
-                    <Input
-                      id="website"
-                      type="url"
-                      value={website}
-                      onChange={(e) => setWebsite(e.target.value)}
-                      placeholder="https://www.example.com"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="partnerType" className="text-sm font-medium">
-                    Partnership Type
-                  </label>
-                  <Select value={partnerType} onValueChange={setPartnerType} required>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select partnership type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="reseller">Reseller Partner</SelectItem>
-                      <SelectItem value="technology">Technology Partner</SelectItem>
-                      <SelectItem value="service">Service Partner</SelectItem>
-                      <SelectItem value="referral">Referral Partner</SelectItem>
-                      <SelectItem value="not-sure">Not Sure Yet</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium">
-                    Tell Us About Your Business
-                  </label>
-                  <Textarea
-                    id="message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Please share information about your business, target market, and how you envision partnering with FGuard..."
-                    rows={5}
-                    required
-                  />
-                </div>
-
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
-                  {isSubmitting ? "Submitting..." : "Submit Application"}
-                </Button>
-
-                {isSuccess && (
-                  <div className="p-3 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100 rounded-md">
-                    Thank you for your interest in partnering with FGuard! Our partner team will review your application
-                    and contact you within 2 business days.
-                  </div>
-                )}
-              </form>
-            </CardContent>
-          </Card>
+                  <Button className="w-full group">
+                    Submit Application
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </section>

@@ -7,14 +7,14 @@ const features = [
     description:
       "Advanced protection against distributed denial-of-service attacks, ensuring your applications remain available even during large-scale attacks.",
     icon: Shield,
-    image: "/images/ddos-protection.jpg",
+    image: "/images/ddos-protection.png",
   },
   {
     name: "Zero-Day Vulnerability Protection",
     description:
       "Proactive defense against unknown vulnerabilities with AI-powered threat detection and virtual patching technology.",
     icon: Zap,
-    image: "/images/zero-day.jpg",
+    image: "/images/zero-day.png",
   },
   {
     name: "OWASP Top 10 Coverage",
@@ -35,14 +35,14 @@ const features = [
     description:
       "Detailed insights into traffic patterns, attack vectors, and security events with customizable dashboards and alerts.",
     icon: BarChart,
-    image: "/images/analytics.jpg",
+    image: "/images/analytics.png",
   },
   {
     name: "Global CDN Integration",
     description:
       "Seamless integration with leading content delivery networks to provide both security and performance optimization.",
     icon: Cloud,
-    image: "/images/cdn.jpg",
+    image: "/images/cdn.png",
   },
 ]
 
@@ -70,13 +70,13 @@ export default function FeaturesSection() {
                 </dt>
                 <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-400">
                   <p className="flex-auto">{feature.description}</p>
-                  <div className="mt-6 rounded-md overflow-hidden">
+                  <div className="mt-6 rounded-md overflow-hidden shadow-lg">
                     <Image
-                      src={feature.image || "/placeholder.svg"}
+                      src={feature.image}
                       alt={feature.name}
                       width={500}
                       height={300}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                 </dd>

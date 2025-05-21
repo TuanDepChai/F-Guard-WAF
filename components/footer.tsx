@@ -82,7 +82,7 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <div className="flex items-center">
-              <div className="h-10 w-10 bg-blue-600 rounded-md mr-3"></div>
+              <img src="/images/logo.png" alt="FGuard Logo" className="h-10 w-auto mr-3" />
               <span className="text-2xl font-bold">FGuard</span>
             </div>
             <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">

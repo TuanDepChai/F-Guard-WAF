@@ -91,9 +91,34 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      typography: (theme: any) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-body': theme('colors.gray.700'),
+            '--tw-prose-headings': theme('colors.gray.900'),
+            '--tw-prose-lead': theme('colors.gray.600'),
+            '--tw-prose-links': theme('colors.blue.600'),
+            '--tw-prose-code': theme('colors.gray.800'),
+            '--tw-prose-pre-bg': theme('colors.gray.100'),
+            '--tw-prose-pre-code': theme('colors.gray.800'),
+            '--tw-prose-quote-borders': theme('colors.gray.300'),
+            '--tw-prose-captions': theme('colors.gray.500'),
+
+            '--tw-prose-invert-body': theme('colors.gray.300'),
+            '--tw-prose-invert-headings': theme('colors.white'),
+            '--tw-prose-invert-lead': theme('colors.gray.400'),
+            '--tw-prose-invert-links': theme('colors.blue.400'),
+            '--tw-prose-invert-code': theme('colors.gray.200'),
+            '--tw-prose-invert-pre-bg': theme('colors.gray.800'),
+            '--tw-prose-invert-pre-code': theme('colors.gray.200'),
+            '--tw-prose-invert-quote-borders': theme('colors.gray.600'),
+            '--tw-prose-invert-captions': theme('colors.gray.500'),
+          },
+        },
+      }),
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config
 
 export default config

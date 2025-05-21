@@ -4,7 +4,8 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Menu, X, ChevronDown } from "lucide-react"
-import DarkModeToggle from "./dark-mode-toggle"
+import { ThemeToggle } from "./theme-toggle"
+import Image from "next/image"
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -81,12 +82,17 @@ export default function Navbar() {
         scrolled ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm" : "bg-white dark:bg-gray-900"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
-        <div className="flex lg:flex-1">
+      <nav className="mx-auto flex h-24 max-w-7xl items-center justify-between p-4 lg:px-8" aria-label="Global">
+        <div className="flex items-center">
           <Link href="/" className="-m-1.5 p-1.5 flex items-center">
             <span className="sr-only">FGuard</span>
-            <div className="h-8 w-8 bg-blue-600 rounded-md mr-2"></div>
-            <span className="text-xl font-bold">FGuard</span>
+            <Image
+              src="/images/logo.png"
+              alt="FGuard Logo"
+              width={200}
+              height={200}
+              className="mr-2"
+            />
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -154,7 +160,7 @@ export default function Navbar() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
-          <DarkModeToggle />
+          <ThemeToggle />
           <Link
             href="/demo"
             className="rounded-md bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
@@ -177,8 +183,13 @@ export default function Navbar() {
             <div className="flex items-center justify-between">
               <Link href="/" className="-m-1.5 p-1.5 flex items-center">
                 <span className="sr-only">FGuard</span>
-                <div className="h-8 w-8 bg-blue-600 rounded-md mr-2"></div>
-                <span className="text-xl font-bold">FGuard</span>
+                <Image
+                  src="/images/logo.png"
+                  alt="FGuard Logo"
+                  width={200}
+                  height={200}
+                  className="mr-2"
+                />
               </Link>
               <button type="button" className="-m-2.5 rounded-md p-2.5" onClick={() => setMobileMenuOpen(false)}>
                 <span className="sr-only">Close menu</span>
@@ -242,8 +253,8 @@ export default function Navbar() {
                 </div>
                 <div className="py-6 space-y-3">
                   <div className="flex items-center">
-                    <DarkModeToggle />
-                    <span className="ml-2 text-sm">Toggle theme</span>
+                    <ThemeToggle />
+                    <span className="ml-2 text-sm text-gray-900 dark:text-gray-100">Toggle theme</span>
                   </div>
                   <Link
                     href="/demo"
@@ -254,10 +265,10 @@ export default function Navbar() {
                   </Link>
                   <Link
                     href="/login"
-                    className="block text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
+                    className="block w-full rounded-md bg-gray-100 dark:bg-gray-800 px-3.5 py-2.5 text-center text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm hover:bg-gray-200 dark:hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Log in <span aria-hidden="true">&rarr;</span>
+                    Log in
                   </Link>
                 </div>
               </div>

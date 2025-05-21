@@ -1,14 +1,15 @@
-import type { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { Badge } from "@/components/ui/badge"
+import { getPostData, getAllPostSlugs } from '@/lib/blog'
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { Badge } from '@/components/ui/badge'
 
 // Mock blog post data - in a real app, this would come from a database or CMS
 const blogPosts = [
   {
     id: 1,
-    title: "Understanding OWASP Top 10 and How FGuard Protects Against Them",
+    title: 'Understanding OWASP Top 10 and How FGuard Protects Against Them',
     content: `
       <p>The OWASP Top 10 is a standard awareness document for developers and web application security. It represents a broad consensus about the most critical security risks to web applications.</p>
       
@@ -24,15 +25,15 @@ const blogPosts = [
       <h2>How FGuard Helps</h2>
       <p>FGuard WAF provides comprehensive protection against all OWASP Top 10 vulnerabilities through advanced rule sets, machine learning-based anomaly detection, and real-time monitoring capabilities.</p>
     `,
-    date: "May 10, 2023",
-    author: "Sarah Johnson",
-    category: "Security",
-    image: "/images/owasp.jpg",
-    slug: "understanding-owasp-top-10",
+    date: 'May 10, 2023',
+    author: 'Sarah Johnson',
+    category: 'Security',
+    image: '/images/owasp.jpg',
+    slug: 'understanding-owasp-top-10',
   },
   {
     id: 2,
-    title: "DDoS Attacks in 2023: Trends and Protection Strategies",
+    title: 'DDoS Attacks in 2023: Trends and Protection Strategies',
     content: `
       <p>Distributed Denial of Service (DDoS) attacks continue to evolve in sophistication and scale. This article explores the latest trends and effective protection strategies.</p>
       
@@ -45,15 +46,15 @@ const blogPosts = [
       <h2>Protection Strategies</h2>
       <p>Effective DDoS protection requires a multi-layered approach including traffic scrubbing, rate limiting, and behavioral analysis. FGuard's DDoS protection service provides automatic detection and mitigation of attacks across all layers.</p>
     `,
-    date: "April 22, 2023",
-    author: "Michael Chen",
-    category: "Threats",
-    image: "/images/ddos-protection.jpg",
-    slug: "ddos-attacks-trends-protection",
+    date: 'April 22, 2023',
+    author: 'Michael Chen',
+    category: 'Threats',
+    image: '/images/ddos-protection.jpg',
+    slug: 'ddos-attacks-trends-protection',
   },
   {
     id: 3,
-    title: "Zero-Day Vulnerabilities: Detection and Mitigation",
+    title: 'Zero-Day Vulnerabilities: Detection and Mitigation',
     content: `
       <p>Zero-day vulnerabilities represent some of the most dangerous threats to organizations as they exploit previously unknown security flaws before patches are available.</p>
       
@@ -66,15 +67,15 @@ const blogPosts = [
       <h2>FGuard's Approach</h2>
       <p>FGuard employs advanced machine learning algorithms to establish baseline behavior for applications and detect deviations that may indicate zero-day exploitation. Our virtual patching capability provides protection while official patches are being developed.</p>
     `,
-    date: "March 15, 2023",
-    author: "Elena Rodriguez",
-    category: "Research",
-    image: "/images/zero-day.jpg",
-    slug: "zero-day-vulnerabilities",
+    date: 'March 15, 2023',
+    author: 'Elena Rodriguez',
+    category: 'Research',
+    image: '/images/zero-day.jpg',
+    slug: 'zero-day-vulnerabilities',
   },
   {
     id: 4,
-    title: "API Security Best Practices for Modern Applications",
+    title: 'API Security Best Practices for Modern Applications',
     content: `
       <p>APIs have become the backbone of modern application architecture, but they also introduce unique security challenges that must be addressed.</p>
       
@@ -87,11 +88,11 @@ const blogPosts = [
       <h2>Monitoring and Testing</h2>
       <p>Regularly test APIs for vulnerabilities using both automated tools and manual penetration testing. Implement continuous monitoring to detect and respond to suspicious API activity in real-time.</p>
     `,
-    date: "February 28, 2023",
-    author: "David Kim",
-    category: "Best Practices",
-    image: "/images/api-security.jpg",
-    slug: "api-security-best-practices",
+    date: 'February 28, 2023',
+    author: 'David Kim',
+    category: 'Best Practices',
+    image: '/images/api-security.jpg',
+    slug: 'api-security-best-practices',
   },
 ]
 
@@ -101,28 +102,22 @@ type Props = {
   }
 }
 
-export function generateMetadata({ params }: Props): Metadata {
-  const post = blogPosts.find((post) => post.slug === params.slug)
-
-  if (!post) {
-    return {
-      title: "Post Not Found | FGuard Blog",
-      description: "The requested blog post could not be found.",
-    }
-  }
-
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const postData = await getPostData(params.slug)
   return {
-    title: `${post.title} | FGuard Blog`,
-    description: post.content.substring(0, 160).replace(/<[^>]*>/g, ""),
+    title: `${postData.title} | FGuard Blog`,
+    description: postData.excerpt,
+    keywords: postData.category ? [postData.category, 'FGuard blog'] : ['FGuard blog'],
   }
 }
 
-export default function BlogPostPage({ params }: Props) {
-  const post = blogPosts.find((post) => post.slug === params.slug)
+export async function generateStaticParams() {
+  const posts = getAllPostSlugs()
+  return posts
+}
 
-  if (!post) {
-    notFound()
-  }
+export default async function Post({ params }: Props) {
+  const postData = await getPostData(params.slug)
 
   return (
     <main className="flex-1">
@@ -142,32 +137,34 @@ export default function BlogPostPage({ params }: Props) {
           </Link>
 
           <Badge variant="outline" className="mb-4">
-            {post.category}
+            {postData.category}
           </Badge>
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">{post.title}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">{postData.title}</h1>
 
           <div className="flex items-center mb-8">
             <div className="w-10 h-10 rounded-full bg-gray-200 mr-3"></div>
             <div>
-              <p className="font-medium">{post.author}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{post.date}</p>
+              <p className="font-medium">{postData.author}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{postData.date}</p>
             </div>
           </div>
 
-          <div className="relative w-full h-80 mb-8">
-            <Image
-              src={post.image || "/placeholder.svg"}
-              alt={post.title}
-              fill
-              className="object-cover rounded-lg"
-              priority
-              sizes="(max-width: 768px) 100vw, 768px"
-            />
-          </div>
+          {postData.image && (
+            <div className="relative w-full h-80 mb-8">
+              <Image
+                src={postData.image}
+                alt={postData.title}
+                fill
+                className="object-cover rounded-lg"
+                priority
+                sizes="(max-width: 768px) 100vw, 768px"
+              />
+            </div>
+          )}
 
           <div
             className="prose prose-lg dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
           />
 
           <div className="border-t border-gray-200 dark:border-gray-700 mt-12 pt-8">

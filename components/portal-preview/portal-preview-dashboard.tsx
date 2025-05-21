@@ -28,8 +28,8 @@ export default function PortalPreviewDashboard() {
                 </div>
                 <div className="relative aspect-video">
                   <Image
-                    src="/images/waf-dashboard.jpg"
-                    alt="FGuard Security Overview Dashboard"
+                    src="/images/barracuda-dashboard.png"
+                    alt="Barracuda WAF Dashboard"
                     fill
                     className="object-cover"
                   />
@@ -50,8 +50,8 @@ export default function PortalPreviewDashboard() {
                 </div>
                 <div className="relative aspect-video">
                   <Image
-                    src="/images/threat-detection.jpg"
-                    alt="FGuard Threat Analysis Dashboard"
+                    src="/images/barracuda-dashboard.png"
+                    alt="Barracuda WAF Threat Analysis"
                     fill
                     className="object-cover"
                   />
@@ -72,8 +72,8 @@ export default function PortalPreviewDashboard() {
                 </div>
                 <div className="relative aspect-video">
                   <Image
-                    src="/images/traffic-filtering.jpg"
-                    alt="FGuard Rule Management Interface"
+                    src="/images/barracuda-dashboard.png"
+                    alt="Barracuda WAF Rule Management"
                     fill
                     className="object-cover"
                   />
@@ -93,7 +93,12 @@ export default function PortalPreviewDashboard() {
                   <h3 className="text-lg font-semibold">Security Reports</h3>
                 </div>
                 <div className="relative aspect-video">
-                  <Image src="/images/analytics.jpg" alt="FGuard Security Reports" fill className="object-cover" />
+                  <Image
+                    src="/images/barracuda-dashboard.png"
+                    alt="Barracuda WAF Security Reports"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <div className="p-4 bg-gray-50 dark:bg-gray-800">
                   <p className="text-sm text-gray-600 dark:text-gray-400">

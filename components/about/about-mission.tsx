@@ -21,7 +21,7 @@ export default function AboutMission() {
             </div>
             <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
               <Image
-                src="/images/security-dashboard.jpg"
+                src="/images/hero-dashboard.png"
                 alt="FGuard Security Dashboard"
                 fill
                 className="object-cover"
