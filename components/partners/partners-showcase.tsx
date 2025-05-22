@@ -8,13 +8,9 @@ import { Star, Quote, ThumbsUp, MessageCircle } from "lucide-react"
 export default function PartnersShowcase() {
   const testimonials = [
     {
-      name: "John Smith",
-      role: "CEO, Security Solutions Inc.",
-      content: "Partnering with FGuard WAF has transformed our security offerings. Their technology and support are unmatched in the industry.",
-      rating: 5,
       name: "Sarah Johnson",
       role: "CTO, TechSecure Solutions",
-      image: "/images/testimonials/sarah.jpg",
+      image: "/images/testimonials/sarah.svg",
       quote: "FGuard's WAF solution has transformed our security offerings. The partnership program provides exceptional support and resources.",
       rating: 5,
       logo: "/images/partners/techsecure.svg"
@@ -22,7 +18,7 @@ export default function PartnersShowcase() {
     {
       name: "Michael Chen",
       role: "Director of Security, CloudDefend",
-      image: "/images/testimonials/michael.jpg",
+      image: "/images/testimonials/michael.svg",
       quote: "The integration capabilities and technical support from FGuard have been outstanding. Our joint solutions are delivering real value to customers.",
       rating: 5,
       logo: "/images/partners/clouddefend.svg"
@@ -30,7 +26,7 @@ export default function PartnersShowcase() {
     {
       name: "Emma Rodriguez",
       role: "CEO, SecureNet Services",
-      image: "/images/testimonials/emma.jpg",
+      image: "/images/testimonials/emma.svg",
       quote: "As a service partner, FGuard has enabled us to expand our managed security services portfolio and grow our business significantly.",
       rating: 5,
       logo: "/images/partners/securenet.svg"
@@ -49,50 +45,23 @@ export default function PartnersShowcase() {
   ]
 
   return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-800">
-      <div className="container mx-auto px-4">
-        <motion.div 
-          className="max-w-3xl mx-auto text-center mb-16"
+    <section className="py-20 bg-white dark:bg-slate-950">
+      <div className="container px-4 md:px-6">
+        <motion.div
+          className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl font-bold mb-4">Trusted by Industry Leaders</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            Join our growing network of successful partners who are delivering exceptional security solutions
-          </p>
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Our Partners</h2>
+            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
+              Trusted by leading security companies and service providers worldwide
+            </p>
+          </div>
         </motion.div>
 
-        {/* Partner Logos */}
-        <motion.div 
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          {logos.map((logo, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-              viewport={{ once: true }}
-              className="flex items-center justify-center p-4 bg-white dark:bg-gray-900 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
-            >
-              <Image
-                src={logo}
-                alt={`Partner logo ${index + 1}`}
-                width={120}
-                height={40}
-                className="opacity-70 hover:opacity-100 transition-opacity duration-300"
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Testimonials */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <motion.div
@@ -133,7 +102,7 @@ export default function PartnersShowcase() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                  <div className="flex justify-center">
                     <Image
                       src={testimonial.logo}
                       alt={`${testimonial.name}'s company logo`}

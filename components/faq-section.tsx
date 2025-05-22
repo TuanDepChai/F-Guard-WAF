@@ -49,7 +49,7 @@ export default function FaqSection() {
   ]
 
   return (
-    <section id="faq" className="py-20 bg-slate-50 dark:bg-slate-900">
+    <section id="faq" className="py-20">
       <div className="container px-4 md:px-6">
         <motion.div
           className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
@@ -63,7 +63,9 @@ export default function FaqSection() {
               <Shield className="mr-1 h-4 w-4" />
               <span>Enterprise WAF FAQ</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Common Questions</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gradient-animate">
+              Common Questions
+            </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
               Detailed answers to frequently asked questions about our enterprise-grade WAF solution
             </p>
@@ -79,7 +81,7 @@ export default function FaqSection() {
         >
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionItem key={index} value={`item-${index}`} className="card-hover rounded-md px-4 mb-2">
                 <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
                 <AccordionContent>{faq.answer}</AccordionContent>
               </AccordionItem>

@@ -125,7 +125,7 @@ export default function CtaSection() {
           <div className="space-y-2">
             <motion.h2
               id="cta-heading"
-              className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white glow-text"
+              className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-white text-gradient-animate"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -157,7 +157,7 @@ export default function CtaSection() {
                   <Input
                     type="email"
                     placeholder="Your business email"
-                    className="max-w-lg flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:border-white h-11"
+                    className="max-w-lg flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:border-white h-11 input-effect"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     aria-label="Your business email"
@@ -172,7 +172,7 @@ export default function CtaSection() {
                 </div>
                 <Button
                   type="submit"
-                  className="gap-1 bg-white text-primary hover:bg-white/90 hover:shadow-lg hover:shadow-white/20 transition-all duration-300 h-11"
+                  className="gap-1 bg-white text-primary hover:bg-white/90 hover:shadow-lg hover:shadow-white/20 transition-all duration-300 h-11 button-effect"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (

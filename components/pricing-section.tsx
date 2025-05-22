@@ -72,7 +72,7 @@ export default function PricingSection() {
   ]
 
   return (
-    <section id="pricing" className="py-20 bg-slate-50 dark:bg-slate-900">
+    <section id="pricing" className="py-20">
       <div className="container px-4 md:px-6">
         <motion.div
           className="flex flex-col items-center justify-center space-y-4 text-center"
@@ -86,8 +86,8 @@ export default function PricingSection() {
               <Shield className="mr-1 h-4 w-4" />
               <span>Enterprise Pricing</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              <span className="bg-gradient-to-r from-primary via-blue-600 to-cyan-500 bg-clip-text text-transparent">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gradient-animate">
+              <span className="">
                 Security Solutions for Every Scale
               </span>
             </h2>
@@ -104,7 +104,7 @@ export default function PricingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="h-full"
+              className="h-full card-hover"
               whileHover={{
                 y: -10,
                 transition: { duration: 0.2 },

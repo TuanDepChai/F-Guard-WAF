@@ -42,7 +42,7 @@ export default function TestimonialsSection() {
   ]
 
   return (
-    <section className="py-20 bg-white dark:bg-slate-950">
+    <section className="py-20">
       <div className="container px-4 md:px-6">
         <motion.div
           className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
@@ -56,7 +56,9 @@ export default function TestimonialsSection() {
               <Shield className="mr-1 h-4 w-4" />
               <span>Enterprise Success Stories</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Trusted by Security Leaders</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gradient-animate">
+              Trusted by Security Leaders
+            </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
               See why enterprise security professionals choose our WAF solution for their critical applications
             </p>
@@ -165,7 +167,7 @@ export default function TestimonialsSection() {
                 transition: { duration: 0.2 },
               }}
             >
-              <Card className="overflow-hidden">
+              <Card className="overflow-hidden card-hover">
                 <CardContent className="p-6 relative">
                   <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl"></div>
                   <div className="flex space-x-1 mb-2">

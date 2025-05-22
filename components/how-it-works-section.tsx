@@ -127,7 +127,7 @@ export default function HowItWorksSection() {
   ]
 
   return (
-    <section id="how-it-works" className="py-20 bg-slate-50 dark:bg-slate-900">
+    <section id="how-it-works" className="py-20">
       <div className="container px-4 md:px-6">
         <motion.div
           className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
@@ -141,7 +141,7 @@ export default function HowItWorksSection() {
               <Shield className="mr-1 h-4 w-4" />
               <span>How It Works</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gradient-animate">
               How FGuard WAF Protects Your Applications
             </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
@@ -202,7 +202,7 @@ export default function HowItWorksSection() {
                 {steps.map((step, index) => (
                   <motion.div
                     key={index}
-                    className="flex flex-col items-center relative"
+                    className="flex flex-col items-center relative card-hover p-4 rounded-lg"
                     initial={{ opacity: 0.5 }}
                     animate={{
                       opacity: activeStep === index ? 1 : 0.7,
@@ -381,7 +381,7 @@ export default function HowItWorksSection() {
         {/* Detailed Steps Section */}
         <div className="relative max-w-5xl mx-auto">
           {/* Connecting line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-800 -translate-x-1/2 hidden md:block"></div>
+          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-slate-200 -translate-x-1/2 hidden md:block"></div>
 
           <div className="space-y-16 relative">
             {steps.map((step, index) => (
@@ -409,18 +409,20 @@ export default function HowItWorksSection() {
                             ],
                           }}
                           transition={{
-                            duration: 2,
-                            repeat: Number.POSITIVE_INFINITY,
-                            ease: "easeInOut",
+                            boxShadow: {
+                              duration: 2,
+                              repeat: Number.POSITIVE_INFINITY,
+                              ease: "easeInOut",
+                            },
                           }}
                         >
                           {step.icon}
                         </motion.div>
-                        <span className="bg-gradient-to-r from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 text-slate-700 dark:text-slate-200 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                        <span className="bg-gradient-to-r from-slate-200 to-slate-300 text-slate-700 text-xs font-medium px-2.5 py-0.5 rounded-full">
                           Step {index + 1}
                         </span>
                       </div>
-                      <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+                      <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
                         {step.title}
                       </h3>
                       <p className="text-muted-foreground">{step.description}</p>
@@ -451,14 +453,14 @@ export default function HowItWorksSection() {
                   </div>
                   <div className={index % 2 === 0 ? "md:order-2" : "md:order-1"}>
                     <motion.div
-                      className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-lg border"
+                      className="bg-white p-4 rounded-lg shadow-lg border"
                       whileHover={{
                         y: -5,
                         boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
                         transition: { duration: 0.2 },
                       }}
                     >
-                      <div className="relative w-full h-[200px] rounded-md overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
+                      <div className="relative w-full h-[200px] rounded-md overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
                         <motion.div
                           className={`${step.color} p-6 rounded-full shadow-lg`}
                           animate={{
@@ -590,7 +592,7 @@ export default function HowItWorksSection() {
                 {/* Connector arrow */}
                 {index < steps.length - 1 && (
                   <div className="flex justify-center my-8 hidden md:flex">
-                    <div className="w-0.5 h-8 bg-slate-200 dark:bg-slate-800"></div>
+                    <div className="w-0.5 h-8 bg-slate-200"></div>
                   </div>
                 )}
               </motion.div>
@@ -618,7 +620,7 @@ export default function HowItWorksSection() {
             {advancedFeatures.map((feature, index) => (
               <motion.div
                 key={index}
-                className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md border"
+                className="bg-white p-6 rounded-lg shadow-md border"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -650,7 +652,7 @@ export default function HowItWorksSection() {
             </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg border overflow-hidden">
+          <div className="bg-white rounded-lg shadow-lg border overflow-hidden">
             <Tabs defaultValue="architecture" className="w-full">
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="architecture">Architecture</TabsTrigger>
@@ -705,19 +707,19 @@ export default function HowItWorksSection() {
                   Our WAF is designed for high performance, ensuring protection without compromising user experience.
                 </p>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg">
+                  <div className="bg-slate-50 p-4 rounded-lg">
                     <p className="text-sm text-muted-foreground">Average Latency</p>
                     <p className="text-2xl font-bold text-primary">&lt; 5ms</p>
                   </div>
-                  <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg">
+                  <div className="bg-slate-50 p-4 rounded-lg">
                     <p className="text-sm text-muted-foreground">Requests Per Second</p>
                     <p className="text-2xl font-bold text-primary">1M+</p>
                   </div>
-                  <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg">
+                  <div className="bg-slate-50 p-4 rounded-lg">
                     <p className="text-sm text-muted-foreground">Rule Processing Time</p>
                     <p className="text-2xl font-bold text-primary">&lt; 2ms</p>
                   </div>
-                  <div className="bg-slate-50 dark:bg-slate-900 p-4 rounded-lg">
+                  <div className="bg-slate-50 p-4 rounded-lg">
                     <p className="text-sm text-muted-foreground">Uptime SLA</p>
                     <p className="text-2xl font-bold text-primary">99.999%</p>
                   </div>
@@ -813,7 +815,7 @@ export default function HowItWorksSection() {
 
           {showDetails && (
             <motion.div
-              className="mt-8 max-w-3xl mx-auto text-left bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg border"
+              className="mt-8 max-w-3xl mx-auto text-left bg-white p-6 rounded-lg shadow-lg border"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               transition={{ duration: 0.3 }}

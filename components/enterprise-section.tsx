@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 
 export default function EnterpriseSection() {
   return (
-    <section id="enterprise" className="py-20 bg-white dark:bg-slate-950">
+    <section id="enterprise" className="py-20">
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
           <motion.div
@@ -21,7 +21,7 @@ export default function EnterpriseSection() {
               <span>Enterprise WAF Solutions</span>
             </div>
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gradient-animate">
                 Tailored Security for Enterprise Applications
               </h2>
               <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -30,7 +30,7 @@ export default function EnterpriseSection() {
               </p>
             </div>
             <div className="space-y-4">
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-4 hover-lift p-2 rounded-md">
                 <div className="rounded-full bg-primary/10 p-2">
                   <Shield className="h-5 w-5 text-primary" />
                 </div>
@@ -42,7 +42,7 @@ export default function EnterpriseSection() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-4 hover-lift p-2 rounded-md">
                 <div className="rounded-full bg-primary/10 p-2">
                   <FileText className="h-5 w-5 text-primary" />
                 </div>
@@ -54,7 +54,7 @@ export default function EnterpriseSection() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-4 hover-lift p-2 rounded-md">
                 <div className="rounded-full bg-primary/10 p-2">
                   <Headphones className="h-5 w-5 text-primary" />
                 </div>
@@ -67,7 +67,7 @@ export default function EnterpriseSection() {
                 </div>
               </div>
             </div>
-            <Button className="gap-1 bg-gradient-to-r from-primary to-blue-700 hover:from-primary/90 hover:to-blue-700/90">
+            <Button className="gap-1 bg-gradient-to-r from-primary to-blue-700 hover:from-primary/90 hover:to-blue-700/90 button-effect">
               Schedule Security Consultation
               <ArrowRight className="h-4 w-4" />
             </Button>
