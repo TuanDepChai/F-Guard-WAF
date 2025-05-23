@@ -8,45 +8,45 @@ import Footer from "@/components/footer"
 import CookieConsent from "@/components/cookie-consent"
 import ScrollToTop from "@/components/scroll-to-top"
 import SkipToContent from "@/components/skip-to-content"
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "FGuard - Enterprise Web Application Firewall",
-  description: "Advanced WAF solution protecting your applications from cyber threats and attacks.",
-  keywords: "WAF, Web Application Firewall, Security, DDoS Protection, OWASP, API Security",
-  authors: [{ name: "FGuard Security Team" }],
-  creator: "FGuard",
-  publisher: "FGuard",
-  formatDetection: {
-    telephone: false,
+  title: {
+    default: "F-Guard WAF | Enterprise Web Application Firewall",
+    template: "%s | F-Guard WAF",
   },
-  metadataBase: new URL("https://fguard.com"),
-  alternates: {
-    canonical: "/",
-  },
+  description: "Enterprise-grade Web Application Firewall solution for protecting your web applications and APIs from cyber threats.",
+  keywords: [
+    "WAF",
+    "Web Application Firewall",
+    "Security",
+    "Cybersecurity",
+    "API Security",
+    "DDoS Protection",
+  ],
+  authors: [
+    {
+      name: "F-Guard Team",
+      url: "https://fguard-waf.com",
+    },
+  ],
+  creator: "F-Guard",
   openGraph: {
-    title: "FGuard - Enterprise Web Application Firewall",
-    description: "Advanced WAF solution protecting your applications from cyber threats and attacks.",
-    url: "https://fguard.com",
-    siteName: "FGuard",
-    images: [
-      {
-        url: "https://fguard.com/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "FGuard - Enterprise Web Application Firewall",
-      },
-    ],
-    locale: "en_US",
     type: "website",
+    locale: "en_US",
+    url: "https://fguard-waf.com",
+    title: "F-Guard WAF | Enterprise Web Application Firewall",
+    description: "Enterprise-grade Web Application Firewall solution for protecting your web applications and APIs from cyber threats.",
+    siteName: "F-Guard WAF",
   },
   twitter: {
     card: "summary_large_image",
-    title: "FGuard - Enterprise Web Application Firewall",
-    description: "Advanced WAF solution protecting your applications from cyber threats and attacks.",
-    images: ["https://fguard.com/twitter-image.jpg"],
-    creator: "@fguard",
+    title: "F-Guard WAF | Enterprise Web Application Firewall",
+    description: "Enterprise-grade Web Application Firewall solution for protecting your web applications and APIs from cyber threats.",
+    creator: "@fguardwaf",
   },
   robots: {
     index: true,
@@ -59,14 +59,15 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-    generator: 'v0.dev'
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -78,7 +79,7 @@ export default function RootLayout({
         >
           <div className="flex flex-col min-h-screen">
             <SkipToContent />
-            <Navbar />
+            <Navbar session={session} />
             <main id="main-content" className="flex-1">
               {children}
             </main>

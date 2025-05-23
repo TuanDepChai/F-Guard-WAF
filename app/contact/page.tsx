@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -12,36 +14,31 @@ import {
   Facebook,
   Twitter,
   Linkedin,
-  Instagram
+  Instagram,
+  Send
 } from "lucide-react"
-
-export const metadata: Metadata = {
-  title: "Contact Us | FGuard WAF",
-  description: "Get in touch with our team for support and inquiries.",
-}
+import { motion } from 'framer-motion';
 
 const contactInfo = [
   {
-    title: "Address",
-    description: "Lô E2a-7, Đường D1, Khu CNC Long Thạnh Mỹ, Quận 9, tp. HCM",
-    icon: <MapPin className="h-6 w-6" />
+    icon: Mail,
+    title: 'Email',
+    description: 'support@fguard.com',
+    link: 'mailto:support@fguard.com'
   },
   {
-    title: "Phone",
-    description: "+84 98 105 2217",
-    icon: <Phone className="h-6 w-6" />
+    icon: Phone,
+    title: 'Phone',
+    description: '0981052217',
+    link: 'tel:+84981052217'
   },
   {
-    title: "Email",
-    description: "contact@fguardwaf.com",
-    icon: <Mail className="h-6 w-6" />
-  },
-  {
-    title: "Working Hours",
-    description: "Monday - Friday: 8:00 AM - 6:00 PM",
-    icon: <Clock className="h-6 w-6" />
+    icon: MapPin,
+    title: 'Office',
+    description: 'Đại học FPT University, Quận 9',
+    link: 'https://www.google.com/maps/search/?api=1&query=Đại+học+FPT+University,+Quận+9'
   }
-]
+];
 
 const socialLinks = [
   {
@@ -68,179 +65,133 @@ const socialLinks = [
 
 export default function ContactPage() {
   return (
-    <main className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Get in touch with our team for support and inquiries
-            </p>
-          </div>
+    <div className="container mx-auto px-4 py-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-12"
+      >
+        <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
+        <p className="text-xl text-muted-foreground">
+          Get in touch with our team for any questions or support
+        </p>
+      </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        {/* Contact Form */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="bg-card rounded-lg border p-6"
+        >
+          <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
+          <form className="space-y-4">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium mb-1">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                className="w-full px-4 py-2 rounded-md border bg-background"
+                placeholder="Your name"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="w-full px-4 py-2 rounded-md border bg-background"
+                placeholder="your@email.com"
+              />
+            </div>
+            <div>
+              <label htmlFor="subject" className="block text-sm font-medium mb-1">
+                Subject
+              </label>
+              <input
+                type="text"
+                id="subject"
+                className="w-full px-4 py-2 rounded-md border bg-background"
+                placeholder="What's this about?"
+              />
+            </div>
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium mb-1">
+                Message
+              </label>
+              <textarea
+                id="message"
+                rows={4}
+                className="w-full px-4 py-2 rounded-md border bg-background"
+                placeholder="Your message..."
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              <Send className="h-4 w-4" />
+              Send Message
+            </button>
+          </form>
+        </motion.div>
+
+        {/* Contact Information */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-6"
+        >
+          {/* Contact Cards */}
+          <div className="space-y-4">
             {contactInfo.map((info, index) => (
-              <Card key={index} className="border-0 shadow-lg">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg text-primary">
-                      {info.icon}
-                    </div>
-                    <div>
-                      <div className="font-semibold mb-2">{info.title}</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400">
-                        {info.description}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <motion.a
+                key={info.title}
+                href={info.link}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="flex items-center p-4 rounded-lg border bg-card hover:bg-accent transition-colors"
+              >
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                  <info.icon className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-medium">{info.title}</h3>
+                  <p className="text-sm text-muted-foreground">{info.description}</p>
+                </div>
+              </motion.a>
             ))}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            <Card className="border-0 shadow-lg">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
-                <form className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">First Name</label>
-                      <input
-                        type="text"
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        placeholder="John"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Last Name</label>
-                      <input
-                        type="text"
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        placeholder="Doe"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Email</label>
-                    <input
-                      type="email"
-                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="john@example.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Subject</label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                      placeholder="How can we help?"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Message</label>
-                    <textarea
-                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary h-32"
-                      placeholder="Your message here..."
-                    />
-                  </div>
-                  <Button className="w-full">
-                    Send Message
-                    <MessageSquare className="ml-2 h-4 w-4" />
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-bold mb-6">Our Location</h2>
-                <div className="aspect-video w-full rounded-lg overflow-hidden">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.231915302358!2d106.8011589!3d10.8415846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527158a0c5d33%3A0x6c3d4d9b2f135f6a!2zTG8gRTJhLTcsIMSQxrDhu51uZyBEMSwgS2h1IENOQyBMb25nIFRo4bqhbmggTeG7mWksIFF14bqtbiA5LCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1647881234567!5m2!1svi!2s"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
-                </div>
-                <div className="mt-6">
-                  <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-                  <div className="flex gap-4">
-                    {socialLinks.map((social, index) => (
-                      <a
-                        key={index}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-3 bg-primary/10 rounded-lg text-primary hover:bg-primary/20 transition-colors"
-                      >
-                        {social.icon}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg text-primary">
-                    <Building2 className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-2">Head Office</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Lô E2a-7, Đường D1<br />
-                      Khu CNC Long Thạnh Mỹ, Quận 9<br />
-                      tp. HCM
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg text-primary">
-                    <Globe className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-2">Global Presence</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Offices in major cities<br />
-                      Worldwide support
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-primary/10 rounded-lg text-primary">
-                    <MessageSquare className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-2">Support</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      24/7 Technical Support<br />
-                      Dedicated Account Manager
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+          {/* Live Chat */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-card rounded-lg border p-6"
+          >
+            <div className="flex items-center mb-4">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                <MessageSquare className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-medium">Live Chat Support</h3>
+                <p className="text-sm text-muted-foreground">
+                  Available 24/7 for immediate assistance
+                </p>
+              </div>
+            </div>
+            <button className="w-full px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90">
+              Start Chat
+            </button>
+          </motion.div>
+        </motion.div>
       </div>
-    </main>
+    </div>
   )
 }

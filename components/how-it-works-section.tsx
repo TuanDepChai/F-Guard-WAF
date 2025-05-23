@@ -410,9 +410,9 @@ export default function HowItWorksSection() {
                           }}
                           transition={{
                             boxShadow: {
-                              duration: 2,
-                              repeat: Number.POSITIVE_INFINITY,
-                              ease: "easeInOut",
+                            duration: 2,
+                            repeat: Number.POSITIVE_INFINITY,
+                            ease: "easeInOut",
                             },
                           }}
                         >

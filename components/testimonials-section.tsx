@@ -54,29 +54,28 @@ export default function TestimonialsSection() {
           <div className="space-y-2">
             <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">
               <Shield className="mr-1 h-4 w-4" />
-              <span>Enterprise Success Stories</span>
+              <span>Client Testimonials</span>
             </div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gradient-animate">
               Trusted by Security Leaders
             </h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
-              See why enterprise security professionals choose our WAF solution for their critical applications
+              Hear directly from the security professionals who rely on FGuard to protect their critical web applications and APIs.
             </p>
           </div>
         </motion.div>
 
-        {/* Featured testimonial with image */}
         <motion.div
           className="mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <div className="relative w-full h-[400px] rounded-xl overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
-            <div className="absolute inset-0 bg-grid-white/5"></div>
+          <div className="relative w-full h-[400px] rounded-xl overflow-hidden bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900 shadow-xl">
+            <div className="absolute inset-0 bg-grid-white/5 z-0"></div>
             <motion.div
-              className="absolute inset-0 bg-dot-white/10"
+              className="absolute inset-0 bg-dot-white/10 z-0"
               animate={{
                 x: [0, 100, 0],
                 y: [0, 50, 0],
@@ -87,13 +86,13 @@ export default function TestimonialsSection() {
                 ease: "linear",
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent flex items-center">
-              <div className="p-8 md:p-12 max-w-lg">
+            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent z-10 flex items-center">
+              <div className="p-8 md:p-12 max-w-lg text-white">
                 <motion.div
                   className="flex space-x-1 mb-4"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
                   viewport={{ once: true }}
                 >
                   {Array.from({ length: 5 }).map((_, i) => (
@@ -101,17 +100,17 @@ export default function TestimonialsSection() {
                       key={i}
                       initial={{ opacity: 0, scale: 0 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3, delay: 0.3 + 0.1 * i }}
+                      transition={{ duration: 0.3, delay: 0.4 + 0.1 * i }}
                     >
-                      <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+                      <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
                     </motion.div>
                   ))}
                 </motion.div>
                 <motion.p
-                  className="text-white text-xl mb-6 italic"
+                  className="text-white text-xl md:text-2xl mb-6 italic leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
                   viewport={{ once: true }}
                 >
                   "FGuard's enterprise WAF solution has been instrumental in protecting our global infrastructure. Their
@@ -122,33 +121,33 @@ export default function TestimonialsSection() {
                   className="flex items-center"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
+                  transition={{ duration: 0.6, delay: 0.7 }}
                   viewport={{ once: true }}
                 >
-                  <Avatar className="h-12 w-12 mr-4 border-2 border-white">
-                    <AvatarFallback className="bg-gradient-to-br from-primary to-blue-600 text-white">
+                  <Avatar className="h-14 w-14 mr-4 border-3 border-blue-400 shadow-lg">
+                    <AvatarFallback className="bg-gradient-to-br from-blue-500 to-blue-700 text-white font-semibold text-lg">
                       JD
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-medium text-white">James Davidson</p>
-                    <p className="text-white/80">Chief Information Security Officer, Global 500 Company</p>
+                    <p className="font-semibold text-white text-lg">James Davidson</p>
+                    <p className="text-blue-200 text-sm">Chief Information Security Officer, Global 500 Company</p>
                   </div>
                 </motion.div>
               </div>
             </div>
             <motion.div
-              className="absolute right-8 bottom-8 w-32 h-32 opacity-20"
+              className="absolute right-8 bottom-8 w-32 h-32 text-primary/10 z-0 opacity-50"
               animate={{
                 rotate: [0, 360],
-                scale: [1, 1.1, 1],
+                scale: [1, 1.05, 1],
               }}
               transition={{
-                rotate: { duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "linear" },
-                scale: { duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" },
+                rotate: { duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" },
+                scale: { duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" },
               }}
             >
-              <Shield className="w-full h-full text-primary" />
+              <Shield className="w-full h-full" />
             </motion.div>
           </div>
         </motion.div>
@@ -159,56 +158,50 @@ export default function TestimonialsSection() {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
               viewport={{ once: true }}
               whileHover={{
                 y: -5,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                boxShadow: "0 15px 20px -5px rgba(0, 0, 0, 0.1), 0 6px 6px -4px rgba(0, 0, 0, 0.04)",
                 transition: { duration: 0.2 },
               }}
             >
-              <Card className="overflow-hidden card-hover">
-                <CardContent className="p-6 relative">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl"></div>
-                  <div className="flex space-x-1 mb-2">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.3, delay: 0.1 * i }}
-                      >
+              <Card className="overflow-hidden h-full card-hover flex flex-col">
+                <CardContent className="p-6 relative flex-1">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -translate-x-1/3 -translate-y-1/3 blur-2xl z-0"></div>
+                  <div className="relative z-10">
+                    <div className="flex space-x-1 mb-3">
+                      {Array.from({ length: 5 }).map((_, i) => (
                         <Star
-                          className={`h-5 w-5 ${
-                            i < testimonial.rating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"
-                          }`}
+                          key={i}
+                          className={`h-5 w-5 ${i < testimonial.rating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"}`}
                         />
-                      </motion.div>
-                    ))}
-                  </div>
-                  <p className="mb-4 text-muted-foreground">{testimonial.content}</p>
-                  <div className="flex items-center">
-                    <Avatar className="h-10 w-10 mr-3 border-2 border-primary/10">
-                      <AvatarFallback className="bg-gradient-to-br from-primary/20 to-blue-500/20 text-primary">
-                        {testimonial.initials}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-medium">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                      ))}
                     </div>
+                    <p className="mb-4 text-muted-foreground leading-relaxed">{testimonial.content}</p>
                   </div>
                 </CardContent>
+                <div className="p-6 pt-0 flex items-center relative z-10">
+                  <Avatar className="h-10 w-10 mr-3 border-2 border-primary/20">
+                    <AvatarFallback className="bg-gradient-to-br from-primary/30 to-blue-600/30 text-primary font-medium">
+                      {testimonial.initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p className="font-medium text-gray-900 dark:text-gray-100">{testimonial.name}</p>
+                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                  </div>
+                </div>
               </Card>
             </motion.div>
           ))}
         </div>
 
         <motion.div
-          className="mt-12 bg-slate-100 dark:bg-slate-800 rounded-lg p-8 text-center"
+          className="mt-12 bg-slate-100 dark:bg-slate-800 rounded-lg p-8 text-center shadow"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
         >
           <div className="flex justify-center mb-4">
@@ -218,7 +211,7 @@ export default function TestimonialsSection() {
               ))}
             </div>
           </div>
-          <h3 className="text-2xl font-bold mb-2">Trusted by 1,000+ enterprise clients worldwide</h3>
+          <h3 className="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Trusted by 1,000+ enterprise clients worldwide</h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             From Fortune 500 companies to government agencies, our enterprise-grade WAF solution protects
             mission-critical applications across industries including finance, healthcare, e-commerce, and more.

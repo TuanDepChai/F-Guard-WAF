@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import PricingSection from "@/components/pricing-section"
+import PricingContent from "@/components/pricing-content"
 
 export const metadata: Metadata = {
   title: "Pricing | FGuard WAF",
@@ -7,10 +7,5 @@ export const metadata: Metadata = {
 }
 
 export default function PricingPage() {
-  return (
-    <main className="flex-1">
-      <PricingSection />
-       {/* Potentially add more detailed pricing info or a comparison table here */}
-    </main>
-  )
+  return <PricingContent />
 } 

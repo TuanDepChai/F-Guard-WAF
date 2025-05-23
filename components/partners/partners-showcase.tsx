@@ -47,7 +47,7 @@ export default function PartnersShowcase() {
   return (
     <section className="py-20 bg-white dark:bg-slate-950">
       <div className="container px-4 md:px-6">
-        <motion.div
+        <motion.div 
           className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

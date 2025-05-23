@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation"
 import { Menu, X, ChevronDown } from "lucide-react"
 import { ThemeToggle } from "./theme-toggle"
 import Image from "next/image"
+import { Session } from "next-auth"
+import { UserNav } from "@/components/user-nav"
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -51,7 +53,11 @@ const navigation = [
   { name: "Contact", href: "/contact" },
 ]
 
-export default function Navbar() {
+interface NavbarProps {
+  session: Session | null
+}
+
+export default function Navbar({ session }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
@@ -161,18 +167,24 @@ export default function Navbar() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
           <ThemeToggle />
-          <Link
-            href="/demo"
-            className="rounded-md bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-          >
-            Try Demo
-          </Link>
-          <Link
-            href="/login"
-            className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
-          >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
+          {session ? (
+            <UserNav user={session.user as any} />
+          ) : (
+            <>
+              <Link
+                href="/demo"
+                className="rounded-md bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              >
+                Try Demo
+              </Link>
+              <Link
+                href="/login"
+                className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
+              >
+                Log in <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </>
+          )}
         </div>
       </nav>
       {/* Mobile menu */}
@@ -251,26 +263,24 @@ export default function Navbar() {
                     </div>
                   ))}
                 </div>
-                <div className="py-6 space-y-3">
-                  <div className="flex items-center">
-                    <ThemeToggle />
-                    <span className="ml-2 text-sm text-gray-900 dark:text-gray-100">Toggle theme</span>
+                {/* Mobile Auth/User section */}
+                {session ? (
+                  <div className="py-6">
+                    <div className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800">
+                      <UserNav user={session.user as any} />
+                    </div>
                   </div>
-                  <Link
-                    href="/demo"
-                    className="block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Try Demo
-                  </Link>
-                  <Link
-                    href="/login"
-                    className="block w-full rounded-md bg-gray-100 dark:bg-gray-800 px-3.5 py-2.5 text-center text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm hover:bg-gray-200 dark:hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-800"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Log in
-                  </Link>
-                </div>
+                ) : (
+                  <div className="py-6">
+                    <Link
+                      href="/login"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Log in
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
