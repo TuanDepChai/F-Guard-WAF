@@ -1,7 +1,5 @@
-import dynamic from 'next/dynamic';
-
-const DocsContent = dynamic(() => import('@/components/docs-content'), { ssr: false });
+import DocsContent from '@/components/docs-content';
 
 export default function DocumentationPage() {
   return <DocsContent />;
-} 
+}
