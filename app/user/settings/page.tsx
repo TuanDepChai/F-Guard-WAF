@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -9,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Bell, User, Globe, Shield } from "lucide-react";
 
 export default async function SettingsPage() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
 
   return (
     <div className="space-y-6">

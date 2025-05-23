@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -8,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Shield, Lock, Key, Smartphone } from "lucide-react";
 
 export default async function SecurityPage() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession();
 
   return (
     <div className="space-y-6">

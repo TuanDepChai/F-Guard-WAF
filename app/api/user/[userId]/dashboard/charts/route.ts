@@ -1,5 +1,4 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../../../auth/[...nextauth]/route";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { subDays, format } from "date-fns";
@@ -9,7 +8,7 @@ export async function GET(
   { params }: { params: { userId: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getServerSession();
     if (!session?.user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
