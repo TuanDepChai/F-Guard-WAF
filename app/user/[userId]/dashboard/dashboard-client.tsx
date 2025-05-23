@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { StatsChart } from "@/components/dashboard/stats-chart";
+import StatsChart from "@/components/dashboard/stats-chart";
 import { Activity } from "lucide-react";
-import { formatDistanceToNow } from "date-fns";
-import { vi } from "date-fns/locale/vi";
+const { formatDistanceToNow, vi } = require('date-fns');
 
 interface DashboardClientProps {
   userId: string;
