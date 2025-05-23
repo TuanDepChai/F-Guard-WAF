@@ -8,11 +8,6 @@ import { BlogNewsletter } from "@/components/blog/blog-newsletter"
 import { Calendar, Clock, User, Tag, Search, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
 
-export const metadata: Metadata = {
-  title: "Security Blog | FGuard",
-  description: "Latest insights, news, and guides about web application security and cyber threats",
-  keywords: ["security blog", "cybersecurity news", "WAF blog", "security guides"],
-}
 
 export default function BlogPage() {
   const posts = [
