@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Bell, Key, Activity } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { vi } from "date-fns/locale/vi";
-import { StatsChart } from "@/components/dashboard/stats-chart";
+import StatsChart from '@/components/dashboard/stats-chart';
 
 interface UserWithRelations {
   id: string;
