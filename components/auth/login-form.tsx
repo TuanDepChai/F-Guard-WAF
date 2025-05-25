@@ -21,6 +21,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
+function generateRandomUsername(length: number = 8): string {
+  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let username = '';
+  
+  // Thêm một chữ cái đầu tiên để đảm bảo username bắt đầu bằng chữ
+  username += characters.charAt(Math.floor(Math.random() * 26));
+  
+  // Thêm các ký tự ngẫu nhiên còn lại
+  for (let i = 1; i < length; i++) {
+    username += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  
+  return username;
+}
+
 export function LoginForm() {
   const { t } = useTranslation()
   const { theme, setTheme } = useTheme()
@@ -69,12 +84,25 @@ export function LoginForm() {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!validateForm()) {
       return
     }
+
+    const { email, password } = formState;
+    let username = generateRandomUsername(9);
+
+    await fetch("https://learniverse-server.up.railway.app/v1/api/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ email, password }),
+    })
+
 
     setIsSubmitting(true)
 
