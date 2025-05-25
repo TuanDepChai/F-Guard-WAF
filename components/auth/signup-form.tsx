@@ -1,102 +1,111 @@
 "use client"
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { useTranslation } from "@/lib/i18n"
-import { Loader2 } from "lucide-react"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { useTranslation } from "@/lib/i18n";
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function SignupForm() {
-  const { t } = useTranslation()
+  const router = useRouter();
+  const { t } = useTranslation();
   const [formState, setFormState] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
     agreeTerms: false,
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormState((prev) => ({ ...prev, [name]: value }))
+    const { name, value } = e.target;
+    setFormState((prev) => ({ ...prev, [name]: value }));
 
     // Clear error when user types
     if (errors[name]) {
       setErrors((prev) => {
-        const newErrors = { ...prev }
-        delete newErrors[name]
-        return newErrors
-      })
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
     }
-  }
+  };
 
   const handleCheckboxChange = (checked: boolean) => {
-    setFormState((prev) => ({ ...prev, agreeTerms: checked }))
+    setFormState((prev) => ({ ...prev, agreeTerms: checked }));
 
     // Clear error when user checks
     if (errors.agreeTerms) {
       setErrors((prev) => {
-        const newErrors = { ...prev }
-        delete newErrors.agreeTerms
-        return newErrors
-      })
+        const newErrors = { ...prev };
+        delete newErrors.agreeTerms;
+        return newErrors;
+      });
     }
-  }
+  };
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {}
+    const newErrors: Record<string, string> = {};
 
     if (!formState.name.trim()) {
-      newErrors.name = "Name is required"
+      newErrors.name = "Name is required";
     }
 
     if (!formState.email.trim()) {
-      newErrors.email = "Email is required"
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formState.email)) {
-      newErrors.email = "Email is invalid"
+      newErrors.email = "Email is invalid";
     }
 
     if (!formState.password) {
-      newErrors.password = "Password is required"
+      newErrors.password = "Password is required";
     } else if (formState.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters"
+      newErrors.password = "Password must be at least 8 characters";
     }
 
     if (formState.password !== formState.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match"
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
     if (!formState.agreeTerms) {
-      newErrors.agreeTerms = "You must agree to the terms and conditions"
+      newErrors.agreeTerms = "You must agree to the terms and conditions";
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
     if (!validateForm()) {
-      return
+      return;
     }
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
+    const { name, email, password } = formState;
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
-      // Redirect to dashboard or show success message
-      window.location.href = "/dashboard"
-    }, 1500)
-  }
+    await fetch(
+      "https://learniverse-server.up.railway.app/v1/api/user/signup",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ email, password, username: name }),
+      }
+    );
+    router.push("/login");
+  };
 
   return (
     <Card>
@@ -104,7 +113,7 @@ export function SignupForm() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <label htmlFor="name" className="text-sm font-medium">
-              {t("auth.fullName") || "Full Name"}*
+              Full Name*
             </label>
             <Input
               id="name"
@@ -113,12 +122,14 @@ export function SignupForm() {
               onChange={handleChange}
               className={errors.name ? "border-red-500" : ""}
             />
-            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+            )}
           </div>
 
           <div className="space-y-2">
             <label htmlFor="email" className="text-sm font-medium">
-              {t("auth.email") || "Email Address"}*
+              Email Address*
             </label>
             <Input
               id="email"
@@ -128,12 +139,14 @@ export function SignupForm() {
               onChange={handleChange}
               className={errors.email ? "border-red-500" : ""}
             />
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
           </div>
 
           <div className="space-y-2">
             <label htmlFor="password" className="text-sm font-medium">
-              {t("auth.password") || "Password"}*
+              Password*
             </label>
             <Input
               id="password"
@@ -143,12 +156,14 @@ export function SignupForm() {
               onChange={handleChange}
               className={errors.password ? "border-red-500" : ""}
             />
-            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+            )}
           </div>
 
           <div className="space-y-2">
             <label htmlFor="confirmPassword" className="text-sm font-medium">
-              {t("auth.confirmPassword") || "Confirm Password"}*
+              Confirm Password*
             </label>
             <Input
               id="confirmPassword"
@@ -158,7 +173,11 @@ export function SignupForm() {
               onChange={handleChange}
               className={errors.confirmPassword ? "border-red-500" : ""}
             />
-            {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.confirmPassword}
+              </p>
+            )}
           </div>
 
           <div className="flex items-start space-x-2 pt-2">
@@ -176,22 +195,24 @@ export function SignupForm() {
               <Link href="/terms" className="text-primary hover:underline">
                 {t("auth.terms") || "Terms of Service"}
               </Link>{" "}
-              {t("auth.and") || "and"}{" "}
+              and
               <Link href="/privacy" className="text-primary hover:underline">
-                {t("auth.privacy") || "Privacy Policy"}
+                Privacy Policy
               </Link>
             </label>
           </div>
-          {errors.agreeTerms && <p className="text-red-500 text-xs mt-1">{errors.agreeTerms}</p>}
+          {errors.agreeTerms && (
+            <p className="text-red-500 text-xs mt-1">{errors.agreeTerms}</p>
+          )}
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t("auth.creating") || "Creating account..."}
+                Creating account...
               </>
             ) : (
-              t("auth.createAccount") || "Create Account"
+              "Create Account"
             )}
           </Button>
         </form>
@@ -231,7 +252,11 @@ export function SignupForm() {
               Google
             </Button>
             <Button variant="outline" className="w-full">
-              <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="h-4 w-4 mr-2"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
               </svg>
               Facebook
@@ -240,5 +265,5 @@ export function SignupForm() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

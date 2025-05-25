@@ -2,16 +2,9 @@
 
 import type React from "react"
 
-import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { useTranslation } from "@/lib/i18n"
-import { Loader2, Mail, Lock, Eye, EyeOff, QrCode, Moon, Sun } from "lucide-react"
-import Link from "next/link"
-import { toast } from "sonner"
-import { useTheme } from "next-themes"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -19,7 +12,23 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { useTranslation } from "@/lib/i18n";
+import {
+  Eye,
+  EyeOff,
+  Loader2,
+  Lock,
+  Mail,
+  Moon,
+  QrCode,
+  Sun,
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
 
 function generateRandomUsername(length: number = 8): string {
   const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
