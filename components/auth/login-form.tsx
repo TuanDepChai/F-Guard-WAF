@@ -102,27 +102,40 @@ export function LoginForm() {
       return
     }
 
-    const { email, password } = formState;
-    let username = generateRandomUsername(9);
-
-    await fetch("https://learniverse-server.up.railway.app/v1/api/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({ email, password }),
-    })
-
-
     setIsSubmitting(true)
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const { email, password } = formState;
+      
+      const response = await fetch("https://learniverse-server.up.railway.app/v1/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ email, password }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed. Please check your credentials.')
+      }
+
+      // Store user data in localStorage
+      localStorage.setItem('user', JSON.stringify(data.user))
+      
+      // Show success message
+      toast.success('Login successful!')
+      
+      // Redirect to dashboard
+      router.push('/dashboard')
+    } catch (error) {
+      console.error('Login error:', error)
+      toast.error(error instanceof Error ? error.message : 'Login failed. Please try again.')
+    } finally {
       setIsSubmitting(false)
-      // Redirect to dashboard after successful login
-      router.push('/dashboard');
-    }, 1500)
+    }
   }
 
   const toggleTheme = () => {
@@ -171,13 +184,13 @@ export function LoginForm() {
                 id="password"
                 name="password"
                 type={showPassword ? "text" : "password"}
-                placeholder="Password"
+                placeholder="Enter your password"
                 required
                 value={formState.password}
                 onChange={handleChange}
                 className={errors.password ? 'border-red-500' : ''}
               />
-               <button
+              <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground focus:outline-none"
@@ -189,17 +202,16 @@ export function LoginForm() {
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
 
-          {/* Remember Me and Forgot Password - Adjusted structure */}
+          {/* Remember Me */}
           <div className="flex items-center justify-between">
-             <div className="flex items-center space-x-2">
-               <Checkbox
-                  id="remember-me"
-                  checked={formState.rememberMe}
-                  onCheckedChange={handleCheckboxChange}
-               />
-               <Label htmlFor="remember-me">Remember me</Label>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="remember-me"
+                checked={formState.rememberMe}
+                onCheckedChange={handleCheckboxChange}
+              />
+              <Label htmlFor="remember-me">Remember me</Label>
             </div>
-             {/* Forgot password link is now inside the password div */} 
           </div>
 
           {/* Submit Button */}
@@ -207,10 +219,10 @@ export function LoginForm() {
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Logging in...
+                Signing in...
               </>
             ) : (
-              "Login"
+              "Sign in"
             )}
           </Button>
         </form>
