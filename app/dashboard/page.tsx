@@ -9,6 +9,8 @@ import { Toggle } from '@/components/ui/toggle';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 // Helper function for Local Storage with basic error handling
 const getLocalStorageItem = (key: string, defaultValue: any) => {
@@ -32,6 +34,10 @@ const setLocalStorageItem = (key: string, value: any) => {
 };
 
 const DashboardPage: React.FC = () => {
+  // Use Auth Context and router
+  const { logout } = useAuth();
+  const router = useRouter();
+
   // Local Storage Feature 1: Active Tab
   const [activeTab, setActiveTab] = useState(() => getLocalStorageItem('dashboard-active-tab', 'basic'));
 
@@ -117,6 +123,11 @@ const DashboardPage: React.FC = () => {
 
   const filteredSubscriptions = hideExpiredSubs ? subscriptionStatus.filter(sub => !sub.expired) : subscriptionStatus;
 
+  const handleLogoutClick = () => {
+    logout();
+    router.push('/');
+  };
+
   return (
     <div className="container mx-auto py-8">
       {showNotification && (
@@ -127,7 +138,23 @@ const DashboardPage: React.FC = () => {
         </div>
       )}
 
-      <h1 className="text-3xl font-bold mb-6">Web Application Firewall Dashboard</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold">Web Application Firewall Dashboard</h1>
+        <div className="flex space-x-4">
+          <Button onClick={() => router.push('/dashboard/profile')} variant="outline">
+            Profile
+          </Button>
+          <Button onClick={() => router.push('/dashboard/update')} variant="outline">
+            Update
+          </Button>
+          <Button onClick={() => router.push('/dashboard/settings')} variant="outline">
+            Settings
+          </Button>
+          <Button onClick={handleLogoutClick} variant="outline">
+            Log Out
+          </Button>
+        </div>
+      </div>
 
       <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
         <TabsList className="grid w-full grid-cols-3">

@@ -31,6 +31,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import { useRouter } from 'next/navigation';
+import { useAuth } from "@/context/AuthContext";
 
 function generateRandomUsername(length: number = 8): string {
   const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -60,6 +61,8 @@ export function LoginForm() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showPassword, setShowPassword] = useState(false)
   const [password, setPassword] = useState("")
+
+  const { login } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -122,9 +125,10 @@ export function LoginForm() {
         throw new Error(data.message || 'Login failed. Please check your credentials.')
       }
 
-      // Store user data in localStorage
-      localStorage.setItem('user', JSON.stringify(data.user))
-      
+      // Store user data in a cookie (handled by AuthContext login function)
+      // Use the login function from AuthContext
+      login(data.user);
+
       // Show success message
       toast.success('Login successful!')
       

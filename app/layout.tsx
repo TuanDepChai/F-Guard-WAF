@@ -8,6 +8,7 @@ import Footer from "@/components/footer"
 import CookieConsent from "@/components/cookie-consent"
 import ScrollToTop from "@/components/scroll-to-top"
 import SkipToContent from "@/components/skip-to-content"
+import { AuthProvider } from "@/context/AuthContext"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -76,16 +77,18 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-col min-h-screen">
-            <SkipToContent />
-            <Navbar />
-            <main id="main-content" className="flex-1">
-              {children}
-            </main>
-            <Footer />
-            <CookieConsent />
-            <ScrollToTop />
-          </div>
+          <AuthProvider>
+            <div className="flex flex-col min-h-screen">
+              <SkipToContent />
+              <Navbar key={typeof window !== 'undefined' ? document.cookie : 'server'} />
+              <main id="main-content" className="flex-1">
+                {children}
+              </main>
+              <Footer />
+              <CookieConsent />
+              <ScrollToTop />
+            </div>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -2,10 +2,14 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Menu, X, ChevronDown } from "lucide-react"
 import { ThemeToggle } from "./theme-toggle"
 import Image from "next/image"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { CircleUser } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { useAuth, UserData } from "@/context/AuthContext";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -56,6 +60,39 @@ export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const router = useRouter();
+
+  // Use Auth Context
+  const { isLoggedIn, userData, logout } = useAuth();
+
+  useEffect(() => {
+    // Function to check cookie and update state
+    const checkLoginStatus = () => {
+      const userCookie = document.cookie.split('; ').find(row => row.startsWith('user='));
+      if (userCookie) {
+        try {
+          const user: UserData = JSON.parse(userCookie.split('=')[1]);
+          // These state updates are now handled by the AuthProvider internally
+          // setUserData(user);
+          // setIsLoggedIn(true);
+        } catch (error) {
+          console.error('Failed to parse user cookie:', error);
+          // These state updates are now handled by the AuthProvider internally
+          // setIsLoggedIn(false);
+          // setUserData(null);
+        }
+      } else {
+        // These state updates are now handled by the AuthProvider internally
+        // setIsLoggedIn(false);
+        // setUserData(null);
+      }
+    };
+
+    // Check status initially and also consider re-checking if needed (though mount should suffice on redirect)
+    // checkLoginStatus(); // Initial check is handled by AuthProvider now
+
+    // Re-run effect if pathname changes - this might still be useful for some scenarios
+  }, [pathname]); // Re-run effect if pathname changes
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,6 +112,11 @@ export default function Navbar() {
     }
     return pathname.startsWith(href)
   }
+
+  const handleLogout = () => {
+    logout(); // Use logout from Auth Context
+    router.push('/'); // Redirect to home page after logout
+  };
 
   return (
     <header
@@ -161,18 +203,56 @@ export default function Navbar() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
           <ThemeToggle />
-          <Link
-            href="/demo"
-            className="rounded-md bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-          >
-            Try Demo
-          </Link>
-          <Link
-            href="/login"
-            className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
-          >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
+          {!isLoggedIn ? (
+            <>
+              <Link
+                href="/demo"
+                className="rounded-md bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              >
+                Try Demo
+              </Link>
+              <Link
+                href="/login"
+                className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
+              >
+                Log in <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </>
+          ) : (
+            <>
+              {pathname !== '/dashboard' && (
+                <Link
+                  href="/dashboard"
+                  className="rounded-md bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                >
+                  Back to Dashboard
+                </Link>
+              )}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <CircleUser className="h-6 w-6" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{userData?.name || 'User'}</p>
+                      <p className="text-xs leading-none text-muted-foreground">
+                        {userData?.email}
+                      </p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => router.push('/dashboard/profile')}>Profile</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push('/dashboard/update')}>Update</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>Settings</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          )}
         </div>
       </nav>
       {/* Mobile menu */}
