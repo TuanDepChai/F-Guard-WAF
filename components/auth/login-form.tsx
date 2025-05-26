@@ -29,6 +29,8 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Label } from "@/components/ui/label";
+import { useRouter } from 'next/navigation';
 
 function generateRandomUsername(length: number = 8): string {
   const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -48,6 +50,7 @@ function generateRandomUsername(length: number = 8): string {
 export function LoginForm() {
   const { t } = useTranslation()
   const { theme, setTheme } = useTheme()
+  const router = useRouter();
   const [formState, setFormState] = useState({
     email: "",
     password: "",
@@ -56,8 +59,7 @@ export function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showPassword, setShowPassword] = useState(false)
-  const [showOtpInput, setShowOtpInput] = useState(false)
-  const [otp, setOtp] = useState("")
+  const [password, setPassword] = useState("")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -118,23 +120,8 @@ export function LoginForm() {
     // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false)
-      setShowOtpInput(true)
-      toast.success("OTP sent to your email")
-    }, 1500)
-  }
-
-  const handleOtpSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (otp.length !== 6) {
-      toast.error("Please enter a valid OTP")
-      return
-    }
-
-    setIsSubmitting(true)
-    // Simulate OTP verification
-    setTimeout(() => {
-      setIsSubmitting(false)
-      window.location.href = "/dashboard"
+      // Redirect to dashboard after successful login
+      router.push('/dashboard');
     }, 1500)
   }
 
@@ -151,145 +138,82 @@ export function LoginForm() {
           </Button>
         </div>
 
-        {!showOtpInput ? (
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email Address
-              </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                  className={`pl-10 ${errors.email ? "border-red-500" : ""}`}
-                  placeholder="Enter your email"
-                />
-              </div>
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="text-sm font-medium">
-                  Password
-                </label>
-                <Link href="/forgot-password" className="text-sm text-primary hover:underline">
-                  Forgot password?
-                </Link>
-              </div>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formState.password}
-                  onChange={handleChange}
-                  className={`pl-10 ${errors.password ? "border-red-500" : ""}`}
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2"
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4 text-muted-foreground" />
-                  ) : (
-                    <Eye className="h-4 w-4 text-muted-foreground" />
-                  )}
-                </button>
-              </div>
-              {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="rememberMe" checked={formState.rememberMe} onCheckedChange={handleCheckboxChange} />
-                <label
-                  htmlFor="rememberMe"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Remember me
-                </label>
-              </div>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <QrCode className="h-5 w-5" />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Scan QR Code</DialogTitle>
-                    <DialogDescription>
-                      Scan this QR code with your mobile device to log in securely
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="flex justify-center p-4">
-                    {/* Placeholder for QR code */}
-                    <div className="w-48 h-48 bg-muted flex items-center justify-center">
-                      <QrCode className="h-24 w-24 text-muted-foreground" />
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </div>
-
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Logging in...
-                </>
-              ) : (
-                "Log in"
-              )}
-            </Button>
-          </form>
-        ) : (
-          <form onSubmit={handleOtpSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <label htmlFor="otp" className="text-sm font-medium">
-                Enter OTP
-              </label>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Email Input */}
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <div className="relative">
               <Input
-                id="otp"
-                type="text"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                placeholder="Enter 6-digit OTP"
-                maxLength={6}
-                className="text-center text-2xl tracking-widest"
+                id="email"
+                name="email"
+                type="email"
+                placeholder="m@example.com"
+                required
+                value={formState.email}
+                onChange={handleChange}
+                className={errors.email ? 'border-red-500' : ''}
               />
+              <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             </div>
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+          </div>
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Verifying...
-                </>
-              ) : (
-                "Verify OTP"
-              )}
-            </Button>
-
-            <div className="text-center">
-              <button
+          {/* Password Input */}
+          <div className="space-y-2">
+            <div className="flex items-center">
+              <Label htmlFor="password">Password</Label>
+              <Link href="/forgot-password" className="ml-auto inline-block text-sm underline">
+                Forgot your password?
+              </Link>
+            </div>
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                required
+                value={formState.password}
+                onChange={handleChange}
+                className={errors.password ? 'border-red-500' : ''}
+              />
+               <button
                 type="button"
-                onClick={() => setShowOtpInput(false)}
-                className="text-sm text-primary hover:underline"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground focus:outline-none"
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                Back to login
+                {showPassword ? <EyeOff /> : <Eye />}
               </button>
             </div>
-          </form>
-        )}
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+          </div>
+
+          {/* Remember Me and Forgot Password - Adjusted structure */}
+          <div className="flex items-center justify-between">
+             <div className="flex items-center space-x-2">
+               <Checkbox
+                  id="remember-me"
+                  checked={formState.rememberMe}
+                  onCheckedChange={handleCheckboxChange}
+               />
+               <Label htmlFor="remember-me">Remember me</Label>
+            </div>
+             {/* Forgot password link is now inside the password div */} 
+          </div>
+
+          {/* Submit Button */}
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Logging in...
+              </>
+            ) : (
+              "Login"
+            )}
+          </Button>
+        </form>
 
         <div className="mt-6">
           <div className="relative">
