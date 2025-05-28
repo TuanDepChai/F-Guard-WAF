@@ -57,6 +57,7 @@
     "react-hook-form": "^7.54.1",
     "react-intersection-observer": "latest",
     "react-resizable-panels": "^2.1.7",
+    "react-router-dom": "^7.6.1",
     "recharts": "latest",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",

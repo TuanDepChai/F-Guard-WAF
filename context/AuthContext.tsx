@@ -1,5 +1,6 @@
 'use client';
 
+import { CloudCog } from 'lucide-react';
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface UserData {
@@ -11,7 +12,7 @@ export interface UserData {
 interface AuthContextType {
   isLoggedIn: boolean;
   userData: UserData | null;
-  login: (user: UserData) => void;
+  login: (user: UserData) => Promise<void>;
   logout: () => void;
 }
 
@@ -28,7 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       try {
         const cookieValue = userCookie.split('=')[1];
         if (cookieValue) {
-          const user: UserData = JSON.parse(cookieValue);
+          const user: UserData = JSON.parse(decodeURIComponent(cookieValue));
           setUserData(user);
           setIsLoggedIn(true);
         } else {
@@ -47,15 +48,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, []);
 
-  const login = (user: UserData) => {
-    // In a real app, setting the cookie would likely happen during the API call handling
-    // but we'll set it here for demonstration if not already set by the login form
-    const existingCookie = document.cookie.split('; ').find(row => row.startsWith('user='));
-    if (!existingCookie) {
-         const expirationDate = new Date();
-         expirationDate.setDate(expirationDate.getDate() + 7); // Expires in 7 days
-         document.cookie = `user=${JSON.stringify(user)}; expires=${expirationDate.toUTCString()}; path=/`;
-    }
+  const login = async (user: UserData) => {
+    // Set cookie with proper encoding and expiration
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 7); // Expires in 7 days
+    const cookieValue = encodeURIComponent(JSON.stringify(user));
+    document.cookie = `user=${cookieValue}; expires=${expirationDate.toUTCString()}; path=/; SameSite=Strict`;
 
     setUserData(user);
     setIsLoggedIn(true);
@@ -63,7 +61,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const logout = () => {
     // Remove the user cookie
-    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict';
     setIsLoggedIn(false);
     setUserData(null);
   };

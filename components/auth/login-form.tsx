@@ -125,15 +125,16 @@ export function LoginForm() {
         throw new Error(data.message || 'Login failed. Please check your credentials.')
       }
 
-      // Store user data in a cookie (handled by AuthContext login function)
-      // Use the login function from AuthContext
-      login(data.user);
+      // Store user data in cookie and update auth context
+      await login(data.metadata.user);
 
       // Show success message
       toast.success('Login successful!')
-      
-      // Redirect to dashboard
-      router.push('/dashboard')
+
+      // Use router.replace for navigation after a short delay to ensure context update
+      setTimeout(() => {
+        router.replace('/dashboard');
+      }, 50); // Reduced delay slightly
     } catch (error) {
       console.error('Login error:', error)
       toast.error(error instanceof Error ? error.message : 'Login failed. Please try again.')
