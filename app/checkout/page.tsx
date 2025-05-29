@@ -11,7 +11,7 @@ interface Plan {
   _id: string;
   name: string;
   description: string;
-  price: string;
+  price: number;
 }
 
 export default function CheckoutPage() {
@@ -36,7 +36,7 @@ export default function CheckoutPage() {
           throw new Error('Failed to fetch plan details');
         }
         const data = await response.json();
-        setPlan(data.plan);
+        setPlan(data);
       } catch (error) {
         console.error('Error fetching plan:', error);
         toast.error('Failed to load plan details');
@@ -54,14 +54,14 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/payments/create`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/payments/vnpay`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           planId: plan._id,
-          amount: plan.price.replace(/[^0-9]/g, ''), // Remove non-numeric characters
+          amount: plan.price,
         }),
       });
 
