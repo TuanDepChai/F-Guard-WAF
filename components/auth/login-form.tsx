@@ -128,6 +128,8 @@ export function LoginForm() {
       // Store user data in cookie and update auth context
       await login(data.user);
 
+      localStorage.setItem('token', data.token);
+
       // Show success message
       toast.success('Login successful!')
 

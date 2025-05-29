@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
@@ -16,17 +16,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
+import { toast } from 'sonner';
 
 const ProfilePage: React.FC = () => {
-  const { userData, logout } = useAuth();
+  const { userData, setUserData, logout } = useAuth();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('general');
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    name: userData?.name || '',
+    username: userData?.username || '',
     email: userData?.email || '',
     phone: userData?.phone || '',
-    language: 'en',
     timezone: 'UTC',
     notifications: {
       email: true,
@@ -71,9 +71,33 @@ const ProfilePage: React.FC = () => {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // TODO: Implement save functionality
-    setIsEditing(false);
+    try {
+      console.log('Form data:', formData);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/auth/me`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setUserData(data.user);
+        toast.success(data.message);
+        console.log('Profile updated successfully');
+      } else {
+        toast.error(data.message);
+        console.error('Failed to update profile');
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast.error('Error updating profile');
+    } finally {
+      setIsEditing(false);
+    }
   };
 
   const handleLogout = () => {
@@ -169,21 +193,21 @@ const ProfilePage: React.FC = () => {
             <div className="flex flex-col items-center space-y-4">
               <Avatar className="h-24 w-24 group">
                 <AvatarImage src={avatarUrl} alt="Avatar" />
-                <AvatarFallback>{userData?.name?.charAt(0)}</AvatarFallback>
+                <AvatarFallback>{userData?.username?.charAt(0)}</AvatarFallback>
                 <label htmlFor="avatar-upload" className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer rounded-full">
                   <Upload className="h-8 w-8 text-white" />
                   <span className="sr-only">Upload avatar</span>
                 </label>
-                <input 
-                  id="avatar-upload" 
-                  type="file" 
-                  accept="image/*" 
-                  className="sr-only" 
+                <input
+                  id="avatar-upload"
+                  type="file"
+                  accept="image/*"
+                  className="sr-only"
                   onChange={handleAvatarUpload}
                 />
               </Avatar>
               <div className="text-center">
-                <h2 className="text-xl font-semibold">{userData?.name}</h2>
+                <h2 className="text-xl font-semibold">{userData?.username}</h2>
                 <p className="text-gray-500">{userData?.email}</p>
               </div>
               <div className="w-full space-y-2">
@@ -207,36 +231,38 @@ const ProfilePage: React.FC = () => {
         {/* Settings Tabs */}
         <div className="lg:col-span-2">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="general">
+            <TabsList className="grid w-full grid-cols-4 gap-2">
+              <TabsTrigger value="general" className="flex items-center justify-center">
                 <User className="h-4 w-4 mr-2" />
                 General
               </TabsTrigger>
-              <TabsTrigger value="security">
+              <TabsTrigger value="security" className="flex items-center justify-center">
                 <Shield className="h-4 w-4 mr-2" />
                 Security
               </TabsTrigger>
-              <TabsTrigger value="notifications">
+              <TabsTrigger value="notifications" className="flex items-center justify-center">
                 <Bell className="h-4 w-4 mr-2" />
                 Notifications
               </TabsTrigger>
-              <TabsTrigger value="preferences">
+              <TabsTrigger value="preferences" className="flex items-center justify-center">
                 <Settings className="h-4 w-4 mr-2" />
                 Preferences
               </TabsTrigger>
-              <TabsTrigger value="activity">
+            </TabsList>
+            <TabsList className="grid w-full grid-cols-4 gap-2 mt-2">
+              <TabsTrigger value="activity" className="flex items-center justify-center">
                 <Download className="h-4 w-4 mr-2" />
                 Activity
               </TabsTrigger>
-              <TabsTrigger value="devices">
+              <TabsTrigger value="devices" className="flex items-center justify-center">
                 <Smartphone className="h-4 w-4 mr-2" />
                 Devices
               </TabsTrigger>
-              <TabsTrigger value="social">
+              <TabsTrigger value="social" className="flex items-center justify-center">
                 <ExternalLink className="h-4 w-4 mr-2" />
                 Social
               </TabsTrigger>
-              <TabsTrigger value="data">
+              <TabsTrigger value="data" className="flex items-center justify-center">
                 <Download className="h-4 w-4 mr-2" />
                 Data
               </TabsTrigger>
@@ -251,13 +277,13 @@ const ProfilePage: React.FC = () => {
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="name">Full Name</Label>
+                        <Label htmlFor="name">Username</Label>
                         <Input
                           id="name"
                           name="name"
-                          value={formData.name}
+                          value={formData.username}
                           onChange={handleInputChange}
-                          disabled={!isEditing}
+                          disabled
                         />
                       </div>
                       <div className="space-y-2">
@@ -280,23 +306,6 @@ const ProfilePage: React.FC = () => {
                           onChange={handleInputChange}
                           disabled={!isEditing}
                         />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="language">Language</Label>
-                        <Select
-                          value={formData.language}
-                          onValueChange={(value) => handleSelectChange('language', value)}
-                          disabled={!isEditing}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select language" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="en">English</SelectItem>
-                            <SelectItem value="vi">Tiếng Việt</SelectItem>
-                            <SelectItem value="zh">中文</SelectItem>
-                          </SelectContent>
-                        </Select>
                       </div>
                     </div>
                     <div className="flex justify-end space-x-2">
@@ -450,22 +459,6 @@ const ProfilePage: React.FC = () => {
                           </SelectContent>
                         </Select>
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="language">Display Language</Label>
-                        <Select
-                          value={formData.language}
-                          onValueChange={(value) => handleSelectChange('language', value)}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select language" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="en">English</SelectItem>
-                            <SelectItem value="vi">Tiếng Việt</SelectItem>
-                            <SelectItem value="zh">中文</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
                     </div>
 
                     <Separator />
@@ -567,14 +560,14 @@ const ProfilePage: React.FC = () => {
                 <div className="space-y-4">
                   {activityData.map((activity) => (
                     <div key={activity.id} className="flex items-start space-x-4 p-4 rounded-lg border bg-card">
-                      <div className={`p-2 rounded-full ${activity.type === 'login' ? 'bg-green-100 text-green-600' : 
-                        activity.type === 'settings' ? 'bg-blue-100 text-blue-600' : 
-                        activity.type === 'security' ? 'bg-red-100 text-red-600' : 
-                        'bg-gray-100 text-gray-600'}`}>
+                      <div className={`p-2 rounded-full ${activity.type === 'login' ? 'bg-green-100 text-green-600' :
+                        activity.type === 'settings' ? 'bg-blue-100 text-blue-600' :
+                          activity.type === 'security' ? 'bg-red-100 text-red-600' :
+                            'bg-gray-100 text-gray-600'}`}>
                         {activity.type === 'login' ? <LogIn className="w-4 h-4" /> :
-                         activity.type === 'settings' ? <Settings className="w-4 h-4" /> :
-                         activity.type === 'security' ? <Shield className="w-4 h-4" /> :
-                         <User className="w-4 h-4" />}
+                          activity.type === 'settings' ? <Settings className="w-4 h-4" /> :
+                            activity.type === 'security' ? <Shield className="w-4 h-4" /> :
+                              <User className="w-4 h-4" />}
                       </div>
                       <div className="flex-1 space-y-1">
                         <p className="text-sm font-medium">{activity.description}</p>
@@ -641,10 +634,10 @@ const ProfilePage: React.FC = () => {
                       <div className="flex items-center space-x-4">
                         <div className="p-2 rounded-full bg-primary/10">
                           {account.platform === 'Facebook' ? <Facebook className="w-4 h-4 text-primary" /> :
-                           account.platform === 'Twitter' ? <Twitter className="w-4 h-4 text-primary" /> :
-                           account.platform === 'Github' ? <Github className="w-4 h-4 text-primary" /> :
-                           account.platform === 'LinkedIn' ? <Linkedin className="w-4 h-4 text-primary" /> :
-                           <Instagram className="w-4 h-4 text-primary" />}
+                            account.platform === 'Twitter' ? <Twitter className="w-4 h-4 text-primary" /> :
+                              account.platform === 'Github' ? <Github className="w-4 h-4 text-primary" /> :
+                                account.platform === 'LinkedIn' ? <Linkedin className="w-4 h-4 text-primary" /> :
+                                  <Instagram className="w-4 h-4 text-primary" />}
                         </div>
                         <div>
                           <p className="font-medium">{account.platform}</p>
@@ -714,10 +707,10 @@ const ProfilePage: React.FC = () => {
                   </Card>
 
                   <Card className="md:col-span-2">
-        <CardHeader>
+                    <CardHeader>
                       <CardTitle>Backup and Restore</CardTitle>
                       <CardDescription>Backup or restore your profile settings</CardDescription>
-        </CardHeader>
+                    </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
                         <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -736,18 +729,18 @@ const ProfilePage: React.FC = () => {
                         <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                           <div className="flex items-center space-x-3">
                             <Upload className="h-5 w-5 text-green-500" />
-          <div>
+                            <div>
                               <h3 className="font-medium">Restore Settings</h3>
                               <p className="text-sm text-gray-500">Upload a backup file to restore your settings.</p>
                             </div>
                           </div>
                           <label htmlFor="restore-file" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 cursor-pointer">
                             Choose File
-                            <input 
-                              id="restore-file" 
-                              type="file" 
+                            <input
+                              id="restore-file"
+                              type="file"
                               accept=".json"
-                              className="sr-only" 
+                              className="sr-only"
                               onChange={handleRestoreSettings}
                             />
                           </label>
@@ -851,7 +844,7 @@ const ProfilePage: React.FC = () => {
                   <div className="p-2 rounded-full bg-primary/10">
                     <Smartphone className="w-4 h-4 text-primary" />
                   </div>
-          <div>
+                  <div>
                     <p className="font-medium">{device.name}</p>
                     <p className="text-sm text-muted-foreground">{device.type}</p>
                   </div>
@@ -877,14 +870,14 @@ const ProfilePage: React.FC = () => {
             {socialAccounts.map((account) => (
               <Button key={account.id} variant="outline" className="w-full justify-start">
                 {account.platform === 'Facebook' ? <Facebook className="w-4 h-4 mr-2" /> :
-                 account.platform === 'Twitter' ? <Twitter className="w-4 h-4 mr-2" /> :
-                 account.platform === 'Github' ? <Github className="w-4 h-4 mr-2" /> :
-                 account.platform === 'LinkedIn' ? <Linkedin className="w-4 h-4 mr-2" /> :
-                 <Instagram className="w-4 h-4 mr-2" />}
+                  account.platform === 'Twitter' ? <Twitter className="w-4 h-4 mr-2" /> :
+                    account.platform === 'Github' ? <Github className="w-4 h-4 mr-2" /> :
+                      account.platform === 'LinkedIn' ? <Linkedin className="w-4 h-4 mr-2" /> :
+                        <Instagram className="w-4 h-4 mr-2" />}
                 Connect with {account.platform}
               </Button>
             ))}
-            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

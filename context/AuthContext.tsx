@@ -6,15 +6,15 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 export interface UserData {
   id: string;
   email: string;
-  name?: string;
+  username?: string;
   phone?: string;
   avatar?: string;
-  licenseKey?: string;
 }
 
 interface AuthContextType {
   isLoggedIn: boolean;
   userData: UserData | null;
+  setUserData: (user: UserData) => void;
   login: (user: UserData) => Promise<void>;
   logout: () => void;
 }
@@ -58,8 +58,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const cookieValue = encodeURIComponent(JSON.stringify(user));
     document.cookie = `user=${cookieValue}; expires=${expirationDate.toUTCString()}; path=/; SameSite=Strict`;
 
-    setUserData(user);
-    setIsLoggedIn(true);
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/auth/me`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUserData(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user data:', error);
+    } finally {
+      setIsLoggedIn(true);
+    }
   };
 
   const logout = () => {
@@ -70,7 +83,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userData, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, userData, setUserData, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -5,9 +5,6 @@ export function middleware(request: NextRequest) {
   // Get user info from cookie
   const userCookie = request.cookies.get('user')
   
-  console.log(`Middleware: Path: ${request.nextUrl.pathname}`);
-  console.log(`Middleware: User Cookie: ${userCookie ? userCookie.value : 'Not found'}`);
-
   // Check if accessing dashboard without login
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
     if (!userCookie || !userCookie.value) {
