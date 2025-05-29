@@ -71,10 +71,32 @@ const ProfilePage: React.FC = () => {
     }));
   };
 
+  const handleCancel = () => {
+    setIsEditing(false);
+    setFormData(prev => ({
+      ...prev,
+      username: userData?.username || '',
+      email: userData?.email || '',
+      phone: userData?.phone || ''
+    }));
+  };
+
   const handleSave = async () => {
-    // TODO: Implement save functionality
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
+    // Validate phone number (allows formats like: +1234567890, 123-456-7890, (123) 456-7890)
+    const phoneRegex = /^(\+\d{1,3}[- ]?)?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}$/;
+    if (formData.phone && !phoneRegex.test(formData.phone)) {
+      toast.error('Please enter a valid phone number');
+      return;
+    }
+
     try {
-      console.log('Form data:', formData);
       const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/auth/me`, {
         method: 'PUT',
         headers: {
@@ -311,7 +333,7 @@ const ProfilePage: React.FC = () => {
                     <div className="flex justify-end space-x-2">
                       {isEditing ? (
                         <>
-                          <Button variant="outline" onClick={() => setIsEditing(false)}>
+                          <Button variant="outline" onClick={handleCancel}>
                             Cancel
                           </Button>
                           <Button onClick={handleSave}>

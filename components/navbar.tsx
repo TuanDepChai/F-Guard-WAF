@@ -213,7 +213,7 @@ export default function Navbar() {
               </Link>
               <Link
                 href="/login"
-                className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
+                className="flex text-sm items-center justify-center font-semibold leading-6 text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
               >
                 Log in <span aria-hidden="true">&rarr;</span>
               </Link>
