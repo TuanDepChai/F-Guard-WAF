@@ -1,164 +1,143 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card';
-import { toast } from 'sonner';
-import { Loader2 } from 'lucide-react';
-import { useAuth } from '@/context/AuthContext';
+import { AlertTriangle, CheckCircle, Loader2, History, FileText, Settings } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Separator } from '@/components/ui/separator';
 
 const UpdatePage: React.FC = () => {
-  const { userData } = useAuth();
-  const [formData, setFormData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmNewPassword: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [updateStatus, setUpdateStatus] = useState<'checking' | 'available' | 'no_updates' | 'installing' | 'success' | 'error'>('checking');
+  const [updateInfo, setUpdateInfo] = useState<{ version: string; description: string; } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [updateHistory, setUpdateHistory] = useState<{
+    version: string;
+    date: string;
+    notes: string;
+  }[]>([
+    // Simulate past updates
+    { version: '1.0.0', date: '2023-12-01', notes: 'Initial release.' },
+    { version: '1.0.1', date: '2024-01-15', notes: 'Bug fixes and minor improvements.' },
+  ]);
+  const [autoUpdateEnabled, setAutoUpdateEnabled] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
-    // Clear error for this field when user starts typing
-    if (errors[id]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[id];
-        return newErrors;
-      });
-    }
-  };
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    if (!formData.currentPassword) {
-      newErrors.currentPassword = 'Current password is required.';
-    }
-    if (!formData.newPassword) {
-      newErrors.newPassword = 'New password is required.';
-    } else if (formData.newPassword.length < 6) {
-      newErrors.newPassword = 'New password must be at least 6 characters.';
-    }
-    if (formData.newPassword !== formData.confirmNewPassword) {
-      newErrors.confirmNewPassword = 'New passwords do not match.';
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    // Assume an API endpoint for updating password exists
-    // Replace '/api/user/update-password' with your actual endpoint
+  // Placeholder functions for update logic
+  const checkForUpdates = async () => {
+    setUpdateStatus('checking');
+    setError(null);
     try {
-      const response = await fetch('/api/user/update-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // Include authorization header if your API requires it (e.g., JWT)
-          // 'Authorization': `Bearer ${yourAuthToken}`, 
-        },
-        body: JSON.stringify({
-          userId: userData?.id, // Pass user ID to API
-          currentPassword: formData.currentPassword,
-          newPassword: formData.newPassword,
-        }),
-      });
+      // Simulate checking for updates
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      const availableUpdate = { version: '1.1.0', description: 'Performance improvements and bug fixes.' }; // Simulate an available update
+      // const availableUpdate = null; // Simulate no updates
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        // Handle API errors (e.g., incorrect current password)
-        throw new Error(data.message || 'Failed to update password.');
+      if (availableUpdate) {
+        setUpdateInfo(availableUpdate);
+        setUpdateStatus('available');
+      } else {
+        setUpdateStatus('no_updates');
+        setUpdateInfo(null);
       }
-
-      toast.success('Password updated successfully!');
-      // Optionally clear the form or redirect
-      setFormData({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
-
-    } catch (error) {
-      console.error('Password update error:', error);
-      toast.error(error instanceof Error ? error.message : 'An error occurred during password update.');
-    } finally {
-      setIsSubmitting(false);
+    } catch (err) {
+      setError('Failed to check for updates.');
+      setUpdateStatus('error');
     }
   };
+
+  const installUpdates = async () => {
+    setUpdateStatus('installing');
+    setError(null);
+    try {
+      // Simulate installing updates
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      setUpdateStatus('success');
+      setUpdateInfo(null); // Clear update info after success
+      // Add the installed update to history (simulate with current available update)
+      if (updateInfo) {
+        const newUpdate = { ...updateInfo, date: new Date().toISOString().slice(0, 10), notes: updateInfo.description }; // Use description as notes for now
+        setUpdateHistory(prevHistory => [newUpdate, ...prevHistory]);
+      }
+    } catch (err) {
+      setError('Failed to install updates.');
+      setUpdateStatus('error');
+    }
+  };
+
+  React.useEffect(() => {
+    checkForUpdates(); // Check for updates on page load
+  }, []);
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-6">Update Account Information</h1>
-      
-      <Card className="max-w-md mx-auto">
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-3xl font-bold mb-8">System Update</h1>
+
+      <Card className="mb-6">
         <CardHeader>
-          <CardTitle>Change Password</CardTitle>
+          <CardTitle>Update Status</CardTitle>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="currentPassword">Current Password</Label>
-              <Input
-                id="currentPassword"
-                type="password"
-                value={formData.currentPassword}
-                onChange={handleChange}
-                required
-                className={errors.currentPassword ? 'border-red-500' : ''}
-              />
-              {errors.currentPassword && <p className="text-red-500 text-sm">{errors.currentPassword}</p>}
-            </div>
+        <CardContent className="space-y-4">
+          {
+            updateStatus === 'checking' && (
+              <div className="flex items-center space-x-3 text-blue-500">
+                <Loader2 className="w-5 h-5 animate-spin" />
+                <p>Checking for updates...</p>
+              </div>
+            )
+          }
+          {
+            updateStatus === 'available' && updateInfo && (
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2 text-yellow-600">
+                  <AlertTriangle className="w-5 h-5" />
+                  <p className="font-medium">Update Available (v{updateInfo.version})</p>
+                </div>
+                <CardDescription>{updateInfo.description}</CardDescription>
+                <Button onClick={installUpdates}>Install Update</Button>
+              </div>
+            )
+          }
+          {
+            updateStatus === 'no_updates' && (
+              <div className="flex items-center space-x-2 text-green-600">
+                <CheckCircle className="w-5 h-5" />
+                <p>Your system is up to date.</p>
+              </div>
+            )
+          }
+           {
+            updateStatus === 'installing' && (
+              <div className="flex items-center space-x-2 text-blue-500">
+                <Loader2 className="w-5 h-5 animate-spin" />
+                <p>Installing update...</p>
+              </div>
+            )
+          }
+           {
+            updateStatus === 'success' && (
+              <div className="flex items-center space-x-2 text-green-600">
+                <CheckCircle className="w-5 h-5" />
+                <p>Update installed successfully!</p>
+              </div>
+            )
+          }
+          {
+            updateStatus === 'error' && error && (
+              <div className="flex items-center space-x-2 text-red-600">
+                <AlertTriangle className="w-5 h-5" />
+                <p>Error: {error}</p>
+              </div>
+            )
+          }
 
-            <div className="space-y-2">
-              <Label htmlFor="newPassword">New Password</Label>
-              <Input
-                id="newPassword"
-                type="password"
-                value={formData.newPassword}
-                onChange={handleChange}
-                required
-                className={errors.newPassword ? 'border-red-500' : ''}
-              />
-               {errors.newPassword && <p className="text-red-500 text-sm">{errors.newPassword}</p>}
-            </div>
+          {updateStatus !== 'checking' && updateStatus !== 'installing' && (
+             <Button variant="outline" onClick={checkForUpdates} className="mt-4">Check for Updates</Button>
+          )}
 
-            <div className="space-y-2">
-              <Label htmlFor="confirmNewPassword">Confirm New Password</Label>
-              <Input
-                id="confirmNewPassword"
-                type="password"
-                value={formData.confirmNewPassword}
-                onChange={handleChange}
-                required
-                 className={errors.confirmNewPassword ? 'border-red-500' : ''}
-              />
-              {errors.confirmNewPassword && <p className="text-red-500 text-sm">{errors.confirmNewPassword}</p>}
-            </div>
-            
-            {/* Submit Button */}
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Updating...
-                </>
-              ) : (
-                "Update Password"
-              )}
-            </Button>
-          </form>
         </CardContent>
       </Card>
 
-      {/* You can add other update forms here (e.g., for email, name) */}
+      {/* Future sections: Update History, Release Notes, etc. */}
 
     </div>
   );
