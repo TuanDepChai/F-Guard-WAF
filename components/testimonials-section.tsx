@@ -42,7 +42,7 @@ export default function TestimonialsSection() {
   ]
 
   return (
-    <section className="py-20">
+    <section className="py-16 sm:py-24 lg:py-32">
       <div className="container px-4 md:px-6">
         <motion.div
           className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
@@ -56,10 +56,10 @@ export default function TestimonialsSection() {
               <Shield className="mr-1 h-4 w-4" />
               <span>Enterprise Success Stories</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gradient-animate">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-gray-900 dark:text-white text-gradient-animate">
               Trusted by Security Leaders
             </h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
+            <p className="max-w-[900px] text-gray-600 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
               See why enterprise security professionals choose our WAF solution for their critical applications
             </p>
           </div>
@@ -67,7 +67,7 @@ export default function TestimonialsSection() {
 
         {/* Featured testimonial with image */}
         <motion.div
-          className="mb-12"
+          className="mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -114,9 +114,9 @@ export default function TestimonialsSection() {
                   transition={{ duration: 0.5, delay: 0.4 }}
                   viewport={{ once: true }}
                 >
-                  "FGuard's enterprise WAF solution has been instrumental in protecting our global infrastructure. Their
+                  FGuard's enterprise WAF solution has been instrumental in protecting our global infrastructure. Their
                   security team's expertise and the platform's advanced capabilities have given us confidence in our web
-                  application security posture."
+                  application security posture.
                 </motion.p>
                 <motion.div
                   className="flex items-center"
@@ -126,13 +126,13 @@ export default function TestimonialsSection() {
                   viewport={{ once: true }}
                 >
                   <Avatar className="h-12 w-12 mr-4 border-2 border-white">
-                    <AvatarFallback className="bg-gradient-to-br from-primary to-blue-600 text-white">
+                    <AvatarFallback className="bg-primary text-white">
                       JD
                     </AvatarFallback>
                   </Avatar>
                   <div>
                     <p className="font-medium text-white">James Davidson</p>
-                    <p className="text-white/80">Chief Information Security Officer, Global 500 Company</p>
+                    <p className="text-gray-200">Chief Information Security Officer, Global 500 Company</p>
                   </div>
                 </motion.div>
               </div>
@@ -167,7 +167,7 @@ export default function TestimonialsSection() {
                 transition: { duration: 0.2 },
               }}
             >
-              <Card className="overflow-hidden card-hover">
+              <Card className="overflow-hidden bg-card shadow-sm border border-border card-hover transition-transform duration-200 ease-in-out hover:scale-[1.02]">
                 <CardContent className="p-6 relative">
                   <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl"></div>
                   <div className="flex space-x-1 mb-2">
@@ -186,16 +186,16 @@ export default function TestimonialsSection() {
                       </motion.div>
                     ))}
                   </div>
-                  <p className="mb-4 text-muted-foreground">{testimonial.content}</p>
+                  <p className="mb-4 text-gray-600 dark:text-gray-400">{testimonial.content}</p>
                   <div className="flex items-center">
-                    <Avatar className="h-10 w-10 mr-3 border-2 border-primary/10">
-                      <AvatarFallback className="bg-gradient-to-br from-primary/20 to-blue-500/20 text-primary">
+                    <Avatar className="h-10 w-10 mr-3 border-2 border-border">
+                      <AvatarFallback className="bg-primary text-primary-foreground">
                         {testimonial.initials}
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-medium">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                      <p className="font-medium text-gray-900 dark:text-white">{testimonial.name}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">{testimonial.role}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -205,7 +205,7 @@ export default function TestimonialsSection() {
         </div>
 
         <motion.div
-          className="mt-12 bg-slate-100 dark:bg-slate-800 rounded-lg p-8 text-center"
+          className="mt-16 bg-card shadow-sm border border-border rounded-lg p-8 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -218,8 +218,8 @@ export default function TestimonialsSection() {
               ))}
             </div>
           </div>
-          <h3 className="text-2xl font-bold mb-2">Trusted by 1,000+ enterprise clients worldwide</h3>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <h3 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Trusted by 1,000+ enterprise clients worldwide</h3>
+          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             From Fortune 500 companies to government agencies, our enterprise-grade WAF solution protects
             mission-critical applications across industries including finance, healthcare, e-commerce, and more.
           </p>

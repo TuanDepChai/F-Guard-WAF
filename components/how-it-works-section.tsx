@@ -27,7 +27,7 @@ export default function HowItWorksSection() {
       icon: <Filter className="h-6 w-6 text-white" />,
       title: "Traffic Filtering",
       description: "All traffic to your website is routed through FGuard's WAF system for inspection and filtering.",
-      color: "bg-blue-600",
+      color: "bg-primary",
       detailedDescription:
         "Our advanced traffic filtering system acts as the first line of defense, examining all incoming requests before they reach your application servers. Using a combination of IP reputation databases, rate limiting, and behavioral analysis, we can identify and filter out suspicious traffic patterns in real-time.",
       stats: {
@@ -46,7 +46,7 @@ export default function HowItWorksSection() {
       icon: <AlertTriangle className="h-6 w-6 text-white" />,
       title: "Threat Detection",
       description: "The system analyzes traffic in real-time to detect attack patterns and abnormal behavior.",
-      color: "bg-yellow-600",
+      color: "bg-yellow-500",
       detailedDescription:
         "Our threat detection engine uses machine learning algorithms and signature-based detection to identify known attack patterns and zero-day threats. By analyzing HTTP/HTTPS traffic at the application layer, we can detect SQL injection attempts, XSS attacks, CSRF, and other OWASP Top 10 vulnerabilities.",
       stats: {
@@ -66,7 +66,7 @@ export default function HowItWorksSection() {
       title: "Attack Blocking",
       description:
         "Attacks and malicious traffic are automatically blocked, while legitimate users can still access normally.",
-      color: "bg-red-600",
+      color: "bg-red-500",
       detailedDescription:
         "When a threat is detected, our system takes immediate action to neutralize it. Depending on the severity and confidence level, actions range from blocking the specific request to temporarily banning the source IP. Our intelligent system minimizes false positives, ensuring legitimate users maintain uninterrupted access.",
       stats: {
@@ -86,7 +86,7 @@ export default function HowItWorksSection() {
       title: "Continuous Protection",
       description:
         "The system continuously updates security rules to combat the latest threats and protect your website 24/7.",
-      color: "bg-green-600",
+      color: "bg-green-500",
       detailedDescription:
         "Security is not a one-time setup but an ongoing process. Our dedicated security research team continuously monitors emerging threats and updates protection rules. With virtual patching capabilities, we can protect your applications from newly discovered vulnerabilities even before you update your code.",
       stats: {
@@ -127,7 +127,7 @@ export default function HowItWorksSection() {
   ]
 
   return (
-    <section id="how-it-works" className="py-20">
+    <section id="how-it-works" className="py-16 sm:py-24 lg:py-32">
       <div className="container px-4 md:px-6">
         <motion.div
           className="flex flex-col items-center justify-center space-y-4 text-center mb-12"
@@ -141,10 +141,10 @@ export default function HowItWorksSection() {
               <Shield className="mr-1 h-4 w-4" />
               <span>How It Works</span>
             </div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-gradient-animate">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-gray-900 dark:text-white text-gradient-animate">
               How FGuard WAF Protects Your Applications
             </h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
+            <p className="max-w-[900px] text-gray-600 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed mx-auto">
               Our enterprise-grade WAF solution provides comprehensive protection through a sophisticated multi-step
               process that identifies and neutralizes threats before they reach your applications
             </p>
@@ -204,16 +204,13 @@ export default function HowItWorksSection() {
                     key={index}
                     className="flex flex-col items-center relative card-hover p-4 rounded-lg"
                     initial={{ opacity: 0.5 }}
-                    animate={{
-                      opacity: activeStep === index ? 1 : 0.7,
-                      scale: activeStep === index ? 1.1 : 1,
-                    }}
+                    animate={{ opacity: activeStep === index ? 1 : 0.7 }}
                     whileHover={{ scale: 1.05, opacity: 1 }}
                     onClick={() => setActiveStep(index)}
                     style={{ cursor: "pointer" }}
                   >
                     <motion.div
-                      className={`${step.color} p-6 rounded-full mb-3 shadow-lg relative z-10`}
+                      className={`${step.color} p-6 rounded-full mb-4 shadow-lg relative z-10`}
                       whileHover={{
                         boxShadow: `0 0 20px 5px ${
                           step.color.includes("blue")
@@ -306,7 +303,7 @@ export default function HowItWorksSection() {
             </div>
 
             {/* Overlay with active step details */}
-            {activeStep !== null && (
+            {activeStep !== null && showDetails && (
               <motion.div
                 className="absolute inset-0 bg-black/80 flex items-center justify-center p-6"
                 initial={{ opacity: 0 }}
@@ -620,12 +617,11 @@ export default function HowItWorksSection() {
             {advancedFeatures.map((feature, index) => (
               <motion.div
                 key={index}
-                className="bg-white p-6 rounded-lg shadow-md border"
+                className="flex flex-col items-center space-y-3 card-hover p-6 rounded-lg bg-card shadow-sm transition-transform duration-200 ease-in-out hover:scale-[1.02]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
               >
                 <div className="rounded-full bg-primary/10 p-3 w-12 h-12 flex items-center justify-center mb-4">
                   {feature.icon}
@@ -807,10 +803,19 @@ export default function HowItWorksSection() {
         </motion.div>
 
         {/* FAQ Toggle */}
-        <div className="mt-16 text-center">
-          <Button variant="ghost" onClick={() => setShowDetails(!showDetails)} className="flex items-center gap-2">
-            {showDetails ? "Hide Technical Details" : "Show Technical Details"}
-            {showDetails ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        <div className="mt-16 text-center space-y-4">
+          <Button variant="ghost" onClick={() => setShowDetails(prev => !prev)} className="flex items-center gap-2">
+            {showDetails ? (
+              <>
+                <ChevronUp className="h-5 w-5" />
+                <span>Hide Technical Details</span>
+              </>
+            ) : (
+              <>
+                <ChevronDown className="h-5 w-5" />
+                <span>Show Technical Details</span>
+              </>
+            )}
           </Button>
 
           {showDetails && (

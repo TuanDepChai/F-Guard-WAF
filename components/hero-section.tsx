@@ -20,7 +20,7 @@ export default function HeroSection() {
               Protect Your Web Applications with{" "}
               <span className="text-gradient-animate">F-Guard WAF</span>
             </h1>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+            <p className="mt-6 text-lg leading-relaxed text-gray-700 dark:text-gray-300">
               A modern Web Application Firewall solution designed to protect your web applications from cyber attacks.
             </p>
             <div className="mt-10 flex items-center gap-x-6">

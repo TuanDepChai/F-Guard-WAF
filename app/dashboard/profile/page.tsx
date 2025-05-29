@@ -714,10 +714,10 @@ const ProfilePage: React.FC = () => {
                   </Card>
 
                   <Card className="md:col-span-2">
-                    <CardHeader>
+        <CardHeader>
                       <CardTitle>Backup and Restore</CardTitle>
                       <CardDescription>Backup or restore your profile settings</CardDescription>
-                    </CardHeader>
+        </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
                         <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -736,7 +736,7 @@ const ProfilePage: React.FC = () => {
                         <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                           <div className="flex items-center space-x-3">
                             <Upload className="h-5 w-5 text-green-500" />
-                            <div>
+          <div>
                               <h3 className="font-medium">Restore Settings</h3>
                               <p className="text-sm text-gray-500">Upload a backup file to restore your settings.</p>
                             </div>
@@ -851,7 +851,7 @@ const ProfilePage: React.FC = () => {
                   <div className="p-2 rounded-full bg-primary/10">
                     <Smartphone className="w-4 h-4 text-primary" />
                   </div>
-                  <div>
+          <div>
                     <p className="font-medium">{device.name}</p>
                     <p className="text-sm text-muted-foreground">{device.type}</p>
                   </div>
@@ -884,7 +884,7 @@ const ProfilePage: React.FC = () => {
                 Connect with {account.platform}
               </Button>
             ))}
-          </div>
+            </div>
         </DialogContent>
       </Dialog>
     </div>
