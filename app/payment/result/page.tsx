@@ -88,7 +88,7 @@ function PaymentResultContent() {
     const hour = dateStr.substring(8, 10);
     const minute = dateStr.substring(10, 12);
     const second = dateStr.substring(12, 14);
-    
+
     return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
   };
 
@@ -97,8 +97,8 @@ function PaymentResultContent() {
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle className="text-center">
-            {isLoading ? 'Verifying Payment...' : 
-             isSuccess ? 'Payment Successful' : 'Payment Failed'}
+            {isLoading ? 'Verifying Payment...' :
+              isSuccess ? 'Payment Successful' : 'Payment Failed'}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -138,8 +138,12 @@ function PaymentResultContent() {
                   <div className={isSuccess ? 'text-green-500' : 'text-red-500'}>
                     {isSuccess ? 'Success' : 'Failed'}
                   </div>
-                  <div className="font-medium">License Key:</div>
-                  <div className='font-bold'>{licenseKey}</div>
+                  {licenseKey && (
+                    <>
+                      <div className="font-medium">License Key:</div>
+                      <div className='font-bold'>{licenseKey}</div>
+                    </>
+                  )}
                 </div>
               </div>
 

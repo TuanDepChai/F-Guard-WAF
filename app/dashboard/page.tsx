@@ -254,7 +254,7 @@ const DashboardPage: React.FC = () => {
             >
               <Filter className="h-4 w-4" />
             </Button>
-        </div>
+          </div>
           <Button
             variant="outline"
             onClick={() => setShowFilters(!showFilters)}
@@ -285,7 +285,7 @@ const DashboardPage: React.FC = () => {
                   {notificationCount}
                 </span>
               )}
-          </Button>
+            </Button>
             {showNotifications && (
               <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 z-50">
                 <div className="flex items-center justify-between mb-4">
@@ -301,14 +301,13 @@ const DashboardPage: React.FC = () => {
                     { type: 'info', message: 'New security patch released', time: '3 hours ago', severity: 'low' },
                   ].map((notification, index) => (
                     <div key={index} className="flex items-start space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <div className={`p-2 rounded-full ${
-                        notification.severity === 'high' ? 'bg-red-100 text-red-600' :
-                        notification.severity === 'medium' ? 'bg-yellow-100 text-yellow-600' :
-                        'bg-blue-100 text-blue-600'
-                      }`}>
+                      <div className={`p-2 rounded-full ${notification.severity === 'high' ? 'bg-red-100 text-red-600' :
+                          notification.severity === 'medium' ? 'bg-yellow-100 text-yellow-600' :
+                            'bg-blue-100 text-blue-600'
+                        }`}>
                         {notification.type === 'alert' ? <AlertCircle className="h-4 w-4" /> :
-                         notification.type === 'update' ? <RefreshCw className="h-4 w-4" /> :
-                         <Info className="h-4 w-4" />}
+                          notification.type === 'update' ? <RefreshCw className="h-4 w-4" /> :
+                            <Info className="h-4 w-4" />}
                       </div>
                       <div className="flex-1">
                         <p className="text-sm font-medium">{notification.message}</p>
@@ -339,15 +338,15 @@ const DashboardPage: React.FC = () => {
               <Select defaultValue="all">
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
+                </SelectTrigger>
+                <SelectContent>
                   <SelectItem value="all">All Categories</SelectItem>
                   <SelectItem value="attacks">Attack Logs</SelectItem>
                   <SelectItem value="rules">Security Rules</SelectItem>
                   <SelectItem value="users">User Activity</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                </SelectContent>
+              </Select>
+            </div>
             <div>
               <Label>Date Range</Label>
               <div className="flex space-x-2">
@@ -359,7 +358,7 @@ const DashboardPage: React.FC = () => {
                   type="date"
                   className="flex-1 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
                 />
-                </div>
+              </div>
             </div>
             <div>
               <Label>Sort by</Label>
@@ -383,7 +382,7 @@ const DashboardPage: React.FC = () => {
       {showFilters && (
         <div className="mb-6 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div>
+            <div>
               <Label>Time Range</Label>
               <Select value={selectedDateRange} onValueChange={setSelectedDateRange}>
                 <SelectTrigger>
@@ -396,7 +395,7 @@ const DashboardPage: React.FC = () => {
                   <SelectItem value="custom">Custom Range</SelectItem>
                 </SelectContent>
               </Select>
-                    </div>
+            </div>
             <div>
               <Label>Attack Type</Label>
               <Select value={selectedAttackType} onValueChange={setSelectedAttackType}>
@@ -411,8 +410,8 @@ const DashboardPage: React.FC = () => {
                   <SelectItem value="brute">Brute Force</SelectItem>
                 </SelectContent>
               </Select>
-                  </div>
-                  <div>
+            </div>
+            <div>
               <Label>Severity</Label>
               <Select value={selectedSeverity} onValueChange={setSelectedSeverity}>
                 <SelectTrigger>
@@ -425,7 +424,7 @@ const DashboardPage: React.FC = () => {
                   <SelectItem value="low">Low</SelectItem>
                 </SelectContent>
               </Select>
-                    </div>
+            </div>
             <div>
               <Label>Status</Label>
               <Select defaultValue="all">
@@ -439,7 +438,7 @@ const DashboardPage: React.FC = () => {
                   <SelectItem value="pending">Pending</SelectItem>
                 </SelectContent>
               </Select>
-                  </div>
+            </div>
           </div>
         </div>
       )}
@@ -477,15 +476,15 @@ const DashboardPage: React.FC = () => {
         <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 mb-6 rounded-lg shadow-lg flex justify-between items-center animate-fade-in" role="alert">
           <div className="flex items-center space-x-2">
             <Bell className="h-5 w-5" />
-                   <div>
+            <div>
               <p className="font-bold">Welcome!</p>
               <p>This is your FGuard Web Application Firewall Dashboard.</p>
-                    </div>
-                  </div>
+            </div>
+          </div>
           <Button variant="ghost" onClick={() => setShowNotification(false)} className="text-white hover:bg-blue-600">
             Dismiss
           </Button>
-                  </div>
+        </div>
       )}
 
       <div className="flex items-center justify-between mb-8">
@@ -494,8 +493,12 @@ const DashboardPage: React.FC = () => {
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
             Web Application Firewall Dashboard
           </h1>
-                  </div>
+        </div>
         <div className="flex space-x-3">
+          <Button onClick={() => router.push('/dashboard/license')} variant="outline" className="flex items-center space-x-2">
+            <Key className="h-4 w-4" />
+            <span>License</span>
+          </Button>
           <Button onClick={() => router.push('/dashboard/profile')} variant="outline" className="flex items-center space-x-2">
             <User className="h-4 w-4" />
             <span>Profile</span>
@@ -511,56 +514,56 @@ const DashboardPage: React.FC = () => {
           <Button onClick={handleLogoutClick} variant="outline" className="flex items-center space-x-2 text-red-600 hover:text-red-700">
             <span>Logout</span>
           </Button>
-                  </div>
+        </div>
       </div>
 
       {/* Quick Stats Section with Animation */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white transform hover:scale-105 transition-transform duration-300">
           <CardContent className="p-6">
-                   <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium opacity-80">Total Attacks Blocked</p>
                 <h3 className="text-2xl font-bold mt-1">12,345</h3>
                 <p className="text-sm opacity-80 mt-1">↑ 12% from last week</p>
-                  </div>
+              </div>
               <ShieldCheck className="h-8 w-8 opacity-80" />
             </div>
           </CardContent>
         </Card>
         <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white">
           <CardContent className="p-6">
-                   <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium opacity-80">System Health</p>
                 <h3 className="text-2xl font-bold mt-1">98%</h3>
-                  </div>
+              </div>
               <Activity className="h-8 w-8 opacity-80" />
             </div>
           </CardContent>
         </Card>
         <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white">
           <CardContent className="p-6">
-                   <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium opacity-80">Active Rules</p>
                 <h3 className="text-2xl font-bold mt-1">256</h3>
-                  </div>
+              </div>
               <BarChart2 className="h-8 w-8 opacity-80" />
             </div>
           </CardContent>
         </Card>
         <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white">
           <CardContent className="p-6">
-                   <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium opacity-80">Threats Detected</p>
                 <h3 className="text-2xl font-bold mt-1">42</h3>
-                  </div>
+              </div>
               <AlertTriangle className="h-8 w-8 opacity-80" />
-                </div>
-              </CardContent>
-            </Card>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Real-time Statistics Section */}
@@ -570,13 +573,13 @@ const DashboardPage: React.FC = () => {
             <div className="flex items-center space-x-2">
               <TrendingUp className="h-5 w-5 text-green-500" />
               <CardTitle className="text-lg font-semibold">Real-time Attack Statistics</CardTitle>
-                      </div>
+            </div>
             <div className="flex items-center space-x-2">
               <span className="text-sm text-green-500 flex items-center">
                 <TrendingUp className="h-4 w-4 mr-1" />
                 +12% from last hour
               </span>
-                    </div>
+            </div>
           </CardHeader>
           <CardContent className="pt-6">
             <div className="h-80">
@@ -585,8 +588,8 @@ const DashboardPage: React.FC = () => {
                   <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200 dark:stroke-gray-700" />
                   <XAxis dataKey="time" className="text-sm" />
                   <YAxis className="text-sm" />
-                  <Tooltip 
-                    contentStyle={{ 
+                  <Tooltip
+                    contentStyle={{
                       backgroundColor: 'rgba(255, 255, 255, 0.9)',
                       borderRadius: '8px',
                       border: 'none',
@@ -597,7 +600,7 @@ const DashboardPage: React.FC = () => {
                   <Line type="monotone" dataKey="blocked" stroke="#22c55e" strokeWidth={2} />
                 </LineChart>
               </ResponsiveContainer>
-                  </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -620,9 +623,9 @@ const DashboardPage: React.FC = () => {
                   <Legend />
                 </RadarChart>
               </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Detailed Statistics Section */}
@@ -633,7 +636,7 @@ const DashboardPage: React.FC = () => {
               <ShieldAlert className="h-5 w-5 text-red-500" />
               <CardTitle className="text-lg font-semibold">Attack Types Distribution</CardTitle>
             </div>
-              </CardHeader>
+          </CardHeader>
           <CardContent className="pt-6">
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
@@ -668,7 +671,7 @@ const DashboardPage: React.FC = () => {
           </CardHeader>
           <CardContent className="pt-6">
             <div className="space-y-6">
-                  <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Key className="h-5 w-5 text-blue-500" />
                   <span>Password Strength</span>
@@ -677,8 +680,8 @@ const DashboardPage: React.FC = () => {
                   <Progress value={85} className="w-32" />
                   <span className="text-sm font-medium">85%</span>
                 </div>
-                  </div>
-                  <div className="flex items-center justify-between">
+              </div>
+              <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <Shield className="h-5 w-5 text-purple-500" />
                   <span>Firewall Protection</span>
@@ -697,10 +700,10 @@ const DashboardPage: React.FC = () => {
                   <Progress value={78} className="w-32" />
                   <span className="text-sm font-medium">78%</span>
                 </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Performance Overview */}
@@ -709,13 +712,13 @@ const DashboardPage: React.FC = () => {
           <div className="flex items-center space-x-2">
             <Zap className="h-5 w-5 text-yellow-500" />
             <CardTitle className="text-lg font-semibold">Performance Overview</CardTitle>
-                  </div>
+          </div>
           <div className="flex items-center space-x-2">
             <Button variant="outline" size="sm" className="flex items-center space-x-1">
               <Clock className="h-4 w-4" />
               <span>Last 24 Hours</span>
             </Button>
-                        </div>
+          </div>
         </CardHeader>
         <CardContent className="pt-6">
           <div className="h-80">
@@ -723,31 +726,31 @@ const DashboardPage: React.FC = () => {
               <AreaChart data={performanceData}>
                 <defs>
                   <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200 dark:stroke-gray-700" />
                 <XAxis dataKey="time" className="text-sm" />
                 <YAxis className="text-sm" />
-                <Tooltip 
-                  contentStyle={{ 
+                <Tooltip
+                  contentStyle={{
                     backgroundColor: 'rgba(255, 255, 255, 0.9)',
                     borderRadius: '8px',
                     border: 'none',
                     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
                   }}
                 />
-                <Area 
-                  type="monotone" 
-                  dataKey="value" 
-                  stroke="#3b82f6" 
-                  fillOpacity={1} 
-                  fill="url(#colorValue)" 
+                <Area
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#3b82f6"
+                  fillOpacity={1}
+                  fill="url(#colorValue)"
                 />
               </AreaChart>
             </ResponsiveContainer>
-                        </div>
+          </div>
         </CardContent>
       </Card>
 
@@ -758,7 +761,7 @@ const DashboardPage: React.FC = () => {
             <div className="flex items-center space-x-2">
               <TrendingUp className="h-5 w-5 text-blue-500" />
               <CardTitle className="text-lg font-semibold">Attack Trends</CardTitle>
-                        </div>
+            </div>
             <div className="flex items-center space-x-2">
               <Select value={selectedTrendPeriod} onValueChange={setSelectedTrendPeriod}>
                 <SelectTrigger className="w-[120px]">
@@ -799,8 +802,8 @@ const DashboardPage: React.FC = () => {
                     />
                   </PopoverContent>
                 </Popover>
-                  )}
-                </div>
+              )}
+            </div>
           </CardHeader>
           <CardContent className="pt-6">
             <div className="h-80">
@@ -808,20 +811,20 @@ const DashboardPage: React.FC = () => {
                 <ComposedChart data={trendData}>
                   <defs>
                     <linearGradient id="colorAttacks" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#ef4444" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="colorBlocked" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#22c55e" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="#22c55e" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200 dark:stroke-gray-700" />
                   <XAxis dataKey="date" className="text-sm" />
                   <YAxis yAxisId="left" className="text-sm" />
                   <YAxis yAxisId="right" orientation="right" className="text-sm" />
-                  <Tooltip 
-                    contentStyle={{ 
+                  <Tooltip
+                    contentStyle={{
                       backgroundColor: 'rgba(255, 255, 255, 0.9)',
                       borderRadius: '8px',
                       border: 'none',
@@ -854,12 +857,12 @@ const DashboardPage: React.FC = () => {
                 </ComposedChart>
               </ResponsiveContainer>
             </div>
-              </CardContent>
-            </Card>
+          </CardContent>
+        </Card>
 
         <Card className="hover:shadow-lg transition-shadow duration-300">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
-                 <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2">
               <BarChart3 className="h-5 w-5 text-purple-500" />
               <CardTitle className="text-lg font-semibold">Attack Patterns</CardTitle>
             </div>
@@ -871,8 +874,8 @@ const DashboardPage: React.FC = () => {
                   <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200 dark:stroke-gray-700" />
                   <XAxis dataKey="time" className="text-sm" />
                   <YAxis className="text-sm" />
-                  <Tooltip 
-                    contentStyle={{ 
+                  <Tooltip
+                    contentStyle={{
                       backgroundColor: 'rgba(255, 255, 255, 0.9)',
                       borderRadius: '8px',
                       border: 'none',
@@ -886,7 +889,7 @@ const DashboardPage: React.FC = () => {
                   <Bar dataKey="brute" stackId="a" fill="#6366f1" />
                 </BarChart>
               </ResponsiveContainer>
-                  </div>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -912,7 +915,7 @@ const DashboardPage: React.FC = () => {
             {/* Attack Origins Section */}
             <Card className="lg:col-span-2 hover:shadow-lg transition-shadow duration-300">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
-                   <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2">
                   <Network className="h-5 w-5 text-blue-600" />
                   <CardTitle className="text-lg font-semibold">Attack Origins</CardTitle>
                 </div>
@@ -921,14 +924,14 @@ const DashboardPage: React.FC = () => {
                   <Select value={attackTimeRange} onValueChange={setAttackTimeRange}>
                     <SelectTrigger className="w-[120px] bg-gray-50 dark:bg-gray-800">
                       <SelectValue placeholder="Time Range" />
-                         </SelectTrigger>
-                         <SelectContent>
+                    </SelectTrigger>
+                    <SelectContent>
                       <SelectItem value="lastDay">Last 24 Hours</SelectItem>
                       <SelectItem value="lastWeek">Last Week</SelectItem>
                       <SelectItem value="lastMonth">Last Month</SelectItem>
-                         </SelectContent>
-                       </Select>
-                   </div>
+                    </SelectContent>
+                  </Select>
+                </div>
               </CardHeader>
               <CardContent className="pt-6">
                 <div className="w-full h-64">
@@ -951,8 +954,8 @@ const DashboardPage: React.FC = () => {
                       <CartesianGrid strokeDasharray="3 3" className="stroke-gray-200 dark:stroke-gray-700" />
                       <XAxis dataKey="name" className="text-sm" />
                       <YAxis className="text-sm" />
-                      <Tooltip 
-                        contentStyle={{ 
+                      <Tooltip
+                        contentStyle={{
                           backgroundColor: 'rgba(255, 255, 255, 0.9)',
                           borderRadius: '8px',
                           border: 'none',
@@ -1012,7 +1015,7 @@ const DashboardPage: React.FC = () => {
                   <CardTitle className="text-lg font-semibold">Active Security Rules</CardTitle>
                 </div>
                 <Button variant="outline" size="sm">Add Rule</Button>
-            </CardHeader>
+              </CardHeader>
               <CardContent className="pt-6">
                 <div className="space-y-4">
                   {[
@@ -1023,10 +1026,9 @@ const DashboardPage: React.FC = () => {
                   ].map((rule, index) => (
                     <div key={index} className="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
                       <div className="flex items-center space-x-4">
-                        <div className={`p-2 rounded-full ${
-                          rule.priority === 'high' ? 'bg-red-100 text-red-600' :
-                          'bg-yellow-100 text-yellow-600'
-                        }`}>
+                        <div className={`p-2 rounded-full ${rule.priority === 'high' ? 'bg-red-100 text-red-600' :
+                            'bg-yellow-100 text-yellow-600'
+                          }`}>
                           <Shield className="h-4 w-4" />
                         </div>
                         <div>
@@ -1035,9 +1037,8 @@ const DashboardPage: React.FC = () => {
                         </div>
                       </div>
                       <div className="flex items-center space-x-4">
-                        <span className={`text-sm font-medium ${
-                          rule.status === 'active' ? 'text-green-600' : 'text-red-600'
-                        }`}>
+                        <span className={`text-sm font-medium ${rule.status === 'active' ? 'text-green-600' : 'text-red-600'
+                          }`}>
                           {rule.status.charAt(0).toUpperCase() + rule.status.slice(1)}
                         </span>
                         <Button variant="ghost" size="sm">
@@ -1076,18 +1077,18 @@ const DashboardPage: React.FC = () => {
                     <Select defaultValue="30">
                       <SelectTrigger className="w-24">
                         <SelectValue placeholder="Days" />
-                   </SelectTrigger>
-                   <SelectContent>
+                      </SelectTrigger>
+                      <SelectContent>
                         <SelectItem value="7">7 days</SelectItem>
                         <SelectItem value="30">30 days</SelectItem>
                         <SelectItem value="90">90 days</SelectItem>
                         <SelectItem value="365">1 year</SelectItem>
-                   </SelectContent>
-                 </Select>
+                      </SelectContent>
+                    </Select>
                   </div>
-               </div>
-            </CardContent>
-          </Card>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </TabsContent>
 
@@ -1099,7 +1100,7 @@ const DashboardPage: React.FC = () => {
                   <Settings className="h-5 w-5 text-blue-600" />
                   <CardTitle className="text-lg font-semibold">Advanced Configuration</CardTitle>
                 </div>
-            </CardHeader>
+              </CardHeader>
               <CardContent className="pt-6">
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1116,7 +1117,7 @@ const DashboardPage: React.FC = () => {
                           <SelectItem value="error">Error</SelectItem>
                         </SelectContent>
                       </Select>
-               </div>
+                    </div>
                     <div>
                       <Label>Cache Duration</Label>
                       <Select defaultValue="3600">
@@ -1146,9 +1147,9 @@ const DashboardPage: React.FC = () => {
                       <Switch defaultChecked />
                     </div>
                   </div>
-                  </div>
-            </CardContent>
-          </Card>
+                </div>
+              </CardContent>
+            </Card>
 
             <Card className="hover:shadow-lg transition-shadow duration-300">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 border-b">
@@ -1207,25 +1208,23 @@ const DashboardPage: React.FC = () => {
             ].map((activity, index) => (
               <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
                 <div className="flex items-center space-x-3">
-                  <div className={`p-2 rounded-full ${
-                    activity.severity === 'high' ? 'bg-red-100 text-red-600' :
-                    activity.severity === 'medium' ? 'bg-yellow-100 text-yellow-600' :
-                    'bg-green-100 text-green-600'
-                  }`}>
+                  <div className={`p-2 rounded-full ${activity.severity === 'high' ? 'bg-red-100 text-red-600' :
+                      activity.severity === 'medium' ? 'bg-yellow-100 text-yellow-600' :
+                        'bg-green-100 text-green-600'
+                    }`}>
                     {activity.type === 'attack' ? <Shield className="h-4 w-4" /> :
-                     activity.type === 'update' ? <RefreshCw className="h-4 w-4" /> :
-                     <AlertTriangle className="h-4 w-4" />}
+                      activity.type === 'update' ? <RefreshCw className="h-4 w-4" /> :
+                        <AlertTriangle className="h-4 w-4" />}
                   </div>
                   <div>
                     <p className="font-medium">{activity.message}</p>
                     <p className="text-sm text-gray-700 dark:text-gray-300">{activity.time}</p>
                   </div>
                 </div>
-                <span className={`text-sm font-medium ${
-                  activity.severity === 'high' ? 'text-red-600' :
-                  activity.severity === 'medium' ? 'text-yellow-600' :
-                  'text-green-600'
-                }`}>
+                <span className={`text-sm font-medium ${activity.severity === 'high' ? 'text-red-600' :
+                    activity.severity === 'medium' ? 'text-yellow-600' :
+                      'text-green-600'
+                  }`}>
                   {activity.severity.charAt(0).toUpperCase() + activity.severity.slice(1)}
                 </span>
               </div>

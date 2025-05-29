@@ -4,7 +4,7 @@ import { CloudCog } from 'lucide-react';
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface UserData {
-  id: string;
+  _id: string;
   email: string;
   username?: string;
   phone?: string;
