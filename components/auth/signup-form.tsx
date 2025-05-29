@@ -11,12 +11,13 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function SignupForm() {
   const router = useRouter();
   const { t } = useTranslation();
   const [formState, setFormState] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -24,6 +25,7 @@ export function SignupForm() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -55,8 +57,8 @@ export function SignupForm() {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formState.name.trim()) {
-      newErrors.name = "Name is required";
+    if (!formState.username.trim()) {
+      newErrors.username = "Username is required";
     }
 
     if (!formState.email.trim()) {
@@ -67,8 +69,8 @@ export function SignupForm() {
 
     if (!formState.password) {
       newErrors.password = "Password is required";
-    } else if (formState.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+    } else if (formState.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
     }
 
     if (formState.password !== formState.confirmPassword) {
@@ -91,20 +93,34 @@ export function SignupForm() {
     }
 
     setIsSubmitting(true);
-    const { name, email, password } = formState;
+    const { username, email, password } = formState;
 
-    await fetch(
-      "https://learniverse-server.up.railway.app/v1/api/user/signup",
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/register`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({ email, password, username: name }),
+        body: JSON.stringify({ username, email, password }),
       }
     );
-    router.push("/login");
+    
+    const data = await response.json();
+    
+    if (data.user) {
+      toast.success(data.message || 'Account created successfully!');
+      router.push("/login");
+    } else {
+      toast.error(data.message || 'Registration failed');
+    }
+    setIsSubmitting(false);
+    
+    if (!response.ok) {
+      return;
+    }
+
   };
 
   return (
@@ -112,18 +128,18 @@ export function SignupForm() {
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-medium">
-              Full Name*
+            <label htmlFor="username" className="text-sm font-medium">
+              Username*
             </label>
             <Input
-              id="name"
-              name="name"
-              value={formState.name}
+              id="username"
+              name="username"
+              value={formState.username}
               onChange={handleChange}
-              className={errors.name ? "border-red-500" : ""}
+              className={errors.username ? "border-red-500" : ""}
             />
-            {errors.name && (
-              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+            {errors.username && (
+              <p className="text-red-500 text-xs mt-1">{errors.username}</p>
             )}
           </div>
 
@@ -191,13 +207,13 @@ export function SignupForm() {
               htmlFor="agreeTerms"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              {t("auth.agreeTerms") || "I agree to the"}{" "}
+              {"I agree to the"}{" "}
               <Link href="/terms" className="text-primary hover:underline">
-                {t("auth.terms") || "Terms of Service"}
+                {"Terms of Service"}
               </Link>{" "}
               and
               <Link href="/privacy" className="text-primary hover:underline">
-                Privacy Policy
+                {" Privacy Policy"}
               </Link>
             </label>
           </div>
@@ -224,7 +240,7 @@ export function SignupForm() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                {t("auth.orContinueWith") || "Or continue with"}
+                {"Or continue with"}
               </span>
             </div>
           </div>

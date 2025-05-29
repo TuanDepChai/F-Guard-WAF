@@ -9,7 +9,7 @@ import CookieConsent from "@/components/cookie-consent"
 import ScrollToTop from "@/components/scroll-to-top"
 import SkipToContent from "@/components/skip-to-content"
 import { AuthProvider } from "@/context/AuthContext"
-
+import { Toaster } from "sonner"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -82,6 +82,7 @@ export default function RootLayout({
               <SkipToContent />
               <Navbar key={typeof window !== 'undefined' ? document.cookie : 'server'} />
               <main id="main-content" className="flex-1">
+                <Toaster position="top-right" />
                 {children}
               </main>
               <Footer />
