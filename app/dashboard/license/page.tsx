@@ -18,7 +18,7 @@ import {
 interface License {
   _id: string;
   licenseKey: string;
-  transaction:{
+  transaction: {
     _id: string;
     updatedAt: string;
     createdAt: string;
@@ -37,32 +37,32 @@ export default function LicenseHistoryPage() {
   const [isLoading, setIsLoading] = useState(true);
   const { userData } = useAuth();
 
-  console.log(userData)
-
   useEffect(() => {
-    const fetchLicenses = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/licenses/user/${userData?._id}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
+    if (userData !== null) {
+      const fetchLicenses = async () => {
+        try {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/licenses/user/${userData?._id}`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+          });
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch licenses');
+          if (!response.ok) {
+            throw new Error('Failed to fetch licenses');
+          }
+
+          const data = await response.json();
+          setLicenses(data);
+        } catch (error) {
+          console.error('Error fetching licenses:', error);
+          toast.error('Failed to load license history');
+        } finally {
+          setIsLoading(false);
         }
+      };
 
-        const data = await response.json();
-        setLicenses(data);
-      } catch (error) {
-        console.error('Error fetching licenses:', error);
-        toast.error('Failed to load license history');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchLicenses();
+      fetchLicenses();
+    }
   }, [userData]);
 
   const copyToClipboard = (text: string) => {
