@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -14,7 +14,7 @@ interface Plan {
   price: number;
 }
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [plan, setPlan] = useState<Plan | null>(null);
@@ -36,7 +36,7 @@ export default function CheckoutPage() {
           throw new Error('Failed to fetch plan details');
         }
         const data = await response.json();
-        setPlan(data);
+        setPlan(data.plan);
       } catch (error) {
         console.error('Error fetching plan:', error);
         toast.error('Failed to load plan details');
@@ -54,7 +54,7 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/payments/vnpay`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/payments/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +110,14 @@ export default function CheckoutPage() {
                     <p className="font-medium">{plan.name}</p>
                     <p className="text-sm text-gray-500">{plan.description}</p>
                   </div>
-                  <p className="text-xl font-bold text-primary">{plan.price}/month</p>
+                  <p className="text-xl font-bold text-primary">
+                    {new Intl.NumberFormat('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND',
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    }).format(plan.price)}/month
+                  </p>
                 </div>
               </div>
             </div>
@@ -147,5 +154,23 @@ export default function CheckoutPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+function CheckoutLoading() {
+  return (
+    <div className="container mx-auto px-4 py-16">
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<CheckoutLoading />}>
+      <CheckoutContent />
+    </Suspense>
   );
 } 
