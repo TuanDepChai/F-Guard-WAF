@@ -110,7 +110,7 @@ export function LoginForm() {
     try {
       const { email, password } = formState;
       
-      const response = await fetch("https://learniverse-server.up.railway.app/v1/api/user/login", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +126,7 @@ export function LoginForm() {
       }
 
       // Store user data in cookie and update auth context
-      await login(data.metadata.user);
+      await login(data.user);
 
       // Show success message
       toast.success('Login successful!')
