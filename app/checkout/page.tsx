@@ -36,7 +36,7 @@ function CheckoutContent() {
           throw new Error('Failed to fetch plan details');
         }
         const data = await response.json();
-        setPlan(data.plan);
+        setPlan(data);
       } catch (error) {
         console.error('Error fetching plan:', error);
         toast.error('Failed to load plan details');
