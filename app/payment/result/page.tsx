@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,22 +8,27 @@ import { CheckCircle2, XCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-interface PaymentResult {
-  amount: string;
-  bankCode: string;
-  bankTranNo: string;
-  cardType: string;
-  orderInfo: string;
-  payDate: string;
-  responseCode: string;
-  tmnCode: string;
-  transactionNo: string;
-  transactionStatus: string;
-  txnRef: string;
-  secureHash: string;
+// Loading component
+function PaymentResultLoading() {
+  return (
+    <div className="container mx-auto py-8 px-4">
+      <Card className="max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-center">Loading...</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4">Please wait...</p>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
 
-export default function PaymentResultPage() {
+// Main component
+function PaymentResultContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -148,5 +153,14 @@ export default function PaymentResultPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+// Export the wrapped component
+export default function PaymentResultPage() {
+  return (
+    <Suspense fallback={<PaymentResultLoading />}>
+      <PaymentResultContent />
+    </Suspense>
   );
 } 
