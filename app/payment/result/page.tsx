@@ -33,6 +33,7 @@ function PaymentResultContent() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [licenseKey, setLicenseKey] = useState('');
 
   useEffect(() => {
     const verifyPayment = async () => {
@@ -52,10 +53,10 @@ function PaymentResultContent() {
         });
 
         const data = await response.json();
-        console.log(data);
         if (response.ok) {
           setIsSuccess(true);
           toast.success('Payment successful!');
+          setLicenseKey(data.license.licenseKey);
         } else {
           setIsSuccess(false);
           toast.error(data.message || 'Payment verification failed');
@@ -137,6 +138,8 @@ function PaymentResultContent() {
                   <div className={isSuccess ? 'text-green-500' : 'text-red-500'}>
                     {isSuccess ? 'Success' : 'Failed'}
                   </div>
+                  <div className="font-medium">License Key:</div>
+                  <div className='font-bold'>{licenseKey}</div>
                 </div>
               </div>
 
