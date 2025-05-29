@@ -91,12 +91,14 @@ export default function WafProductPage() {
                 performance.
               </p>
             </div>
-            <div className="relative h-64 md:h-96 rounded-lg overflow-hidden shadow-lg">
-               {/* Placeholder Image */}
-              <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-muted-foreground">
-                Image Placeholder: WAF Overview Diagram
-              </div>
-              {/* Replace with actual image: <Image src="/images/waf-overview.png" alt="WAF Overview Diagram" fill className="object-cover" /> */}
+            <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg">
+              <Image
+                src="/images/waf-overview.png"
+                alt="WAF Overview Diagram"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
           </div>
         </section>
@@ -106,17 +108,21 @@ export default function WafProductPage() {
           <h2 className="text-3xl font-bold mb-8 text-center">Key Features</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div key={index} className="space-y-4">
+              <div key={index} className="space-y-4 p-6 rounded-lg border bg-card shadow-sm card-hover transition-transform duration-200 ease-in-out hover:scale-[1.02]">
                 <div className="flex items-center space-x-2">
                   <div className="rounded-full bg-primary/10 p-2"><feature.icon className="h-6 w-6 text-primary" /></div>
                   <h3 className="text-xl font-semibold">{feature.name}</h3>
                 </div>
                 <p className="text-muted-foreground">{feature.description}</p>
                  {/* Placeholder Image */}
-                <div className="relative h-48 rounded-md overflow-hidden bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-muted-foreground text-sm">
-                   Image Placeholder: {feature.name}
+                <div className="relative h-48 rounded-md overflow-hidden shadow-md">
+                  <Image
+                    src={feature.image}
+                    alt={feature.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                {/* Replace with actual image: <div className="relative h-48 rounded-md overflow-hidden shadow-md"><Image src={feature.image} alt={feature.name} fill className="object-cover" /></div> */}
               </div>
             ))}
           </div>

@@ -1,9 +1,16 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Check, Shield, X } from "lucide-react"
+import { Check, Shield, X, Zap, Users, Building2, ArrowRight, HelpCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import Image from "next/image"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export default function PricingPage() {
   const plans = [
@@ -12,6 +19,8 @@ export default function PricingPage() {
       description: "For small to medium businesses with standard security needs",
       price: "$1,499",
       popular: false,
+      icon: <Building2 className="h-8 w-8 text-primary" />,
+      image: "/images/pricing/business-plan.svg",
       features: [
         "Up to 10 web applications",
         "Basic DDoS protection",
@@ -29,6 +38,8 @@ export default function PricingPage() {
       description: "For organizations with advanced security requirements",
       price: "$3,999",
       popular: true,
+      icon: <Users className="h-8 w-8 text-primary" />,
+      image: "/images/pricing/enterprise-plan.svg",
       features: [
         "Up to 50 web applications",
         "Advanced DDoS protection",
@@ -50,6 +61,8 @@ export default function PricingPage() {
       description: "For large enterprises with mission-critical applications",
       price: "Custom",
       popular: false,
+      icon: <Zap className="h-8 w-8 text-primary" />,
+      image: "/images/pricing/ultimate-plan.svg",
       features: [
         "Unlimited web applications",
         "Premium DDoS protection",
@@ -71,11 +84,34 @@ export default function PricingPage() {
     },
   ]
 
+  const faqs = [
+    {
+      question: "What payment methods do you accept?",
+      answer: "We accept all major credit cards, PayPal, and bank transfers for annual plans. Monthly plans are billed via credit card only."
+    },
+    {
+      question: "Can I upgrade or downgrade my plan?",
+      answer: "Yes, you can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle."
+    },
+    {
+      question: "Is there a free trial available?",
+      answer: "Yes, we offer a 14-day free trial for all plans. No credit card required to start."
+    },
+    {
+      question: "What happens if I exceed my plan limits?",
+      answer: "We'll notify you before you reach your limits. You can either upgrade your plan or purchase additional capacity."
+    },
+    {
+      question: "Do you offer discounts for non-profits?",
+      answer: "Yes, we offer special pricing for non-profit organizations. Please contact our sales team for more information."
+    }
+  ]
+
   return (
     <section className="py-16 sm:py-24 lg:py-32">
-      <div className="container px-4 md:px-6">
+      <div className="container mx-auto px-4">
         <motion.div
-          className="flex flex-col items-center justify-center space-y-4 text-center"
+          className="flex flex-col items-center justify-center space-y-4 text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -96,7 +132,8 @@ export default function PricingPage() {
             </p>
           </div>
         </motion.div>
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 mt-12">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {plans.map((plan, index) => (
             <motion.div
               key={index}
@@ -124,11 +161,16 @@ export default function PricingPage() {
                   </div>
                 )}
                 <CardHeader className="flex flex-col space-y-1.5">
-                  <CardTitle className="text-2xl">
-                    <span className="text-gray-900 dark:text-white">
-                      {plan.name}
-                    </span>
-                  </CardTitle>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      {plan.icon}
+                      <CardTitle className="text-2xl">
+                        <span className="text-gray-900 dark:text-white">
+                          {plan.name}
+                        </span>
+                      </CardTitle>
+                    </div>
+                  </div>
                   <CardDescription className="text-gray-600 dark:text-gray-400">{plan.description}</CardDescription>
                   <div className="mt-4">
                     <span className="text-4xl font-bold text-primary dark:text-primary-light">
@@ -138,63 +180,75 @@ export default function PricingPage() {
                   </div>
                 </CardHeader>
                 <CardContent className="flex-1">
+                  <div className="relative h-48 mb-6">
+                    <Image
+                      src={plan.image}
+                      alt={`${plan.name} plan illustration`}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
                   <div className="space-y-4">
-                    <div>
-                      <p className="font-medium text-sm mb-2 text-gray-900 dark:text-white">Included features:</p>
-                      <ul className="space-y-2 text-sm">
-                        {plan.features.map((feature, featureIndex) => (
-                          <motion.li
-                            key={featureIndex}
-                            className="flex items-center"
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, delay: 0.1 + featureIndex * 0.05 }}
-                            viewport={{ once: true }}
-                          >
-                            <Check className="mr-2 h-4 w-4 text-primary" />
-                            <span className="text-gray-700 dark:text-gray-300">{feature}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
+                    <div className="space-y-2">
+                      <h4 className="font-medium text-sm text-gray-900 dark:text-white">What's included:</h4>
+                      {plan.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-center space-x-2">
+                          <Check className="h-4 w-4 text-green-500" />
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{feature}</span>
+                        </div>
+                      ))}
                     </div>
-
                     {plan.notIncluded.length > 0 && (
-                      <div>
-                        <p className="font-medium text-sm mb-2 text-gray-600 dark:text-gray-400">Not included:</p>
-                        <ul className="space-y-2 text-sm">
-                          {plan.notIncluded.map((feature, featureIndex) => (
-                            <motion.li
-                              key={featureIndex}
-                              className="flex items-center text-gray-600 dark:text-gray-400"
-                              initial={{ opacity: 0, x: -10 }}
-                              whileInView={{ opacity: 1, y: 0 }}
-                              transition={{ duration: 0.3, delay: 0.1 + (plan.features.length + featureIndex) * 0.05 }}
-                              viewport={{ once: true }}
-                            >
-                              <X className="mr-2 h-4 w-4" />
-                              <span className="text-gray-700 dark:text-gray-300">{feature}</span>
-                            </motion.li>
-                          ))}
-                        </ul>
+                      <div className="space-y-2">
+                        <h4 className="font-medium text-sm text-gray-900 dark:text-white">Not included:</h4>
+                        {plan.notIncluded.map((feature, featureIndex) => (
+                          <div key={featureIndex} className="flex items-center space-x-2">
+                            <X className="h-4 w-4 text-red-500" />
+                            <span className="text-sm text-gray-600 dark:text-gray-400">{feature}</span>
+                          </div>
+                        ))}
                       </div>
                     )}
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button
-                    className={`w-full ${
-                      plan.popular
-                        ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all duration-300"
-                        : "hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300"
-                    }`}
-                  >
+                  <Button className="w-full" variant={plan.popular ? "default" : "outline"}>
                     {plan.price === "Custom" ? "Contact Sales" : "Get Started"}
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </CardFooter>
               </Card>
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          className="max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Frequently Asked Questions</h3>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">Find answers to common questions about our pricing and plans</p>
+          </div>
+          <Accordion type="single" collapsible className="w-full">
+            {faqs.map((faq, index) => (
+              <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionTrigger className="text-left">
+                  <div className="flex items-center">
+                    <HelpCircle className="h-5 w-5 text-primary mr-2" />
+                    {faq.question}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
       </div>
     </section>
   )

@@ -34,6 +34,7 @@ import {
   HelpCircle,
   LifeBuoy
 } from "lucide-react"
+import Image from "next/image"
 
 export const metadata: Metadata = {
   title: "Small Business Solutions | FGuard WAF",
@@ -165,7 +166,7 @@ const pricing = [
 
 export default function SmallBusinessPage() {
   return (
-    <main className="py-20">
+    <main className="py-12 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -174,6 +175,29 @@ export default function SmallBusinessPage() {
               Affordable and effective security solutions designed for small businesses
             </p>
           </div>
+
+          <section className="py-12">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-muted-foreground">
+                <Image
+                  src="/images/microsoft-80658_1280.png"
+                  alt="Small Business Security Overview"
+                  width={600}
+                  height={400}
+                  className="rounded-lg shadow-lg"
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold mb-6">Essential Security for Growing Businesses</h2>
+                <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+                  Small businesses are increasingly targeted by cyber attacks, but often lack the resources for complex security solutions. FGuard offers affordable and easy-to-use security tailored for small businesses, providing essential protection without the overhead.
+                </p>
+                <p className="text-lg text-gray-600 dark:text-gray-400">
+                  Our Small Business Solutions include core WAF protection, DDoS mitigation, and simple management tools. We help you secure your online presence, protect customer data, and ensure your website remains available, allowing you to focus on growing your business.
+                </p>
+              </div>
+            </div>
+          </section>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {features.map((feature, index) => (

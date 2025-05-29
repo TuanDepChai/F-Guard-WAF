@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function EnterpriseSolutionPage() {
   return (
-    <main className="flex-1">
+    <main className="flex-1 py-12 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Enterprise Solution</h1>
@@ -33,17 +33,19 @@ export default function EnterpriseSolutionPage() {
               </p>
             </div>
             <div className="relative h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
-              {/* Placeholder Image */}
-              <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-muted-foreground">
-                Image Placeholder: Enterprise Solution Overview
-              </div>
-              {/* Replace with actual image: <Image src="/images/enterprise-overview.png" alt="Enterprise Solution Overview" fill className="object-cover" /> */}
+              <Image
+                src="/images/purepng.com-ibm-logologobrand-logoiconslogos-251519939176ka7y8.png"
+                alt="Enterprise Security Overview"
+                width={600}
+                height={400}
+                className="rounded-lg shadow-lg"
+              />
             </div>
           </div>
         </section>
 
         {/* Key Benefits Section */}
-        <section className="py-12 bg-gray-100 dark:bg-gray-800">
+        <section className="py-12 bg-gray-100 dark:bg-gray-800 rounded-lg">
           <h2 className="text-3xl font-bold mb-8 text-center">Key Benefits</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="space-y-4">

@@ -1,229 +1,213 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState, useRef, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Shield, AlertTriangle, CheckCircle, XCircle, RefreshCw } from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Shield, AlertTriangle, CheckCircle2, XCircle } from "lucide-react"
 import { useTranslation } from "@/lib/i18n"
+
+interface Attack {
+  id: string
+  type: string
+  payload: string
+  timestamp: Date
+  status: "blocked" | "allowed"
+  severity: "high" | "medium" | "low"
+}
 
 export default function InteractiveDemo() {
   const { t } = useTranslation()
-  const [attackInput, setAttackInput] = useState("")
-  const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [result, setResult] = useState<null | {
-    blocked: boolean
-    threatType: string
-    riskLevel: "high" | "medium" | "low"
-    details: string
-  }>(null)
+  const [isRunning, setIsRunning] = useState(false)
+  const [attacks, setAttacks] = useState<Attack[]>([])
+  const [stats, setStats] = useState({
+    total: 0,
+    blocked: 0,
+    allowed: 0,
+    highSeverity: 0,
+    mediumSeverity: 0,
+    lowSeverity: 0
+  })
+  const demoRef = useRef<HTMLDivElement>(null)
 
-  const commonAttacks = [
-    { name: "SQL Injection", example: "' OR 1=1 --" },
-    { name: "XSS Attack", example: "<script>alert('XSS')</script>" },
-    { name: "Path Traversal", example: "../../../etc/passwd" },
-    { name: "Command Injection", example: "; cat /etc/passwd" },
+  const attackTypes = [
+    { type: "SQL Injection", payload: "' OR '1'='1", severity: "high" },
+    { type: "XSS", payload: "<script>alert('xss')</script>", severity: "high" },
+    { type: "Path Traversal", payload: "../../../etc/passwd", severity: "high" },
+    { type: "Command Injection", payload: "& cat /etc/passwd", severity: "high" },
+    { type: "File Upload", payload: "shell.php", severity: "medium" },
+    { type: "CSRF", payload: "POST /api/transfer", severity: "medium" },
+    { type: "Broken Auth", payload: "admin:admin", severity: "medium" },
+    { type: "Sensitive Data", payload: "password=123456", severity: "low" },
+    { type: "Rate Limiting", payload: "1000 requests/min", severity: "low" },
+    { type: "Invalid Input", payload: "special@chars", severity: "low" }
   ]
 
-  const analyzeAttack = (input: string) => {
-    setIsAnalyzing(true)
-    setResult(null)
+  const generateAttack = () => {
+    const randomAttack = attackTypes[Math.floor(Math.random() * attackTypes.length)]
+    const newAttack: Attack = {
+      id: Math.random().toString(36).substr(2, 9),
+      type: randomAttack.type,
+      payload: randomAttack.payload,
+      timestamp: new Date(),
+      status: Math.random() > 0.1 ? "blocked" : "allowed",
+      severity: randomAttack.severity as "high" | "medium" | "low"
+    }
 
-    // Simulate analysis delay
-    setTimeout(() => {
-      let threatType = ""
-      let blocked = false
-      let riskLevel: "high" | "medium" | "low" = "low"
-      let details = ""
-
-      if (input.includes("'") && (input.includes("OR") || input.includes("="))) {
-        threatType = "SQL Injection"
-        blocked = true
-        riskLevel = "high"
-        details = t("demo.sqlInjectionDetails")
-      } else if (input.includes("<script>")) {
-        threatType = "Cross-Site Scripting (XSS)"
-        blocked = true
-        riskLevel = "high"
-        details = t("demo.xssDetails")
-      } else if (input.includes("../")) {
-        threatType = "Path Traversal"
-        blocked = true
-        riskLevel = "medium"
-        details = t("demo.pathTraversalDetails")
-      } else if (input.includes(";") || input.includes("|") || input.includes("&&")) {
-        threatType = "Command Injection"
-        blocked = true
-        riskLevel = "high"
-        details = t("demo.commandInjectionDetails")
-      } else if (input.length > 0) {
-        threatType = "Unknown"
-        blocked = false
-        riskLevel = "low"
-        details = t("demo.safeInputDetails")
-      } else {
-        threatType = "Empty Input"
-        blocked = false
-        riskLevel = "low"
-        details = t("demo.emptyInputDetails")
-      }
-
-      setResult({
-        blocked,
-        threatType,
-        riskLevel,
-        details,
-      })
-      setIsAnalyzing(false)
-    }, 1500)
+    setAttacks(prev => [newAttack, ...prev].slice(0, 10))
+    updateStats(newAttack)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    analyzeAttack(attackInput)
+  const updateStats = (attack: Attack) => {
+    setStats(prev => ({
+      total: prev.total + 1,
+      blocked: attack.status === "blocked" ? prev.blocked + 1 : prev.blocked,
+      allowed: attack.status === "allowed" ? prev.allowed + 1 : prev.allowed,
+      highSeverity: attack.severity === "high" ? prev.highSeverity + 1 : prev.highSeverity,
+      mediumSeverity: attack.severity === "medium" ? prev.mediumSeverity + 1 : prev.mediumSeverity,
+      lowSeverity: attack.severity === "low" ? prev.lowSeverity + 1 : prev.lowSeverity
+    }))
   }
 
-  const handleExampleClick = (example: string) => {
-    setAttackInput(example)
-    analyzeAttack(example)
-  }
+  useEffect(() => {
+    let interval: NodeJS.Timeout
+    if (isRunning) {
+      interval = setInterval(generateAttack, 2000)
+    }
+    return () => clearInterval(interval)
+  }, [isRunning])
 
   return (
-    <div className="container mx-auto py-12">
-      <Card className="border-2 border-gray-200 dark:border-gray-800 shadow-lg">
-        <CardHeader>
-          <CardTitle className="text-2xl">{t("demo.interactiveTitle")}</CardTitle>
-          <CardDescription>{t("demo.interactiveDescription")}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="simulator" className="w-full">
-            <TabsList className="grid grid-cols-2 mb-8">
-              <TabsTrigger value="simulator">{t("demo.attackSimulator")}</TabsTrigger>
-              <TabsTrigger value="examples">{t("demo.commonExamples")}</TabsTrigger>
-            </TabsList>
+    <div className="w-full max-w-6xl mx-auto p-6" ref={demoRef}>
+      <Card className="p-6 bg-gradient-to-br from-background to-background/80 backdrop-blur-sm border-primary/20">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
+          <div>
+            <h2 className="text-3xl font-bold mb-2">Live Attack Simulation</h2>
+            <p className="text-muted-foreground">
+              Watch F-Guard WAF in action as it protects against various web attacks
+            </p>
+          </div>
+          <Button
+            onClick={() => setIsRunning(!isRunning)}
+            className="bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-primary text-white"
+          >
+            {isRunning ? "Stop Demo" : "Start Demo"}
+          </Button>
+        </div>
 
-            <TabsContent value="simulator">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex flex-col space-y-2">
-                  <label htmlFor="attack-input" className="text-sm font-medium">
-                    {t("demo.enterAttackString")}
-                  </label>
-                  <div className="flex space-x-2">
-                    <Input
-                      id="attack-input"
-                      value={attackInput}
-                      onChange={(e) => setAttackInput(e.target.value)}
-                      placeholder={t("demo.attackPlaceholder")}
-                      className="flex-1"
-                    />
-                    <Button type="submit" disabled={isAnalyzing} className="bg-primary hover:bg-primary/90">
-                      {isAnalyzing ? (
-                        <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                      ) : (
-                        <Shield className="mr-2 h-4 w-4" />
-                      )}
-                      {isAnalyzing ? t("demo.analyzing") : t("demo.analyze")}
-                    </Button>
-                  </div>
-                </div>
-              </form>
-
-              {result && (
-                <div className="mt-8 border rounded-lg p-4 bg-gray-50 dark:bg-gray-900">
-                  <div className="flex items-center mb-4">
-                    {result.blocked ? (
-                      <div className="flex items-center text-red-600">
-                        <XCircle className="h-6 w-6 mr-2" />
-                        <span className="font-bold">{t("demo.threatBlocked")}</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center text-green-600">
-                        <CheckCircle className="h-6 w-6 mr-2" />
-                        <span className="font-bold">{t("demo.requestAllowed")}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{t("demo.threatType")}</p>
-                      <p className="font-medium">{result.threatType}</p>
-                    </div>
-
-                    <div>
-                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{t("demo.riskLevel")}</p>
-                      <div className="flex items-center">
-                        <span
-                          className={`inline-block w-3 h-3 rounded-full mr-2 ${
-                            result.riskLevel === "high"
-                              ? "bg-red-500"
-                              : result.riskLevel === "medium"
-                                ? "bg-yellow-500"
-                                : "bg-green-500"
-                          }`}
-                        />
-                        <span className="font-medium">
-                          {result.riskLevel === "high"
-                            ? t("demo.highRisk")
-                            : result.riskLevel === "medium"
-                              ? t("demo.mediumRisk")
-                              : t("demo.lowRisk")}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-4">
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">{t("demo.details")}</p>
-                    <p className="text-sm">{result.details}</p>
-                  </div>
-                </div>
-              )}
-            </TabsContent>
-
-            <TabsContent value="examples">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {commonAttacks.map((attack, index) => (
-                  <Card
-                    key={index}
-                    className="cursor-pointer hover:border-primary transition-colors"
-                    onClick={() => handleExampleClick(attack.example)}
-                  >
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-lg flex items-center">
-                        <AlertTriangle className="h-4 w-4 mr-2 text-yellow-500" />
-                        {attack.name}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <code className="bg-gray-100 dark:bg-gray-800 p-2 rounded text-sm block overflow-x-auto">
-                        {attack.example}
-                      </code>
-                    </CardContent>
-                    <CardFooter className="pt-0">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          handleExampleClick(attack.example)
-                        }}
-                      >
-                        {t("demo.tryExample")}
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card className="p-4 bg-primary/5 border-primary/20">
+            <div className="flex items-center gap-2 mb-2">
+              <Shield className="w-5 h-5 text-primary" />
+              <h3 className="font-semibold">Protection Stats</h3>
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span>Total Attacks:</span>
+                <span className="font-mono">{stats.total}</span>
               </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-        <CardFooter className="flex flex-col items-start border-t p-6">
-          <p className="text-sm text-gray-500 dark:text-gray-400">{t("demo.disclaimer")}</p>
-        </CardFooter>
+              <div className="flex justify-between">
+                <span>Blocked:</span>
+                <span className="font-mono text-green-500">{stats.blocked}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Allowed:</span>
+                <span className="font-mono text-red-500">{stats.allowed}</span>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-4 bg-primary/5 border-primary/20">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="w-5 h-5 text-primary" />
+              <h3 className="font-semibold">Severity Distribution</h3>
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span>High:</span>
+                <span className="font-mono text-red-500">{stats.highSeverity}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Medium:</span>
+                <span className="font-mono text-yellow-500">{stats.mediumSeverity}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Low:</span>
+                <span className="font-mono text-blue-500">{stats.lowSeverity}</span>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-4 bg-primary/5 border-primary/20">
+            <div className="flex items-center gap-2 mb-2">
+              <CheckCircle2 className="w-5 h-5 text-primary" />
+              <h3 className="font-semibold">Protection Rate</h3>
+            </div>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span>Success Rate:</span>
+                <span className="font-mono text-green-500">
+                  {stats.total > 0 ? ((stats.blocked / stats.total) * 100).toFixed(1) : 0}%
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Response Time:</span>
+                <span className="font-mono">{"<"} 10ms</span>
+              </div>
+              <div className="flex justify-between">
+                <span>False Positives:</span>
+                <span className="font-mono text-yellow-500">
+                  {stats.total > 0 ? ((stats.allowed / stats.total) * 100).toFixed(1) : 0}%
+                </span>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-xl font-semibold mb-4">Live Attack Log</h3>
+          <AnimatePresence>
+            {attacks.map((attack) => (
+              <motion.div
+                key={attack.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.3 }}
+                className="flex items-center justify-between p-4 rounded-lg bg-background/50 border border-primary/10"
+              >
+                <div className="flex items-center gap-4">
+                  <Badge
+                    variant={attack.severity === "high" ? "destructive" : attack.severity === "medium" ? "warning" : "secondary"}
+                  >
+                    {attack.severity}
+                  </Badge>
+                  <div>
+                    <p className="font-medium">{attack.type}</p>
+                    <p className="text-sm text-muted-foreground font-mono">{attack.payload}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="text-sm text-muted-foreground">
+                    {attack.timestamp.toLocaleTimeString()}
+                  </span>
+                  {attack.status === "blocked" ? (
+                    <Badge variant="success" className="bg-green-500/20 text-green-500">
+                      <CheckCircle2 className="w-4 h-4 mr-1" />
+                      Blocked
+                    </Badge>
+                  ) : (
+                    <Badge variant="destructive" className="bg-red-500/20 text-red-500">
+                      <XCircle className="w-4 h-4 mr-1" />
+                      Allowed
+                    </Badge>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
       </Card>
     </div>
   )

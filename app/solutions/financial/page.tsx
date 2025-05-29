@@ -46,6 +46,7 @@ import {
   BarChart2,
   PieChart as PieChartIcon
 } from "lucide-react"
+import Image from "next/image"
 
 export const metadata: Metadata = {
   title: "Financial Solutions | FGuard WAF",
@@ -177,7 +178,7 @@ const pricing = [
 
 export default function FinancialPage() {
   return (
-    <main className="py-20">
+    <main className="py-12 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -186,6 +187,29 @@ export default function FinancialPage() {
               PCI DSS-compliant security solutions for financial institutions
             </p>
           </div>
+
+          <section className="py-12">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-muted-foreground">
+                <Image
+                  src="/images/cdn.png"
+                  alt="Financial Services Security Overview"
+                  width={600}
+                  height={400}
+                  className="rounded-lg shadow-lg"
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold mb-6">Secure Your Financial Applications and Data</h2>
+                <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+                  The financial industry faces sophisticated cyber threats targeting sensitive customer data and critical infrastructure. Maintaining compliance with regulations like PCI DSS is also paramount. FGuard provides robust, compliant security solutions tailored for financial institutions.
+                </p>
+                <p className="text-lg text-gray-600 dark:text-gray-400">
+                  Our Financial Solutions offer advanced WAF capabilities, fraud prevention, secure transaction processing, and continuous compliance monitoring. We help you protect against data breaches, ensure business continuity, and build trust with your customers in a highly regulated environment.
+                </p>
+              </div>
+            </div>
+          </section>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {features.map((feature, index) => (

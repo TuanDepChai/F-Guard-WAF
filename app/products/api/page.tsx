@@ -44,6 +44,7 @@ import {
   GitCompare,
   GitFork
 } from "lucide-react"
+import Image from "next/image"
 
 export const metadata: Metadata = {
   title: "API Protection | FGuard WAF",
@@ -173,7 +174,7 @@ const pricing = [
 
 export default function APIProtectionPage() {
   return (
-    <main className="py-20">
+    <main className="py-12 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -182,6 +183,29 @@ export default function APIProtectionPage() {
               Secure and optimize your APIs with advanced protection and monitoring
             </p>
           </div>
+
+          <section className="py-12">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg">
+                <Image
+                  src="/images/api-security.jpg"
+                  alt="API Security Overview"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold mb-6">What is API Security?</h2>
+                <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+                  APIs (Application Programming Interfaces) are the backbone of modern applications, enabling data exchange and functionality. However, they also present a significant attack surface if not properly secured. FGuard's API Protection provides comprehensive security for your APIs, protecting them from malicious attacks, abuse, and data breaches.
+                </p>
+                <p className="text-lg text-gray-600 dark:text-gray-400">
+                  Our solution offers advanced features such as authentication and authorization, rate limiting, schema validation, and real-time monitoring to ensure your APIs are secure and reliable. We help you protect sensitive data, prevent denial-of-service attacks, and maintain compliance with industry standards.
+                </p>
+              </div>
+            </div>
+          </section>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {features.map((feature, index) => (

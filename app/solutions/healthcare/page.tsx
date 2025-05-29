@@ -43,6 +43,7 @@ import {
   FileSearch,
   FileText as FileTextIcon
 } from "lucide-react"
+import Image from "next/image"
 
 export const metadata: Metadata = {
   title: "Healthcare Solutions | FGuard WAF",
@@ -174,7 +175,7 @@ const pricing = [
 
 export default function HealthcarePage() {
   return (
-    <main className="py-20">
+    <main className="py-12 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -183,6 +184,29 @@ export default function HealthcarePage() {
               HIPAA-compliant security solutions for healthcare organizations
             </p>
           </div>
+
+          <section className="py-12">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-muted-foreground">
+                <Image
+                  src="/images/hero-dashboard.png"
+                  alt="Healthcare Security Overview"
+                  width={600}
+                  height={400}
+                  className="rounded-lg shadow-lg"
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold mb-6">Protect Sensitive Patient Data and Systems</h2>
+                <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+                  Healthcare organizations handle highly sensitive patient information and critical systems that are prime targets for cyber attacks. Maintaining compliance with regulations like HIPAA is essential. FGuard offers robust, HIPAA-compliant security solutions tailored for the healthcare industry.
+                </p>
+                <p className="text-lg text-gray-600 dark:text-gray-400">
+                  Our Healthcare Solutions provide advanced WAF capabilities, data protection, secure access controls, and comprehensive audit trails. We help you safeguard patient privacy, prevent data breaches, and ensure the continuous availability of your healthcare applications and services.
+                </p>
+              </div>
+            </div>
+          </section>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {features.map((feature, index) => (

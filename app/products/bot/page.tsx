@@ -39,6 +39,7 @@ import {
   Filter,
   AlertOctagon
 } from "lucide-react"
+import Image from "next/image"
 
 export const metadata: Metadata = {
   title: "Bot Protection | FGuard WAF",
@@ -168,7 +169,7 @@ const pricing = [
 
 export default function BotProtectionPage() {
   return (
-    <main className="py-20">
+    <main className="py-12 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -177,6 +178,29 @@ export default function BotProtectionPage() {
               Protect your web applications from malicious bots with advanced detection and management
             </p>
           </div>
+
+          <section className="py-12">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-muted-foreground">
+                <Image
+                  src="/images/zero-day.png"
+                  alt="Bot Protection Overview"
+                  width={600}
+                  height={400}
+                  className="rounded-lg shadow-lg"
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold mb-6">What is Bot Protection?</h2>
+                <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+                  Malicious bots can cause significant damage to your web applications, including data scraping, credential stuffing, spam, and denial of service. FGuard's Bot Protection provides comprehensive defense against automated threats, distinguishing between good bots (like search engine crawlers) and bad bots.
+                </p>
+                <p className="text-lg text-gray-600 dark:text-gray-400">
+                  Our solution uses a combination of behavioral analysis, device fingerprinting, and machine learning to accurately identify and mitigate bot traffic without impacting legitimate users. Gain visibility into bot activity and protect your critical online assets from automated attacks.
+                </p>
+              </div>
+            </div>
+          </section>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {features.map((feature, index) => (

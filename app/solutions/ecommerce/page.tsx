@@ -42,6 +42,7 @@ import {
   Percent,
   Gift
 } from "lucide-react"
+import Image from "next/image"
 
 export const metadata: Metadata = {
   title: "E-commerce Solutions | FGuard WAF",
@@ -173,7 +174,7 @@ const pricing = [
 
 export default function EcommercePage() {
   return (
-    <main className="py-20">
+    <main className="py-12 sm:py-16 lg:py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -182,6 +183,29 @@ export default function EcommercePage() {
               Comprehensive security and performance solutions for your e-commerce business
             </p>
           </div>
+
+          <section className="py-12">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="relative h-[400px] rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-muted-foreground">
+                <Image
+                  src="/images/analytics.png"
+                  alt="E-commerce Security Overview"
+                  width={600}
+                  height={400}
+                  className="rounded-lg shadow-lg"
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold mb-6">Secure and Optimize Your Online Store</h2>
+                <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+                  In the fast-paced world of e-commerce, security and performance are paramount. Protecting customer data, preventing fraud, and ensuring a seamless shopping experience are critical for success. FGuard offers tailored security solutions specifically designed for e-commerce businesses of all sizes.
+                </p>
+                <p className="text-lg text-gray-600 dark:text-gray-400">
+                  Our E-commerce solutions provide robust protection against web application attacks, bot traffic, and DDoS threats that can disrupt your store and impact revenue. We also offer performance optimization features like global CDN to ensure your site loads quickly and reliably for customers worldwide, helping you build trust and drive conversions.
+                </p>
+              </div>
+            </div>
+          </section>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {features.map((feature, index) => (
