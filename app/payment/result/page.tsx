@@ -39,7 +39,7 @@ export default function PaymentResultPage() {
         });
 
         // Verify payment with backend (GET with params)
-        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/payments/vnpay_verify?${new URLSearchParams(params).toString()}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/payments/vnpay_return?${new URLSearchParams(params).toString()}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
