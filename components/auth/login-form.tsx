@@ -133,10 +133,11 @@ export function LoginForm() {
       // Show success message
       toast.success('Login successful!')
 
-      // Use router.replace for navigation after a short delay to ensure context update
-      setTimeout(() => {
+      if (data.user.role === 'admin') {
+        router.replace('/dashboard/admin');
+      } else {
         router.replace('/dashboard');
-      }, 50); // Reduced delay slightly
+      }
     } catch (error) {
       console.error('Login error:', error)
       toast.error(error instanceof Error ? error.message : 'Login failed. Please try again.')
