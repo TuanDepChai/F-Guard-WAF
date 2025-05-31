@@ -24,6 +24,7 @@ import {
   ComposedChart, Scatter, ReferenceLine
 } from 'recharts';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { toast } from 'sonner';
 
 const AdminDashboardPage: React.FC = () => {
   const { userData, logout } = useAuth();
@@ -52,6 +53,17 @@ const AdminDashboardPage: React.FC = () => {
     failedCount: 0
   });
   const [statusFilter, setStatusFilter] = useState<string>('');
+  const [userList, setUserList] = useState<{
+    users: any[];
+    totalUsers: number;
+    totalPages: number;
+    currentPage: number;
+  }>({
+    users: [],
+    totalUsers: 0,
+    totalPages: 0,
+    currentPage: 1
+  });
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -75,6 +87,25 @@ const AdminDashboardPage: React.FC = () => {
     };
     fetchTransactions();
   }, [transactions.currentPage, statusFilter]);
+
+  useEffect(() => {
+    const fetchUserList = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/auth/admin/users?page=${userList.currentPage}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+        });
+        const data = await response.json();
+        setUserList(data);
+      } catch (error) {
+        console.error('Error fetching user list:', error);
+      }
+    };
+    fetchUserList();
+  }, [userList.currentPage]);
 
   // Redirect if not admin
   useEffect(() => {
@@ -126,6 +157,28 @@ const AdminDashboardPage: React.FC = () => {
   const handleStatusChange = (status: string) => {
     setStatusFilter(status);
     setTransactions(prev => ({ ...prev, currentPage: 1 })); // Reset to first page when filter changes
+  };
+
+  const handleUserPageChange = (page: number) => {
+    setUserList(prev => ({ ...prev, currentPage: page }));
+  };
+
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/auth/admin/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      if (response.ok) {
+        setUserList(prev => ({ ...prev, users: prev.users.filter(user => user._id !== userId) }));
+        toast.success('User deleted successfully');
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
   };
 
   return (
@@ -204,9 +257,9 @@ const AdminDashboardPage: React.FC = () => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">Unique Buyers</p>
-                <h3 className="text-2xl font-bold mt-1">{transactions.totalUserBought}</h3>
-                <p className="text-sm text-blue-500 mt-1">Total Users</p>
+                <p className="text-sm font-medium text-gray-500">Total Users</p>
+                <h3 className="text-2xl font-bold mt-1">{userList.totalUsers}</h3>
+                <p className="text-sm text-blue-500 mt-1">Total number of users</p>
               </div>
               <Users className="h-8 w-8 text-blue-500" />
             </div>
@@ -219,8 +272,8 @@ const AdminDashboardPage: React.FC = () => {
               <div>
                 <p className="text-sm font-medium text-gray-500">Success Rate</p>
                 <h3 className="text-2xl font-bold mt-1">
-                  {transactions.totalTransactionMade > 0 
-                    ? Math.round((transactions.successCount / transactions.totalTransactionMade) * 100) 
+                  {transactions.totalTransactionMade > 0
+                    ? Math.round((transactions.successCount / transactions.totalTransactionMade) * 100)
                     : 0}%
                 </h3>
                 <p className="text-sm text-green-500 mt-1">Transaction Success</p>
@@ -303,8 +356,65 @@ const AdminDashboardPage: React.FC = () => {
               <CardTitle>User Management</CardTitle>
             </CardHeader>
             <CardContent>
-              {/* Add user management table or list here */}
-              <p>User management interface will be implemented here</p>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Username</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Phone</TableHead>
+                    <TableHead>Role</TableHead>
+                    <TableHead>Created At</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {userList.users?.map((user: any) => (
+                    <TableRow key={user._id}>
+                      <TableCell>{user.username}</TableCell>
+                      <TableCell>{user.email}</TableCell>
+                      <TableCell>{user.phone || "-"}</TableCell>
+                      <TableCell>{user.role}</TableCell>
+                      <TableCell>{formatDate(user.createdAt)}</TableCell>
+                      <TableCell>
+                        <Button variant="destructive" size="sm" onClick={() => handleDeleteUser(user._id)}>Delete</Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <div className="flex items-center justify-between mt-4">
+                <div className="text-sm text-gray-500">
+                  Showing {userList.users.length} of {userList.totalUsers} users
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleUserPageChange(userList.currentPage - 1)}
+                    disabled={userList.currentPage === 1}
+                  >
+                    Previous
+                  </Button>
+                  {Array.from({ length: userList.totalPages }, (_, i) => i + 1).map((page) => (
+                    <Button
+                      key={page}
+                      variant={page === userList.currentPage ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => handleUserPageChange(page)}
+                    >
+                      {page}
+                    </Button>
+                  ))}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleUserPageChange(userList.currentPage + 1)}
+                    disabled={userList.currentPage === userList.totalPages}
+                  >
+                    Next
+                  </Button>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
